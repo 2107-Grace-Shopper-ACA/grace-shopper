@@ -18,6 +18,8 @@ async function seed() {
     User.create({ username: "Andy", password: "123" }),
     User.create({ username: "Corinne", password: "123" }),
     User.create({ username: "Alex", password: "123" }),
+    User.create({ username: "Stanley", password: "123" }),
+
   ]);
 
   console.log(`seeded ${users.length} users`);
@@ -27,6 +29,7 @@ async function seed() {
       andy: users[0],
       corinne: users[1],
       alex: users[2],
+      stanley: users[3]
     },
   };
 }
