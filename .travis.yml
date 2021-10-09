@@ -4,4 +4,4 @@ node_js:
 services:
   - postgresql
 before script:
-  - psql -c 'create database pastapeddler;' -U postgres
+  - psql -c 'create database pastapeddler-test;' -U postgres
