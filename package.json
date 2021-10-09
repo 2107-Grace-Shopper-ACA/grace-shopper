@@ -1,7 +1,7 @@
 {
   "name": "pasta-peddler",
   "version": "2.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "We sell pasta!",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
