@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const {STRING, TEXT, UUID, UUIDV4} = Sequelize;
+const {STRING, TEXT, INTEGER, UUID, UUIDV4} = Sequelize;
 
 const Product = db.define('product', {
     id: {
@@ -17,7 +17,8 @@ const Product = db.define('product', {
     description: {
         type: TEXT
     },
-    imageUrl: STRING
+    imageUrl: STRING,
+    quantity: INTEGER
 })
 
 module.exports = Product;
