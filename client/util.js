@@ -1,0 +1,1 @@
+//helper functions here, such as formatCurrency
