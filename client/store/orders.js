@@ -21,7 +21,7 @@ import axios from "axios"
  };
  
  /**
-  * REDUCER (They do it differently in auth.js, but I opted for how I know how to do it. We can refactor as a group if we want. - Alex)
+  * REDUCER
   */
 
  export default function (state = [], action) {
