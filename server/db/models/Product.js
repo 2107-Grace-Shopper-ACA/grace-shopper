@@ -20,7 +20,7 @@ const Product = db.define('product', {
     description: {
         type: TEXT
     },
-    imageUrl: STRING,
+    imageUrl: STRING, //@Corinne Does this need to have similar syntax to the description property?
     inventory: {
         type: INTEGER,
         allowNull: false,

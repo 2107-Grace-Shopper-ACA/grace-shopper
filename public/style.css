@@ -1,5 +1,7 @@
 body {
   font-family: sans-serif;
+  color: white;
+  background-color: black;
 }
 
 a {
@@ -18,4 +20,15 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+img {
+  width: 250px;
+  height: 250px;
+  margin: .25rem;
+}
+
+#product-gallery {
+  display: flex;
+  flex-wrap: wrap;
 }
