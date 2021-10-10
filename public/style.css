@@ -25,4 +25,10 @@ form div {
 img {
   width: 250px;
   height: 250px;
+  margin: .25rem;
+}
+
+#product-gallery {
+  display: flex;
+  flex-wrap: wrap;
 }
