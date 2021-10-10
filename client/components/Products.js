@@ -8,6 +8,7 @@ const Products = ({ products }) => {
         return (
           <div key={product.id}>
             <img src={product.imageUrl || "https://i.gifer.com/MNu.gif"}></img>
+            <button>Add to Cart</button>
           </div>
         );
       })}
