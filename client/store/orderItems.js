@@ -13,6 +13,8 @@ import axios from "axios"
  /**
   * THUNK CREATORS
   */
+ 
+ //to stay consistent, do you think that fetch<whatever> should load all of those things? and then from there we can filter to see which items are in a specific order? i think doing it the way it is below has the potential to mess things up when stuff gets updated even though it seems like it shouldn't... - C
  export const fetchOrderItems = (orderId) => {
    return async (dispatch) => {
      const { data: orderItems } = await axios.get(`/api/orderItems/${orderId}`);

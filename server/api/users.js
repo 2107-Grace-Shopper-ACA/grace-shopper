@@ -27,7 +27,7 @@ router.get('/:userId', async (req, res, next) => {
     next(err)
   }
 })
-//this will show their orders? -C
+//this will show their orders, but maybe this should go in /orders/:userId instead? -C
 router.get('/:userId/orders', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.userId);
