@@ -21,6 +21,6 @@ describe('OrderItem routes', () => {
       expect(res.body.length).to.equal(4);
       expect(res.body[0]).to.have.property('orderId');
       expect(res.body[0]).to.have.property('productId');
-    })
+    });
   }) // end describe('/api/orderitems')
 }) // end describe('OrderItem routes')

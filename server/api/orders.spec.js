@@ -20,6 +20,15 @@ describe('Order routes', () => {
       expect(res.body).to.be.an('array');
       expect(res.body.length).to.equal(2);
       expect(res.body[0]).to.have.property('userId');
+      expect(res.body[0]).to.have.property('orderItems');
+    });
+    it('GET /api/orders/:orderId', async () => {
+      const res = await request(app)
+        .get('/api/orders/1')
+        .expect(200)
+
+      expect(res.body).to.be.an('object');
+      expect(res.body).to.have.property('userId');
     })
   }) // end describe('/api/orderitems')
 }) // end describe('OrderItem routes')
