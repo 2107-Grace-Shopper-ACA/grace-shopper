@@ -13,7 +13,7 @@ const Products = ({ products, createOrderItem }) => {
             <label htmlFor="product-quantity">Quantity:</label>
             <input type="number" id="product-quantity" min="1" max="9"/>
             {/* Hardcoding one for now to test */}
-            <button type="button" onClick={() => {createOrderItem({id: product.id, quantity: 1})}}>Add to Cart</button>
+            <button type="button" onClick={() => {createOrderItem({ productId: product.id, quantity: 1})}}>Add to Cart</button>
           </div>
         );
       })}
@@ -31,5 +31,3 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect((state) => state, mapDispatchToProps)(Products);
-
-//Emulating how the Home component is setup with the naming convention and exporting instead of the whole _Products and Products dance we're used to. If this messed up we can fall back on that. - Alex

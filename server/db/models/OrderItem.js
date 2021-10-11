@@ -18,6 +18,10 @@ const OrderItem = db.define('orderItem', {
         validate: {
             notEmpty: true
         }
+    },
+    productId: {
+        type: UUID,
+        foreignKey: true
     }
 })
 
