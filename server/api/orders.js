@@ -21,6 +21,27 @@ router.get('/', async (req, res, next) => {
         next(err)
     }
 })
+
+router.post('/', async (req, res, next) => {
+    try {
+        const _order = await Order.create(req.body);
+        const order = await Order.findByPk(_order.id, {
+            include: [
+                {
+                    model: User,
+                    attributes: ['id', 'username']
+                },
+                {
+                    model: OrderItem
+                }
+            ]
+        });
+        res.json(order)
+    } catch (err) {
+        next(err)
+    }
+})
+
 //this will show a specific order ? although this should just be an admin thing?
 //i think i'm getting confused by what the URI's will be for someone who is logged in and for someone who isn't -C
 router.get('/:orderId', async (req, res, next) => {

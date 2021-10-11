@@ -4,11 +4,12 @@ import axios from "axios"
  * ACTION TYPES
  */
  const LOAD_ORDERITEMS = "LOAD_ORDERITEMS"
-
+ const CREATE_ORDERITEM = 'CREATE_ORDERITEM'
  /**
   * ACTION CREATORS
   */
  const loadOrderItems = (orderItems) => ({ type: LOAD_ORDERITEMS, orderItems });
+ const _createOrderItem = (orderItem) => ({ type: CREATE_ORDERITEM, item})
  
  /**
   * THUNK CREATORS
@@ -21,6 +22,13 @@ import axios from "axios"
      dispatch(loadOrderItems(orderItems));
    };
  };
+
+ export const createOrderItem = (item) => {
+   return async(dispatch) => {
+     const { data: orderItem } = await axios.post('/api/orderItems', item);
+     dispatch(_createOrderItem(orderItem));
+   }
+ }
  
  /**
   * REDUCER (They do it differently in auth.js, but I opted for how I know how to do it. We can refactor as a group if we want. - Alex)

@@ -17,3 +17,5 @@ export default store
 export * from './auth'
 export * from './products' //Not entirely sure what we're accomplishing here yet but added it here to follow suit - Alex
 //LOL this is that thing prof likes to do - it means you can call all actions from the store instead of their real files - Corinne
+export * from './orderItems';
+export * from './orders';

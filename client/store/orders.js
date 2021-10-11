@@ -4,12 +4,13 @@ import axios from "axios"
  * ACTION TYPES
  */
  const LOAD_ORDERS = "LOAD_ORDERS"
+ const CREATE_ORDER = 'CREATE_ORDER'
 
  /**
   * ACTION CREATORS
   */
  const loadOrders = (orders) => ({ type: LOAD_ORDERS, orders });
- 
+ const _createOrder = (order) => ({ type: CREATE_ORDER, order});
  /**
   * THUNK CREATORS
   */
@@ -22,6 +23,12 @@ import axios from "axios"
    };
  };
  
+ export const createOrder = (_order) => {
+  return async (dispatch) => {
+    const { data: order } = await axios.post(`/api/orders/`, _order);
+    dispatch(loadOrders(order));
+  };
+};
  /**
   * REDUCER
   */
