@@ -17,7 +17,7 @@ router.get('/', async (req, res, next) => {
   });
   router.post('/', async (req, res, next) => {
     try {
-      console.log(req.body)
+      console.log(`orderItem req.body: ${JSON.stringify(req.body)}`)
       const _orderItem = await OrderItem.create(req.body);
       const orderItem = await OrderItem.findByPk(_orderItem.id, {
           include: [{

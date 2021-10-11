@@ -8,9 +8,11 @@ const Products = ({ products, createOrderItem }) => {
       {products.map((product) => {
         return (
           <div key={product.id}>
+            <h4>{product.name}</h4>
             <img src={product.imageUrl || "https://i.gifer.com/MNu.gif"}></img>
             <label htmlFor="product-quantity">Quantity:</label>
             <input type="number" id="product-quantity" min="1" max="9"/>
+            {/* Hardcoding one for now to test */}
             <button type="button" onClick={() => {createOrderItem({id: product.id, quantity: 1})}}>Add to Cart</button>
           </div>
         );
@@ -22,6 +24,7 @@ const Products = ({ products, createOrderItem }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     createOrderItem: (product) => {
+      console.log(`product object: ${JSON.stringify(product)}`)
       dispatch(createOrderItem(product))
     }
   }
