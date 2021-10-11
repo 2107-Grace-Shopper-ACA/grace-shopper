@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Product },
+  models: { User, Product, OrderItem, Order },
 } = require("../server/db");
 
 /**
@@ -30,8 +30,24 @@ async function seed() {
     Product.create({ name: "Garganelli", inventory: 100, price: 8, imageUrl: 'https://www.qbcucina.com/wp-content/uploads/2020/05/Garganelli-1.jpg', description: "Garganelli are a type of egg-based pasta formed by rolling a flat, square noodle into a cylindrical shape. Garganelli resembles ribbed quills with points at both ends." }),
   ]);
 
+  //Creating orders
+  const orders = await Promise.all([
+    Order.create({isCart: true, isOpen: true, userId: users[0].id }),
+    Order.create({isCart: false, isOpen: false, userId: users[0].id })
+    ])
+  
+  //Creating order items
+  const orderItems = await Promise.all([
+    OrderItem.create({quantity: 2, productId: products[0].id, orderId: orders[0].id}),
+    OrderItem.create({quantity: 3, productId: products[1].id, orderId: orders[0].id}),
+    OrderItem.create({quantity: 4, productId: products[2].id, orderId: orders[1].id}),
+    OrderItem.create({quantity: 1, productId: products[3].id, orderId: orders[1].id}),
+  ]);
+
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${products.length} products`);
+  console.log(`seeded ${orders.length} orders`);
+  console.log(`seeded ${orderItems.length} order items`);
   console.log(`seeded successfully`);
   return {
     users: {
@@ -40,7 +56,9 @@ async function seed() {
       alex: users[2],
       stanley: users[3]
     },
-    products
+    products,
+    orderItems,
+    orders
   };
 }
 

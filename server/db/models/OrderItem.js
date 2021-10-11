@@ -1,14 +1,22 @@
 const Sequelize = require ('sequelize')
 const db = require('../db')
 
-const {UUID, UUIDV4} = Sequelize
+const {UUID, UUIDV4, INTEGER} = Sequelize
 
 const OrderItem = db.define('orderItem', {
-    id: {
-        type: UUID,
-        defaulValue: UUIDV4,
+//again for some reason the tests only pass if i take this out - C
+    // id: {
+    //     type: UUID,
+    //     defaulValue: UUIDV4,
+    //     allowNull: false,
+    //     primaryKey: true
+    // },
+    quantity: {
+        type: INTEGER,
         allowNull: false,
-        primaryKey: true
+        validate: {
+            notEmpty: true
+        }
     }
 })
 

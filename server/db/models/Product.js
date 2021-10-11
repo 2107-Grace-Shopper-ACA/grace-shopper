@@ -17,10 +17,8 @@ const Product = db.define('product', {
             notEmpty: true
         }
     },
-    description: {
-        type: TEXT
-    },
-    imageUrl: STRING, //@Corinne Does this need to have similar syntax to the description property?
+    description: TEXT,
+    imageUrl: STRING, //@Corinne Does this need to have similar syntax to the description property? //oops they can be either way if you're only stating the datatype -i'll change description
     inventory: {
         type: INTEGER,
         allowNull: false,
