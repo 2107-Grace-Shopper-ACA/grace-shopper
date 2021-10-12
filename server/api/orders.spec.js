@@ -22,10 +22,10 @@ describe('Order routes', () => {
       expect(res.body[0]).to.have.property('userId');
       expect(res.body[0]).to.have.property('orderItems');
     });
-    //I think this may pass or fail without changing anything. Haven't investigated yet. -Alex
     it('GET /api/orders/:orderId', async () => {
+      const orders = await Order.findAll()
       const res = await request(app)
-        .get('/api/orders/1')
+        .get(`/api/orders/${orders[0].id}`)
         .expect(200)
 
       expect(res.body).to.be.an('object');

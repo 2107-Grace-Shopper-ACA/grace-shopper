@@ -14,13 +14,15 @@ async function seed() {
   console.log("db synced!");
 
   // Creating Users
-  const users = await Promise.all([
-    User.create({ username: "Andy", password: "123" }),
-    User.create({ username: "Corinne", password: "123" }),
-    User.create({ username: "Alex", password: "123" }),
-    User.create({ username: "Stanley", password: "123" }),
+    const andy = await User.create({ username: "Andy", password: "123" })
+    const corinne = await User.create({ username: "Corinne", password: "123" })
+    const alex = await User.create({ username: "Alex", password: "123" })
+    const stanley = await User.create({ username: "Stanley", password: "123" })
 
-  ]);
+
+  console.log(`THIS IS ANDYYYY: ${JSON.stringify(andy)}`);
+
+  const users = [andy, corinne, alex, stanley]
 
   // Creating Products
   const products = await Promise.all([
@@ -32,8 +34,8 @@ async function seed() {
 
   //Creating orders
   const orders = await Promise.all([
-    Order.create({isCart: true, isOpen: true, userId: users[0].id }),
-    Order.create({isCart: false, isOpen: false, userId: users[0].id })
+    Order.create({isCart: true, isOpen: true, userId: andy.id }),
+    Order.create({isCart: false, isOpen: false, userId: andy.id })
     ])
   
   //Creating order items
@@ -51,10 +53,10 @@ async function seed() {
   console.log(`seeded successfully`);
   return {
     users: {
-      andy: users[0],
-      corinne: users[1],
-      alex: users[2],
-      stanley: users[3]
+      andy,
+      corinne,
+      alex,
+      stanley
     },
     products,
     orderItems,
