@@ -29,13 +29,5 @@ describe('User routes', () => {
       expect(res.body).to.be.an('object');
       
     });
-    it('GET /api/users/:userId/orders', async () => {
-      const res = await request(app)
-        .get('/api/users/1/orders')
-        .expect(200)
-
-      expect(res.body).to.be.an('array');
-      expect(res.body.length).to.equal(2);
-    });
   }) // end describe('/api/users')
 }) // end describe('User routes')
