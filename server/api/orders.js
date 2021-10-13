@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { models: { Order, OrderItem, User } } = require('../db');
+const { models: { Order, OrderItem, User, Product } } = require('../db');
 module.exports = router
 
 //this would be an admin route?
@@ -12,7 +12,8 @@ router.get('/', async (req, res, next) => {
                     attributes: ['id', 'username']
                 },
                 {
-                    model: OrderItem
+                    model: OrderItem,
+                    include: Product
                 }
             ]
         });
@@ -32,7 +33,8 @@ router.post('/', async (req, res, next) => {
                     attributes: ['id', 'username']
                 },
                 {
-                    model: OrderItem
+                    model: OrderItem,
+                    include: Product
                 }
             ]
         });
@@ -53,7 +55,8 @@ router.get('/:orderId', async (req, res, next) => {
                     attributes: ['id', 'username']
                 },
                 {
-                    model: OrderItem
+                    model: OrderItem,
+                    include: Product
                 }
             ]
         })
@@ -69,7 +72,13 @@ router.get('/users/:userId', async (req, res, next) => {
       const orders = await Order.findAll({
         where: {
           userId: user.id
-        }
+        },
+        include: [
+            {
+                model: OrderItem,
+                include: Product
+            }
+        ]
       })
       res.json(orders)
     } catch (err) {

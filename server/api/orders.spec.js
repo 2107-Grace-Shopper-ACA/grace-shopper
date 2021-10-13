@@ -30,6 +30,7 @@ describe('Order routes', () => {
 
       expect(res.body).to.be.an('object');
       expect(res.body).to.have.property('userId');
+      expect(res.body).to.have.property('orderItems');
     });
     it('GET /api/orders/users/:userId', async () => {
       const res = await request(app)
@@ -38,6 +39,7 @@ describe('Order routes', () => {
 
       expect(res.body).to.be.an('array');
       expect(res.body.length).to.equal(2);
+      expect(res.body[0]).to.have.property('orderItems');
     }); 
   }) // end describe('/api/orders')
 }) // end describe('Order routes')
