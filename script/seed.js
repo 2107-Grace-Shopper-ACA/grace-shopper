@@ -31,19 +31,21 @@ async function seed() {
     Product.create({ name: "Spaghetti", inventory: 100, price: 8, imageUrl: 'https://www.zimbokitchen.com/wp-content/uploads/2012/12/spaghetti2.png', description: "Spaghetti is a long, thin, solid, cylindrical pasta. It is a staple food of traditional Italian cuisine." }),
     Product.create({ name: "Garganelli", inventory: 100, price: 8, imageUrl: 'https://www.qbcucina.com/wp-content/uploads/2020/05/Garganelli-1.jpg', description: "Garganelli are a type of egg-based pasta formed by rolling a flat, square noodle into a cylindrical shape. Garganelli resembles ribbed quills with points at both ends." }),
   ]);
+  const [penne, mafaldine, spaghetti, garganelli] = products.map(product => product);
 
   //Creating orders
   const orders = await Promise.all([
     Order.create({isCart: true, isOpen: true, userId: andy.id }),
     Order.create({isCart: false, isOpen: false, userId: andy.id })
     ])
-  
+  const [order1, order2] = orders.map(order => order);
+
   //Creating order items
   const orderItems = await Promise.all([
-    OrderItem.create({quantity: 2, productId: products[0].id, orderId: orders[0].id}),
-    OrderItem.create({quantity: 3, productId: products[1].id, orderId: orders[0].id}),
-    OrderItem.create({quantity: 4, productId: products[2].id, orderId: orders[1].id}),
-    OrderItem.create({quantity: 1, productId: products[3].id, orderId: orders[1].id}),
+    OrderItem.create({quantity: 2, productId: penne.id, orderId: order1.id}),
+    OrderItem.create({quantity: 3, productId: garganelli.id, orderId: order1.id}),
+    OrderItem.create({quantity: 4, productId: spaghetti.id, orderId: order2.id}),
+    OrderItem.create({quantity: 1, productId: mafaldine.id, orderId: order2.id}),
   ]);
 
   console.log(`seeded ${users.length} users`);
