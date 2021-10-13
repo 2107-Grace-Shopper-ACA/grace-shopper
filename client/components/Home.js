@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { HashRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 /**
  * COMPONENT

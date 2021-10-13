@@ -1,9 +1,9 @@
-import axios from "axios"
+import axios from 'axios'
 
 /**
  * ACTION TYPES
  */
- const LOAD_ORDERS = "LOAD_ORDERS"
+ const LOAD_ORDERS = 'LOAD_ORDERS'
  const CREATE_ORDER = 'CREATE_ORDER'
 
  /**
@@ -26,7 +26,7 @@ import axios from "axios"
  export const createOrder = (_order) => {
   return async (dispatch) => {
     const { data: order } = await axios.post(`/api/orders/`, _order);
-    dispatch(loadOrders(order));
+    dispatch(_createOrder(order));
   };
 };
  /**
