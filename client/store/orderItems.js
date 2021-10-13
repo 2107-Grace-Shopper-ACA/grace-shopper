@@ -39,7 +39,7 @@ import axios from 'axios'
          case LOAD_ORDERITEMS:
              return action.orderItems;
          case CREATE_ORDERITEM:
-             return action.orderItem;
+             return [...state, action.orderItem];
          default:
              return state
      }
