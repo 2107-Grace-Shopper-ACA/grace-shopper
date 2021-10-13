@@ -8,15 +8,15 @@ const LOAD_PRODUCTS = "LOAD_PRODUCTS";
 /**
  * ACTION CREATORS
  */
-const loadProducts = (products) => ({ type: LOAD_PRODUCTS, products });
+const _loadProducts = (products) => ({ type: LOAD_PRODUCTS, products });
 
 /**
  * THUNK CREATORS
  */
-export const fetchProducts = () => {
+export const loadProducts = () => {
   return async (dispatch) => {
     const { data: products } = await axios.get("/api/products");
-    dispatch(loadProducts(products));
+    dispatch(_loadProducts(products));
   };
 };
 
