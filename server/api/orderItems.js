@@ -7,7 +7,6 @@ router.get('/', async (req, res, next) => {
       const orderItems = await OrderItem.findAll({
           include: [{
             model: Product,
-            attributes: ['name']
           }]
       });
       res.json(orderItems)
@@ -22,7 +21,6 @@ router.get('/', async (req, res, next) => {
       const orderItem = await OrderItem.findByPk(_orderItem.id, {
           include: [{
             model: Product,
-            attributes: ['name']
           }]
       });
       res.json(orderItem)
