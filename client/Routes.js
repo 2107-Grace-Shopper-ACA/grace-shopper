@@ -58,8 +58,8 @@ const mapDispatch = dispatch => {
     loadInitialData() {
       dispatch(me())
     },
-    fetchProducts(){
-      dispatch(fetchProducts())
+    loadProducts(){
+      dispatch(loadProducts())
     }
   }
 }
