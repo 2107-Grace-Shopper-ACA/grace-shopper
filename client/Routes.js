@@ -6,7 +6,7 @@ import Home from './components/Home';
 import {me, loadProducts} from './store'
 import Cart from './components/Cart'
 import Products from './components/Products';
-import singleProduct from './store/singleProduct';
+import SingleProduct from './components/SingleProduct';
 
 
 /**
@@ -27,7 +27,7 @@ class Routes extends Component {
           <Switch>
             <Route path="/home" component={Home} />
             <Route path="/cart" component={Cart} />
-            <Route path="/products/:productId" component={singleProduct} />
+            <Route path="/products/:productId" component={SingleProduct} />
             <Redirect to="/home" />
           </Switch>
         ) : (
@@ -36,7 +36,7 @@ class Routes extends Component {
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             <Route path="/cart" component={Cart} />
-            <Route path="/products/:productId" component={singleProduct} />
+            <Route path="/products/:productId" component={SingleProduct} />
           </Switch>
         )}
         <Products/>
