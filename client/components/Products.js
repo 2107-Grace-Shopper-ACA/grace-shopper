@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import {createOrderItem} from '../store/orderItems'
+import {createOrder, createOrderItem} from '../store'
 
-const Products = ({ products, createOrderItem, orders, auth, orderItems }, state) => {
+const Products = ({ products, orders, auth, orderItems, createOrder, createOrderItem}, state) => {
   return (
     <div id="product-gallery">
       {products.map((product) => {
@@ -15,15 +15,18 @@ const Products = ({ products, createOrderItem, orders, auth, orderItems }, state
             {/* Hardcoding one for now to test */}
             <button type="button" onClick={(ev) => {
               console.log(document.getElementById(`${product.id}-quantity`).value)
-              const cartOrder = orders.find(order => (order.userId === auth.id) && order.isCart)
+              let cartOrder = orders.find(order => (order.userId === auth.id) && order.isCart)
               
               if(cartOrder){
                 let orderItem = orderItems.find(orderItem => (orderItem.productId === product.id))
                 if(orderItem){
-                  //PUT thunk editOrderItem
+                  //PUT thunk editOrderItem to reflect updated quantity
                 } else {
-                  createOrderItem({ productId: product.id, quantity: document.getElementById(`${product.id}-quantity`).value})
+                  createOrderItem({ orderId: cartOrder.id, productId: product.id, quantity: document.getElementById(`${product.id}-quantity`).value})
                 }
+              } else {
+                cartOrder = createOrder({userId: auth.id})
+                createOrderItem({ orderId: cartOrder.id, productId: product.id, quantity: document.getElementById(`${product.id}-quantity`).value})
               }
               //console.log(`our productz: ${JSON.stringify(products)}`);
               //console.log(`our state: ${JSON.stringify(state)}`); 
@@ -37,6 +40,9 @@ const Products = ({ products, createOrderItem, orders, auth, orderItems }, state
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    createOrder: (user) => {
+      dispatch(createOrder(user))
+    },
     createOrderItem: (product) => {
       console.log(`product object: ${JSON.stringify(product)}`)
       dispatch(createOrderItem(product))
