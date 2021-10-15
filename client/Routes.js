@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
-import {me, fetchProducts} from './store'
+import {me, loadProducts} from './store'
 import Cart from './components/Cart'
 import Products from './components/Products';
 import singleProduct from './store/singleProduct';
@@ -15,7 +15,7 @@ import singleProduct from './store/singleProduct';
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
-    this.props.fetchProducts()
+    this.props.loadProducts()
   }
 
   render() {
@@ -61,8 +61,8 @@ const mapDispatch = dispatch => {
     loadInitialData() {
       dispatch(me())
     },
-    fetchProducts(){
-      dispatch(fetchProducts())
+    loadProducts(){
+      dispatch(loadProducts())
     }
   }
 }
