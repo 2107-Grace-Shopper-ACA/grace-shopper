@@ -4,7 +4,6 @@ const db = require('../db')
 const {UUID, UUIDV4, BOOLEAN} = Sequelize
 
 const Order = db.define('order', {
-//FOR SOME REASON THE TESTS ONLY PASS WHEN I REMOVE THIS? EVEN THOUGH IT WORKS FINE FOR PRODUCT - Corinne
     id: {
         type: UUID,
         defaultValue: UUIDV4,
@@ -14,11 +13,6 @@ const Order = db.define('order', {
     isCart: {
         type: BOOLEAN,
         defaultValue: true
-    },
-    isOpen: {
-        type: BOOLEAN,
-        allowNull: false,
-        defaultValue: true,
     }
 })
 
