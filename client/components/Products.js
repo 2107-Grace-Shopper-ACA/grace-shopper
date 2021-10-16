@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import {createOrder, createOrderItem} from '../store'
+import {createOrder, createOrderItem, editOrderItem} from '../store'
 
-const Products = ({ products, orders, auth, orderItems, createOrder, createOrderItem}, state) => {
+const Products = ({ products, orders, auth, orderItems, createOrder, createOrderItem, editOrderItem}, state) => {
   return (
     <div id="product-gallery">
       {products.map((product) => {
@@ -18,9 +18,11 @@ const Products = ({ products, orders, auth, orderItems, createOrder, createOrder
               let cartOrder = orders.find(order => (order.userId === auth.id) && order.isCart)
               
               if(cartOrder){
-                let orderItem = orderItems.find(orderItem => (orderItem.productId === product.id))
+                const orderItem = orderItems.find(orderItem => (orderItem.productId === product.id && orderItem.orderId === cartOrder.id))
+                
                 if(orderItem){
                   //PUT thunk editOrderItem to reflect updated quantity
+                  editOrderItem({ id: orderItem.id, quantity: orderItem.quantity + +document.getElementById(`${product.id}-quantity`).value})
                 } else {
                   createOrderItem({ orderId: cartOrder.id, productId: product.id, quantity: document.getElementById(`${product.id}-quantity`).value})
                 }
@@ -46,6 +48,9 @@ const mapDispatchToProps = (dispatch) => {
     createOrderItem: (product) => {
       console.log(`product object: ${JSON.stringify(product)}`)
       dispatch(createOrderItem(product))
+    },
+    editOrderItem: (orderItem) => {
+      dispatch(editOrderItem(orderItem))
     }
   }
 }
