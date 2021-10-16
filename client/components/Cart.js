@@ -1,18 +1,21 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-const Cart = () => {
+const Cart = ({orderItems}) => {
     return (
         <div>
-            Cart is shown here
+            {orderItems.map(orderItem => {
+                return (
+                    <div key={orderItem.id}>
+                        <h4>{orderItem.product.name}</h4>
+                        <img id='orderImg' src={orderItem.product.imageUrl || "https://i.gifer.com/MNu.gif"}></img>
+                        Quantity: {orderItem.quantity}
+                    </div>
+                )
+            })}
         </div>
     )
 }
 
-const mapState = state => {
-    return {
-        state
-    }
-}
 
-export default connect(mapState)(Cart)
+export default connect((state) => state)(Cart)

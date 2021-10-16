@@ -1,34 +1,40 @@
 body {
-  font-family: sans-serif;
-  color: white;
-  background-color: black;
+ font-family: sans-serif;
+ color: white;
+ background-color: black;
 }
 
 a {
-  text-decoration: none;
+ text-decoration: none;
 }
 
 label {
-  display: block;
+ display: block;
 }
 
 nav a {
-  display: inline-block;
-  margin: 1em;
+ display: inline-block;
+ margin: 1em;
 }
 
 form div {
-  margin: 1em;
-  display: inline-block;
+ margin: 1em;
+ display: inline-block;
 }
 
 img {
-  width: 250px;
-  height: 250px;
-  margin: .25rem;
+ width: 250px;
+ height: 250px;
+ margin: 0.25rem;
 }
 
 #product-gallery {
-  display: flex;
-  flex-wrap: wrap;
+ display: flex;
+ flex-wrap: wrap;
+}
+
+#orderImg {
+ width: 100px;
+ height: 100px;
+ margin: 0.25rem;
 }
