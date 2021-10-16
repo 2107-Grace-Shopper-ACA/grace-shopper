@@ -5,9 +5,13 @@ module.exports = router
 router.get('/', async (req, res, next) => {
     try {
       const orderItems = await OrderItem.findAll({
-          include: [{
-            model: Product
-          }]
+          include: [
+            {
+              model: Product
+            },
+            {
+              model: Order
+            }]
       });
       res.json(orderItems)
     } catch (err) {
