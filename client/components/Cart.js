@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-const Cart = ({ orders, auth }) => {
+const Cart = ({ orders }) => {
 
   //Prevents a crash on a hard reload
   if(orders.length === 0) return 'Your cart is empty!'
