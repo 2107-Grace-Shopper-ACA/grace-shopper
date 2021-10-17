@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+const TOKEN = 'token'
+
 /**
  * ACTION TYPES
  */
@@ -28,8 +30,14 @@ import axios from 'axios'
 //  };
 
  export const loadOrderItems = () => {
+  const token = window.localStorage.getItem(TOKEN)
+
   return async (dispatch) => {
-    const { data: orderItems } = await axios.get(`/api/orderItems`);
+    const { data: orderItems } = await axios.get(`/api/orderItems`, {
+      headers: {
+        authorization: token
+      }
+    });
     dispatch(_loadOrderItems(orderItems));
   };
 };

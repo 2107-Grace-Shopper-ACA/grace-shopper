@@ -1,53 +1,67 @@
 const router = require('express').Router()
-const { models: { OrderItem, Product, Order } } = require('../db')
+const {
+  models: { OrderItem, Product, Order },
+} = require('../db')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
-    try {
+  try {
+    const user = await User.findByToken(req.headers.authorization)
+
+    if (user) {
       const orderItems = await OrderItem.findAll({
-          include: [
-            {
-              model: Product
-            },
-            {
-              model: Order
-            }]
-      });
+        where: {
+          userId: user.id,
+        },
+        include: [
+          {
+            model: Product,
+          },
+          {
+            model: Order,
+          },
+        ],
+      })
       res.json(orderItems)
-    } catch (err) {
-      next(err)
     }
-  });
-  router.post('/', async (req, res, next) => {
-    try {
-      console.log(`orderItem req.body: ${JSON.stringify(req.body)}`)
-      const _orderItem = await OrderItem.create(req.body);
-      const orderItem = await OrderItem.findByPk(_orderItem.id, {
-          include: [{
-            model: Product,
-          }]
-      });
-      res.json(orderItem)
-    } catch (err) {
-      next(err)
-    }
-  });
-  router.put('/:orderItemId', async (req, res, next) => {
-    const { quantity } = req.body;
-    console.log(quantity)
-    try {
-      const _orderItem = await OrderItem.findByPk(req.params.orderItemId);
-      await _orderItem.update({quantity});
-      const orderItem = await OrderItem.findByPk(_orderItem.id, {
-          include: [{
-            model: Product,
-          }]
-      });
-      res.json(orderItem)
-    } catch (err) {
-      next(err)
-    }
-  });
+  } catch (err) {
+    next(err)
+  }
+})
+router.post('/', async (req, res, next) => {
+  try {
+    console.log(`orderItem req.body: ${JSON.stringify(req.body)}`)
+    const _orderItem = await OrderItem.create(req.body)
+    const orderItem = await OrderItem.findByPk(_orderItem.id, {
+      include: [
+        {
+          model: Product,
+        },
+      ],
+    })
+    res.json(orderItem)
+  } catch (err) {
+    next(err)
+  }
+})
+router.put('/:orderItemId', async (req, res, next) => {
+  const { quantity } = req.body
+  console.log(quantity)
+  try {
+    const _orderItem = await OrderItem.findByPk(req.params.orderItemId)
+    await _orderItem.update({ quantity })
+    const orderItem = await OrderItem.findByPk(_orderItem.id, {
+      include: [
+        {
+          model: Product,
+        },
+      ],
+    })
+    res.json(orderItem)
+  } catch (err) {
+    next(err)
+  }
+})
 //I think if we want to see all order items in a specific order it should be from /orders/:orderId - C
 // router.get('/:orderId', async (req, res, next) => {
 //     try {
