@@ -1,8 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout} from '../store'
-import orderItems from '../store/orderItems'
+import {logout, loadOrders} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn, orderItems}) => (
   <div>
@@ -13,7 +12,10 @@ const Navbar = ({handleClick, isLoggedIn, orderItems}) => (
           {/* The navbar will show these links after you log in */}
           <Link to="/products">Products</Link>
           <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
+          <a href="#" onClick={()=>{
+            handleClick()
+            loadOrders()
+          }}>
             Logout
           </a>
           <Link to ="/cart">Cart({orderItems.reduce((accu, cur) => {return accu + cur.quantity}, 0)})</Link>
@@ -46,6 +48,9 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout())
+    },
+    loadOrders() {
+      dispatch(loadOrders())
     }
   }
 }

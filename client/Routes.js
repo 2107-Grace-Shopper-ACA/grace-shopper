@@ -13,11 +13,20 @@ import SingleProduct from './components/SingleProduct';
  * COMPONENT
  */
 class Routes extends Component {
+
   componentDidMount() {
     this.props.loadInitialData()
     this.props.loadProducts()
     this.props.loadOrders()
     this.props.loadOrderItems()
+  }
+
+  //TODO Build out to load orders each time there is a change in user - Alex
+  componentDidUpdate(prevProps) {
+    if((!prevProps.auth.id && prevProps.auth.id) || (prevProps.auth.id !== this.props.auth.id)){
+      this.props.loadOrders()
+      //this.props.loadOrderItems() I'm anticipating needing this here - Alex
+    }
   }
 
   render() {
@@ -56,7 +65,8 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
-    isLoggedIn: !!state.auth.id
+    isLoggedIn: !!state.auth.id,
+    auth: state.auth
   }
 }
 

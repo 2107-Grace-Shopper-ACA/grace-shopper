@@ -4,6 +4,9 @@ module.exports = router
 
 //this would be an admin route?
 router.get('/', async (req, res, next) => {
+    //TODO Find out why we get bad token error here - Alex
+    //const user = await User.findByToken(req.headers.authorization)
+    //console.log(`user: ${JSON.stringify(user)}`)
     try {
         const orders = await Order.findAll({
             include: [

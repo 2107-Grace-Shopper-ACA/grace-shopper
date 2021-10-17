@@ -18,6 +18,7 @@ import axios from 'axios'
  //but again i am confused by what the URIs will be for admin/vs not admin... i think we;ll have to use the authorization token or something in the routes in the api directory - C
  //Eventually we'll want to edit this to be user or admin specific - Alex
  export const loadOrders = () => {
+   console.log('loadOrders fired')
    return async (dispatch) => {
      const { data: orders } = await axios.get(`/api/orders`);
      dispatch(_loadOrders(orders));
