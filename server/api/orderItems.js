@@ -1,18 +1,27 @@
 const router = require('express').Router()
 const {
-  models: { OrderItem, Product, Order },
+  models: { OrderItem, Product, Order, User },
 } = require('../db')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
+    //Gets our logged in user
     const user = await User.findByToken(req.headers.authorization)
+
+    //Gets an array of all the orders for our user
+    const orders = await Order.findAll({
+      where: {
+        userId: user.id
+      }
+    })
 
     if (user) {
       const orderItems = await OrderItem.findAll({
-        where: {
-          userId: user.id,
-        },
+        //We'll need to figure out how to restrict this to just be from orders from our user (two avenues we've discussed) -Alex
+        // where: {
+        //   orderId: user.id
+        // },
         include: [
           {
             model: Product,

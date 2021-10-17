@@ -24,7 +24,6 @@ router.get('/', async (req, res, next) => {
           },
         ],
       })
-      console.log(JSON.stringify(orders))
       res.json(orders)
     } else {
         //TODO Avoid an error message in our console if we can't find a user.

@@ -13,6 +13,12 @@ OrderItem.belongsTo(Product)
 OrderItem.belongsTo(Order)
 Order.hasMany(OrderItem)
 
+//OrderItem.belongsTo(User)
+//User.hasMany(OrderItem)
+
+//OrderItem.belongsTo(User, {through: Order})
+//User.hasMany(OrderItem, {through: Order}) "Error: N:M associations are not supported with hasMany. Use belongsToMany instead"
+
 Order.belongsTo(User)
 User.hasMany(Order)
 
