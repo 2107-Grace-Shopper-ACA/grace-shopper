@@ -5,22 +5,21 @@ const {
 module.exports = router
 
 router.get('/', async (req, res, next) => {
+  //Gets our logged in user
+  const user = await User.findByToken(req.headers.authorization)
   try {
-    //Gets our logged in user
-    const user = await User.findByToken(req.headers.authorization)
-
     //Gets an array of all the orders for our user
     const orders = await Order.findAll({
       where: {
-        userId: user.id
-      }
+        userId: user.id,
+      },
     })
 
     if (user) {
       const orderItems = await OrderItem.findAll({
         //We'll need to figure out how to restrict this to just be from orders from our user (two avenues we've discussed) -Alex
         where: {
-          userId: user.id
+          userId: user.id,
         },
         include: [
           {
@@ -32,6 +31,8 @@ router.get('/', async (req, res, next) => {
         ],
       })
       res.json(orderItems)
+    } else {
+      res.send('No user found.')
     }
   } catch (err) {
     next(err)

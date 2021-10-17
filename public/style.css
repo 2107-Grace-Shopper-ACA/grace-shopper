@@ -28,6 +28,10 @@ img {
  margin: 0.25rem;
 }
 
+a {
+    color:white
+}
+
 #product-gallery {
  display: flex;
  flex-wrap: wrap;

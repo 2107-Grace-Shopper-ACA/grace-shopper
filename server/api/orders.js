@@ -5,13 +5,13 @@ const {
 module.exports = router
 
 router.get('/', async (req, res, next) => {
-  try {
-    const user = await User.findByToken(req.headers.authorization)
+  const user = await User.findByToken(req.headers.authorization)
 
+  try {
     if (user) {
       const orders = await Order.findAll({
         where: {
-            userId: user.id
+          userId: user.id,
         },
         include: [
           {
@@ -26,8 +26,8 @@ router.get('/', async (req, res, next) => {
       })
       res.json(orders)
     } else {
-        //TODO Avoid an error message in our console if we can't find a user.
-        console.log('No current user found via token.')
+      //TODO Avoid an error message in our console if we can't find a user.
+      res.send('No current user found via token.')
     }
   } catch (err) {
     next(err)

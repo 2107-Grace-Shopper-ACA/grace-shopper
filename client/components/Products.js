@@ -31,6 +31,7 @@ const Products = ({ products, orders, auth, orderItems, createOrder, createOrder
                 //If there ISN'T an order that is the cart...
               } else {
                 cartOrder = createOrder({userId: auth.id})
+                console.log(`Cart Order made: ${JSON.stringify(cartOrder)}`)
                 createOrderItem({ orderId: cartOrder.id, productId: product.id, quantity: +document.getElementById(`${product.id}-quantity`).value, userId: auth.id})
               } 
               }}>Add to Cart</button>

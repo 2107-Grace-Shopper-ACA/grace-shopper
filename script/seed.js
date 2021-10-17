@@ -41,17 +41,18 @@ async function seed() {
   const [order1, order2] = orders.map(order => order);
 
   //Creating order items
-  const orderItems = await Promise.all([
-    OrderItem.create({quantity: 2, productId: penne.id, orderId: order1.id}),
-    OrderItem.create({quantity: 3, productId: garganelli.id, orderId: order1.id}),
-    OrderItem.create({quantity: 4, productId: spaghetti.id, orderId: order2.id}),
-    OrderItem.create({quantity: 1, productId: mafaldine.id, orderId: order2.id}),
-  ]);
+  //Commented out for debugging purposes. Needs to include userId when reinstated
+  // const orderItems = await Promise.all([
+  //   OrderItem.create({quantity: 2, productId: penne.id, orderId: order1.id}),
+  //   OrderItem.create({quantity: 3, productId: garganelli.id, orderId: order1.id}),
+  //   OrderItem.create({quantity: 4, productId: spaghetti.id, orderId: order2.id}),
+  //   OrderItem.create({quantity: 1, productId: mafaldine.id, orderId: order2.id}),
+  // ]);
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${products.length} products`);
   console.log(`seeded ${orders.length} orders`);
-  console.log(`seeded ${orderItems.length} order items`);
+  //console.log(`seeded ${orderItems.length} order items`);
   console.log(`seeded successfully`);
   return {
     users: {
@@ -61,7 +62,7 @@ async function seed() {
       stanley
     },
     products,
-    orderItems,
+    //orderItems,
     orders
   };
 }
