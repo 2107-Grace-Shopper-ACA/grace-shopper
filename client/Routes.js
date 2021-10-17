@@ -25,7 +25,7 @@ class Routes extends Component {
   componentDidUpdate(prevProps) {
     if((!prevProps.auth.id && prevProps.auth.id) || (prevProps.auth.id !== this.props.auth.id)){
       this.props.loadOrders()
-      //this.props.loadOrderItems() Toggling this comment while debugging
+      this.props.loadOrderItems() //Toggling this comment while debugging
     }
   }
 

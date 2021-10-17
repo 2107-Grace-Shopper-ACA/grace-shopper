@@ -19,9 +19,9 @@ router.get('/', async (req, res, next) => {
     if (user) {
       const orderItems = await OrderItem.findAll({
         //We'll need to figure out how to restrict this to just be from orders from our user (two avenues we've discussed) -Alex
-        // where: {
-        //   orderId: user.id
-        // },
+        where: {
+          userId: user.id
+        },
         include: [
           {
             model: Product,

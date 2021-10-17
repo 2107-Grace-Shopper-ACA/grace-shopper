@@ -13,7 +13,7 @@ OrderItem.belongsTo(Product)
 OrderItem.belongsTo(Order)
 Order.hasMany(OrderItem)
 
-//OrderItem.belongsTo(User)
+OrderItem.belongsTo(User)
 //User.hasMany(OrderItem)
 
 //OrderItem.belongsTo(User, {through: Order})

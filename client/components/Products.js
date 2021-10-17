@@ -13,7 +13,6 @@ const Products = ({ products, orders, auth, orderItems, createOrder, createOrder
             <label htmlFor="product-quantity">Quantity:</label>
             <input type="number" id={`${product.id}-quantity`} defaultValue="1" min="1" max="9"/>
             <button type="button" onClick={(ev) => {
-              console.log(document.getElementById(`${product.id}-quantity`).value)
               let cartOrder = orders.find(order => (order.userId === auth.id) && order.isCart)
               
               //If there is an order that is the cart...
@@ -26,13 +25,13 @@ const Products = ({ products, orders, auth, orderItems, createOrder, createOrder
 
                   //If there ISN'T an orderItem in the cart that matches the orderItem we're trying to add...
                 } else {
-                  createOrderItem({ orderId: cartOrder.id, productId: product.id, quantity: +document.getElementById(`${product.id}-quantity`).value})
+                  createOrderItem({ orderId: cartOrder.id, productId: product.id, quantity: +document.getElementById(`${product.id}-quantity`).value, userId: auth.id})
                 }
 
                 //If there ISN'T an order that is the cart...
               } else {
                 cartOrder = createOrder({userId: auth.id})
-                createOrderItem({ orderId: cartOrder.id, productId: product.id, quantity: +document.getElementById(`${product.id}-quantity`).value})
+                createOrderItem({ orderId: cartOrder.id, productId: product.id, quantity: +document.getElementById(`${product.id}-quantity`).value, userId: auth.id})
               } 
               }}>Add to Cart</button>
           </div>
