@@ -12,7 +12,7 @@ export const Home = props => {
     <div>
       <h3>Welcome, {username}</h3>
       <Link to="/orders"><h4>Your Orders</h4></Link>
-      <h4>Settings</h4>
+      <Link to="/settings"><h4>Settings</h4></Link>
     </div>
 
   )
