@@ -1,29 +1,39 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {connect} from 'react-redux'
+import { loadUsers } from '../store'
 
 /**
- * COMPONENT
+ * CLASS COMPONENT
  */
-export const AdminUsers = ({users}) => {
-    console.log(users)
+class AdminUsers extends Component {
+    componentDidMount() {
+        this.props.loadUsers()
+    }
+    render() {
+        const { users } = this.props;
 
-  return (
-    <div>
-      <ul>
-          {
-            users.map( user => {
-                return (
-                    <li key={user.id}>
-                        Username: {user.username}
-                        Admin: {user.isAdmin ? 'yes' : 'no'}
-                    </li>
-                )
-            })
-          }
-      </ul>
-    </div>
-
-  )
+        if (!users){
+            return '...loading'
+        }
+        return (
+            <div>
+            <ul>
+                {
+                    users.map( user => {
+                        return (
+                            <li key={user.id}>
+                                Username: {user.username}
+                                <br/>
+                                Admin: {user.isAdmin ? 'yes' : 'no'}
+                            </li>
+                        )
+                    })
+                }
+            </ul>
+            </div>
+        
+        )
+    }
 }
 
 /**
@@ -35,4 +45,10 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState)(AdminUsers)
+const mapDispatch = dispatch => {
+    return {
+        loadUsers: () => dispatch(loadUsers())
+    }
+}
+
+export default connect(mapState, mapDispatch)(AdminUsers)

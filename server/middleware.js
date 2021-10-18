@@ -1,4 +1,5 @@
 const { models: { User }} = require('./db') 
+const TOKEN = 'token';
 
 const isLoggedIn = async (req, res, next) => {
     try {
