@@ -12,7 +12,7 @@ const AdminProducts = ({products}) => {
                 return (
                 <div key={product.id}>
                     <Link to={`/admin/products/${product.id}`}>
-                        {product.name}
+                        {product.name} ({product.inventory}) ({(+product.price).toFixed(2)})
                         <br/>
                         <img src={product.imageUrl || "https://i.gifer.com/MNu.gif"}></img>
                     </Link>

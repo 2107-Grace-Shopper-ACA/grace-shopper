@@ -32,13 +32,16 @@ Object.entries(db.models).forEach( entry => {
     }
   });
   router.put(`/${_path}/:id`, isLoggedIn, isAdmin, async(req, res, next) => {
-    //   console.log(req.body)
     try {
       const item = await model.findByPk(req.params.id);
       if (_path === 'products'){
           const { name, inventory, price, imageUrl, description } = req.body
           await item.update({...item, name, inventory: +inventory, price, imageUrl, description});
       }
+      if (_path === 'users'){
+        const { username, isAdmin } = req.body
+        await item.update({...item, username, isAdmin});
+    }
       res.send(item);
     } catch (ex) {
       next(ex);

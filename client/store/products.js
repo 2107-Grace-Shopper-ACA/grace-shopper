@@ -7,12 +7,14 @@ const TOKEN = 'token'
 const LOAD_PRODUCTS = "LOAD_PRODUCTS";
 const EDIT_PRODUCT = "EDIT_PRODUCT";
 const DELETE_PRODUCT = "DELETE_PRODUCT";
+const ADD_PRODUCT = "ADD_PRODUCT";
 /**
  * ACTION CREATORS
  */
 const _loadProducts = (products) => ({ type: LOAD_PRODUCTS, products });
 const _editProduct = (product) => ({ type: EDIT_PRODUCT, product });
 const _deleteProduct = (id) => ({ type: DELETE_PRODUCT, id});
+const _addProduct = (product) => ({ type: ADD_PRODUCT, product});
 /**
  * THUNK CREATORS
  */
@@ -23,7 +25,7 @@ export const loadProducts = () => {
   };
 };
 
-export const editProduct = (product) => {
+export const editProduct = (product, history) => {
   return async (dispatch) => {
     const token = window.localStorage.getItem(TOKEN);
     if (token){
@@ -33,6 +35,7 @@ export const editProduct = (product) => {
         }
       })).data;
       dispatch(_editProduct(edited));
+      history.push('/admin/products');
     }
   };
 };
@@ -41,10 +44,6 @@ export const deleteProduct = (id, history) => {
   return async (dispatch) => {
     const token = window.localStorage.getItem(TOKEN);
     if (token){
-      // await axios.delete(`/api/admin/products/${id}`), {
-      //   headers: {
-      //     authorization: token
-      //   }
       await axios({
         url: `/api/admin/products/${id}`,
         method: 'delete',
@@ -54,10 +53,23 @@ export const deleteProduct = (id, history) => {
         }
       })
       dispatch(_deleteProduct(id));
-      history.push('/admin/products')
+      history.push('/admin/products');
 
     };
     }
+};
+export const addProduct = (product) => {
+  return async (dispatch) => {
+    const token = window.localStorage.getItem(TOKEN);
+    if (token){
+      const edited = (await axios.post(`/api/admin/products/`, product, {
+        headers: {
+          authorization: token
+        }
+      })).data;
+      dispatch(_addProduct(edited));
+    }
+  };
 };
 
 /**

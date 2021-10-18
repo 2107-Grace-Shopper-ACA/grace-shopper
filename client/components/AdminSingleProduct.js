@@ -102,7 +102,7 @@ const mapState = (state, {match}) => {
 
 const mapDispatch = (dispatch, { history }) => {
     return {
-        editProduct: (product) => dispatch(editProduct(product)),
+        editProduct: (product) => dispatch(editProduct(product, history)),
         deleteProduct: (id) => dispatch(deleteProduct(id, history))
     }
 }

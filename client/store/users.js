@@ -5,11 +5,14 @@ const TOKEN = 'token'
  * ACTION TYPES
  */
  const LOAD_USERS = 'LOAD_USERS'
-
+ const DELETE_USER = 'DELETE_USER'
+ const EDIT_USER = 'EDIT_USER'
  /**
   * ACTION CREATORS
   */
  const _loadUsers = (users) => ({ type: LOAD_USERS, users });
+ const _deleteUser = (id) => ({ type: DELETE_USER, id });
+ const _editUser = (user) => ({ type: EDIT_USER, user });
 
  /**
   * THUNK CREATORS
@@ -32,6 +35,38 @@ const TOKEN = 'token'
    };
  };
  
+ export const editUser = (user, history) => {
+  return async (dispatch) => {
+    const token = window.localStorage.getItem(TOKEN);
+    if (token){
+      const edited = (await axios.put(`/api/admin/users/${user.id}`, user, {
+        headers: {
+          authorization: token
+        }
+      })).data;
+      dispatch(_editUser(edited));
+      history.push('/admin/users');
+    }
+  };
+};
+
+export const deleteUser = (id, history) => {
+  return async (dispatch) => {
+    const token = window.localStorage.getItem(TOKEN);
+    if (token){
+      await axios({
+        url: `/api/admin/users/${id}`,
+        method: 'delete',
+        data: id,
+        headers: {
+          authorization: token
+        }
+      })
+      dispatch(_deleteUser(id));
+      history.push('/admin/users');
+    };
+  }
+};
  /**
   * REDUCER
   */
@@ -40,6 +75,10 @@ const TOKEN = 'token'
      switch(action.type) {
          case LOAD_USERS:
              return action.users;
+         case EDIT_USER:
+              return state.map(user => user.id === +action.user.id ? action.user : user)
+         case DELETE_USER: 
+              return state.filter(user => user.id !== +action.id)
          default:
              return state
      }

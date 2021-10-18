@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
+import { Link } from 'react-router-dom'
+
 import { loadUsers } from '../store'
 
 /**
@@ -9,6 +11,7 @@ class AdminUsers extends Component {
     componentDidMount() {
         this.props.loadUsers()
     }
+    
     render() {
         const { users } = this.props;
 
@@ -16,22 +19,17 @@ class AdminUsers extends Component {
             return '...loading'
         }
         return (
-            <div>
-            <ul>
-                {
-                    users.map( user => {
-                        return (
-                            <li key={user.id}>
-                                Username: {user.username}
-                                <br/>
-                                Admin: {user.isAdmin ? 'yes' : 'no'}
-                            </li>
-                        )
-                    })
-                }
-            </ul>
-            </div>
-        
+            <>
+                {users.map((user) => {
+                    return (
+                    <div key={user.id}>
+                        <Link to={`/admin/users/${user.id}`}>
+                            {user.username}
+                        </Link>
+                    </div>
+                    );
+                })}
+            </>    
         )
     }
 }
