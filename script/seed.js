@@ -14,7 +14,7 @@ async function seed() {
   console.log("db synced!");
 
   // Creating Users
-    const andy = await User.create({ username: "Andy", password: "123" })
+    const andy = await User.create({ username: "Andy", password: "123", isAdmin: true })
     const corinne = await User.create({ username: "Corinne", password: "123" })
     const alex = await User.create({ username: "Alex", password: "123" })
     const stanley = await User.create({ username: "Stanley", password: "123" })
