@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
  * COMPONENT
  */
 export const AdminUsers = ({users}) => {
+    console.log(users)
 
   return (
     <div>

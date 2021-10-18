@@ -4,7 +4,7 @@ const { isLoggedIn, isAdmin } = require('../middleware');
 const { pluralize } = require('inflection');
 
 module.exports = router
-
+//we'll have to change the other apis to reflect what is relevant to be shown for admin/not admin
 Object.entries(db.models).forEach( entry => {
   const _path = pluralize(entry[0]);
   const model = entry[1];
