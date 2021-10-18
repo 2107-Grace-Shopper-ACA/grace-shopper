@@ -12,7 +12,7 @@ describe('Product model', () => {
   })
   it('seed populates four products', () => {
     expect(products).to.be.an('array');
-    expect(products.length).to.equal(4);
+    expect(products.length).to.equal(6);
   })
 
   
