@@ -8,9 +8,6 @@ import Cart from './components/Cart'
 import Products from './components/Products';
 import SingleProduct from './components/SingleProduct';
 import Admin from './components/Admin';
-import AdminUsers from './components/AdminUsers';
-import AdminProducts from './components/AdminProducts';
-import AdminSingleProduct from './components/AdminSingleProduct';
 
 /**
  * COMPONENT
@@ -34,20 +31,10 @@ class Routes extends Component {
             <Route path="/cart" component={Cart} />
             <Route path="/products/:productId" component={SingleProduct} />
             <Route path="/products" exact component={Products} />
-            
             {
-              !!auth.isAdmin && <Route path="/admin" exact component={Admin} />
+              !!auth.isAdmin && <Route path="/admin" component={Admin} />
             }
-            {
-              !!auth.isAdmin && <Route path="/admin/users" exact component={AdminUsers} />
-            }
-            {
-              !!auth.isAdmin && <Route path="/admin/products" exact component={AdminProducts} />
-            }
-            {
-              !!auth.isAdmin && <Route path="/admin/products/:id" exact component={AdminSingleProduct} />
-            }
-            <Redirect to="/home" /> //do we need this?
+            <Redirect to="/home" /> 
           </Switch>
         ) : (
           <Switch>

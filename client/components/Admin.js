@@ -1,6 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { Link } from 'react-router-dom';
+import { Link, Route, withRouter } from 'react-router-dom';
+import AdminNavbar from './AdminNavbar';
+import AdminUsers from './AdminUsers';
+import AdminProducts from './AdminProducts';
+import AdminSingleProduct from './AdminSingleProduct';
 
 /**
  * COMPONENT
@@ -11,10 +15,10 @@ export const Admin = props => {
   return (
     <div>
       <h3>Welcome, {username}</h3>
-      <h5>TODO: INSERT ADMIN STUFF</h5>
-      <Link to='/admin/users'>Users</Link>
-      <br />
-      <Link to='/admin/products'>Products</Link>
+      <Route path='/admin' component={AdminNavbar} />
+      <Route path='/admin/users' exact component={AdminUsers} />
+      <Route path='/admin/products' exact component={AdminProducts} />
+      <Route path='/admin/products/:id' component={AdminSingleProduct} />
     </div>
 
   )
@@ -29,4 +33,4 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState)(Admin)
+export default withRouter(connect(mapState)(Admin))
