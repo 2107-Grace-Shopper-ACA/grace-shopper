@@ -37,7 +37,7 @@ router.get('/', async (req, res, next) => {
     console.log(quantity)
     try {
       const _orderItem = await OrderItem.findByPk(req.params.orderItemId);
-      await _orderItem.update({quantity});
+      await _orderItem.update({..._orderItem, quantity});
       const orderItem = await OrderItem.findByPk(_orderItem.id, {
           include: [{
             model: Product,
