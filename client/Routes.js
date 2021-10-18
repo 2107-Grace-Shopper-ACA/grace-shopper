@@ -7,6 +7,9 @@ import {me, loadProducts, loadOrders, loadOrderItems} from './store'
 import Cart from './components/Cart'
 import Products from './components/Products';
 import SingleProduct from './components/SingleProduct';
+import Orders from './components/Orders';
+import SingleOrder from './components/SingleOrder';
+import Settings from './components/Settings';
 
 
 /**
@@ -31,6 +34,9 @@ class Routes extends Component {
             <Route path="/cart" component={Cart} />
             <Route path="/products/:productId" component={SingleProduct} />
             <Route path="/products" exact component={Products} />
+            <Route path="/orders" exact component={Orders} />
+            <Route path="/orders/:orderId" component={SingleOrder} />
+            <Route path="/settings" component={Settings} />
             <Redirect to="/home" />
           </Switch>
         ) : (
