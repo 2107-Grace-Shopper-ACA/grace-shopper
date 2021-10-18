@@ -9,6 +9,7 @@ import Products from './components/Products';
 import SingleProduct from './components/SingleProduct';
 import Admin from './components/Admin';
 import AdminUsers from './components/AdminUsers';
+import AdminProducts from './components/AdminProducts';
 
 /**
  * COMPONENT
@@ -38,6 +39,9 @@ class Routes extends Component {
             }
             {
               !!auth.isAdmin && <Route path="/admin/users" exact component={AdminUsers} />
+            }
+            {
+              !!auth.isAdmin && <Route path="/admin/products" exact component={AdminProducts} />
             }
             <Redirect to="/home" /> //do we need this?
           </Switch>

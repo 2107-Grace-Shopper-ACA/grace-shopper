@@ -15,6 +15,13 @@ Object.entries(db.models).forEach( entry => {
       next(ex);
     }
   });
+  router.get(`/${_path}/:id`, isLoggedIn, isAdmin, async(req, res, next) => {
+    try {
+      res.send(await model.findByPk(req.params.id));
+    } catch (ex) {
+      next(ex);
+    }
+  });
   router.delete(`/${_path}/:id`, isLoggedIn, isAdmin, async(req, res, next) => {
     try {
       const item = await model.findByPk(req.params.id);

@@ -13,6 +13,7 @@ export const Admin = props => {
       <h3>Welcome, {username}</h3>
       <h5>TODO: INSERT ADMIN STUFF</h5>
       <Link to='/admin/users'>Users</Link>
+      <Link to='/admin/products'>Products</Link>
     </div>
 
   )
