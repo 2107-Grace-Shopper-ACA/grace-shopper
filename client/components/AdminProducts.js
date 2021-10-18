@@ -1,19 +1,21 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
-import { loadProducts } from '../store'
+import { Link } from 'react-router-dom';
 
 /**
  * CLASS COMPONENT
  */
-const AdminProducts = ({ products, addProduct, deleteProduct }) => {
-    
+const AdminProducts = ({products}) => {
     return (
         <div id="product-gallery">
             {products.map((product) => {
                 return (
                 <div key={product.id}>
-                    <h4>{product.name}</h4>
-                    <img src={product.imageUrl || "https://i.gifer.com/MNu.gif"}></img>
+                    <Link to={`/admin/products/${product.id}`}>
+                        {product.name}
+                        <br/>
+                        <img src={product.imageUrl || "https://i.gifer.com/MNu.gif"}></img>
+                    </Link>
                 </div>
                 );
             })}
@@ -30,11 +32,4 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = dispatch => {
-    return {
-        deleteProduct: (id) => dispatch(deleteProduct(id)),
-        addProduct: (product) => dispatch(addProduct(product))
-    }
-}
-
-export default connect(mapState, mapDispatch)(AdminProducts)
+export default connect(mapState)(AdminProducts)

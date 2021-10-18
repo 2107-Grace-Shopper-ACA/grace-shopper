@@ -20,7 +20,7 @@ const TOKEN = 'token'
   
   export const loadUsers = () => {
     return async (dispatch) => {
-     const token = window.localStorage.getItem(TOKEN)
+     const token = window.localStorage.getItem(TOKEN);
      if (token){
        const { data: users } = await axios.get(`/api/admin/users`, {
          headers: {

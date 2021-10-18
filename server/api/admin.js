@@ -31,6 +31,18 @@ Object.entries(db.models).forEach( entry => {
       next(ex);
     }
   });
-  
+  router.put(`/${_path}/:id`, isLoggedIn, isAdmin, async(req, res, next) => {
+    //   console.log(req.body)
+    try {
+      const item = await model.findByPk(req.params.id);
+      if (_path === 'products'){
+          const { name, inventory, price, imageUrl, description } = req.body
+          await item.update({...item, name, inventory: +inventory, price, imageUrl, description});
+      }
+      res.send(item);
+    } catch (ex) {
+      next(ex);
+    }
+  });
 });
  
