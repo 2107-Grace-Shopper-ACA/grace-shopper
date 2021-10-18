@@ -8,6 +8,7 @@ import Cart from './components/Cart'
 import Products from './components/Products';
 import SingleProduct from './components/SingleProduct';
 import Admin from './components/Admin';
+import AdminUsers from './AdminUsers';
 
 /**
  * COMPONENT
@@ -34,6 +35,9 @@ class Routes extends Component {
             
             {
               !!auth.isAdmin && <Route path="/admin" component={Admin} />
+            }
+            {
+              !!auth.isAdmin && <Route path="/admin/users" component={AdminUsers} />
             }
             <Redirect to="/home" /> //do we need this?
           </Switch>
