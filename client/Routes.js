@@ -8,6 +8,11 @@ import Cart from './components/Cart'
 import Products from './components/Products';
 import SingleProduct from './components/SingleProduct';
 import Admin from './components/Admin';
+import Orders from './components/Orders';
+import SingleOrder from './components/SingleOrder';
+import Settings from './components/Settings';
+
+
 
 /**
  * COMPONENT
@@ -34,7 +39,10 @@ class Routes extends Component {
             {
               !!auth.isAdmin && <Route path="/admin" component={Admin} />
             }
-            <Redirect to="/home" /> 
+            <Route path="/orders" exact component={Orders} />
+            <Route path="/orders/:orderId" component={SingleOrder} />
+            <Route path="/settings" component={Settings} />
+            <Redirect to="/home" />
           </Switch>
         ) : (
           <Switch>
