@@ -6,6 +6,8 @@ import AdminUsers from './AdminUsers';
 import AdminSingleUser from './AdminSingleUser';
 import AdminProducts from './AdminProducts';
 import AdminSingleProduct from './AdminSingleProduct';
+import AdminOrders from './AdminOrders';
+import AdminSingleOrder from './AdminSingleOrder';
 
 /**
  * COMPONENT
@@ -21,6 +23,8 @@ export const Admin = props => {
       <Route path='/admin/users/:id' exact component={AdminSingleUser} />
       <Route path='/admin/products' exact component={AdminProducts} />
       <Route path='/admin/products/:id' component={AdminSingleProduct} />
+      <Route path='/admin/orders' exact component={AdminOrders} />
+      <Route path='/admin/orders/:id' component={AdminSingleOrder} />
     </div>
 
   )

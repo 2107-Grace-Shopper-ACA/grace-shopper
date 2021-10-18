@@ -7,6 +7,7 @@ import axios from 'axios';
  */
 
 //getting warning about changing controlled input
+//TODO: handle errors
 class AdminSingleProduct extends Component {
     constructor(props){
         super(props);
