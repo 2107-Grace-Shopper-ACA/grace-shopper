@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import { addProduct, deleteProduct, editProduct } from '../store'
+import { addProduct, editProduct } from '../store'
 import axios from 'axios';
 /**
  * CLASS COMPONENT
@@ -36,9 +36,7 @@ class AdminSingleOrder extends Component {
             this.fillForm();
         }
     }
-    handleClick(ev) {
-        this.props.deleteProduct(ev.target.value);
-    }
+    
 
     onChange(ev) {
         const change = {};
@@ -105,7 +103,7 @@ const mapState = (state, {match}) => {
 const mapDispatch = (dispatch, { history }) => {
     return {
         editProduct: (product) => dispatch(editProduct(product, history)),
-        deleteProduct: (id) => dispatch(deleteProduct(id, history))
+        
     }
 }
 

@@ -31,6 +31,23 @@ Object.entries(db.models).forEach( entry => {
       next(ex);
     }
   });
+  router.post(`/${_path}`, isLoggedIn, isAdmin, async(req, res, next) => {
+    try {
+      let item;
+      if (_path === 'products'){
+          const { name, inventory, price, imageUrl, description, isActive, onSale } = req.body
+          item = (await model.create({name, inventory: +inventory, price, imageUrl, description, isActive, onSale}));
+      }
+      // if (_path === 'users'){
+      //   const { username, isAdmin } = req.body
+      //   await item.update({...item, username, isAdmin});
+      // }
+      res.send(item);
+    } catch (ex) {
+      next(ex);
+    }
+  });
+
   router.put(`/${_path}/:id`, isLoggedIn, isAdmin, async(req, res, next) => {
     try {
       const item = await model.findByPk(req.params.id);
