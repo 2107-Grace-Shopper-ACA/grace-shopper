@@ -55,47 +55,6 @@ async function seed() {
     OrderItem.create({quantity: 10, productId: penne.id, orderId: order3.id}),
   ]);
 
-  // const andysCart = await andy.findCartOrder();
-  // const andysOrders = await andy.findPastOrders();
-  // const corinnesCart = await corinne.findCartOrder();
-  // const corinnesOrders = await corinne.findPastOrders();
-  // // console.log(andysCart);
-  // // console.log(andysOrders);
-  // // console.log(corinnesCart);
-  // // console.log(corinnesOrders);
-  // const order2details = await order2.findDetails();
-  // console.log(order2details);
-  // // should be {
-  //   user: 'Andy'
-  //   total: 120,
-  //   [
-  //     {
-  //       productName: 'Macaroni',
-  //       quantity: 4,
-  //       price: 8,
-  //       newInventory: 96,
-  //       subtotal: 32
-  //     },
-  //     {
-  //       productName: 'Mafaldine',
-  //       quantity: 5,
-  //       price: 8,
-  //       newInventory: 95,
-  //       subtotal: 40
-  //     },
-  //     {
-  //       productName: 'Rigatoni',
-  //       quantity: 6,
-  //       price: 8,
-  //       newInventory: 94,
-  //       subtotal: 48
-  //     }
-  //   ]
-  // }
-
-  // const macaroniSold = await macaroni.totalSold();
-  // console.log(macaroniSold); //should be 21
-
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${products.length} products`);
   console.log(`seeded ${orders.length} orders`);

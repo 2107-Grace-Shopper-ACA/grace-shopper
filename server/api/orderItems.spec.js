@@ -19,7 +19,7 @@ describe('OrderItem routes', () => {
         .expect(200)
 
       expect(res.body).to.be.an('array');
-      expect(res.body.length).to.equal(4);
+      expect(res.body.length).to.equal(8);
       expect(res.body[0]).to.have.property('orderId');
       expect(res.body[0]).to.have.property('productId');
     });
