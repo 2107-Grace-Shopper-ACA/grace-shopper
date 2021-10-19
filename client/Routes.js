@@ -16,9 +16,6 @@ class Routes extends Component {
 
   componentDidMount() {
     this.props.loadInitialData()
-    this.props.loadProducts()
-    this.props.loadOrders()
-    this.props.loadOrderItems()
   }
 
   //TODO Build out to load orders each time there is a change in user - Alex
@@ -73,7 +70,10 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     loadInitialData() {
-      dispatch(me())
+      dispatch(me());
+      dispatch(loadProducts())
+      dispatch(loadOrders())
+      dispatch(loadOrderItems())
     },
     loadProducts(){
       dispatch(loadProducts())
