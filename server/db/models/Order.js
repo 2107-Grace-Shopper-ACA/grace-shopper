@@ -14,6 +14,8 @@ const Order = db.define('order', {
         type: BOOLEAN,
         defaultValue: true
     },
+//TODO will need to change this date to current date when they checkout 
+//TODO open orders will have date it was created ... if time we can change it to be the latest date that an orderItem was updated
     date: {
         type: DATE,
         defaultValue: NOW
