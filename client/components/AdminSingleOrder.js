@@ -26,21 +26,22 @@ const AdminSingleOrder = ({order, orderItems }) => {
         accum += +orderItem.product.price * orderItem.quantity;
         return accum;
     }, 0);
-    console.log(order)
-
-
     
         return (
             <div>
                 <TableContainer component={Paper} style={{width: '100%', overflowX: 'auto'}}>
-                    <Table border={2} sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                    <Table border={0} sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                         <TableHead>
+                        <TableRow >
+                            <TableCell align="center" colSpan={4}>
+                                Order ID {order.id}
+                            </TableCell>
+                        </TableRow>
                         <TableRow  style={{backgroundColor:'cornsilk'}}>
                         <TableCell></TableCell>
                             <TableCell>Date Ordered</TableCell>
                             <TableCell>Status</TableCell>
                             <TableCell>Purchaser</TableCell>
-                            <TableCell>Order ID</TableCell>
                             <TableCell >Product Name</TableCell>
                             <TableCell >Quantity</TableCell>
                             <TableCell >Price</TableCell>
@@ -50,9 +51,9 @@ const AdminSingleOrder = ({order, orderItems }) => {
                         <TableBody>
                             {orderItems.map((orderItem, idx) => (
                                 <TableRow
-                                border={3}
+                                border={1}
                                 key={orderItem.id}
-                                sx={{ '&:last-child td, &:last-child th': { border: 1 } }}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                         <TableCell component="th" scope="row">
                                             {idx + 1}
@@ -60,15 +61,18 @@ const AdminSingleOrder = ({order, orderItems }) => {
                                         <TableCell >{order.date}</TableCell>
                                         <TableCell >{order.isCart ? 'Cart' : 'Closed'}</TableCell>
                                         <TableCell >
-                                            {order.user.username}
+                                            <Link to={`/admin/orders/users/${order.user.id}`}>
+                                                {order.user.username}
+                                            </Link>
                                         </TableCell>
                                         <TableCell >
-                                            {order.id}
+                                            <Link to={`/admin/orders/products/${orderItem.product.id}`}>
+                                                {orderItem.product.name}
+                                            </Link>
                                         </TableCell>
-                                        <TableCell >{orderItem.product.name}</TableCell>
                                         <TableCell >{orderItem.quantity}</TableCell>
-                                        <TableCell >{+orderItem.product.price}</TableCell>
-                                        <TableCell >{orderItem.quantity * +orderItem.product.price}</TableCell>
+                                        <TableCell >${+orderItem.product.price}</TableCell>
+                                        <TableCell >${orderItem.quantity * +orderItem.product.price}</TableCell>
                                 </TableRow>
                         ))}
                         </TableBody>

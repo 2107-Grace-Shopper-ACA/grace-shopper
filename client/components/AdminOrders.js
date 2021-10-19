@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
 import { Link, useHistory } from 'react-router-dom';
 import AdminProductForm from './AdminProductForm';
@@ -12,19 +12,44 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import orderItems from '../store/orderItems';
+import {loadUsers} from '../store';
 
 /**
  * COMPONENT
  */
-const AdminOrders = ({orders, orderItems, history}) => {
+const AdminOrders = ({orders, orderItems, match, products, history}) => {
+    useEffect(() => {
+        loadUsers();
+    }, []);
+    
+    let displayOrders, product;
+    if (match.path.includes('users')){
+        displayOrders = orders.filter(order => order.userId === +match.params.id);
+    } else if (match.path.includes('products')){
+        const items = orderItems.filter(orderItem => orderItem.productId === match.params.id);
+        displayOrders = orders.filter(order => {
+            for (const item of items){
+                if (item.orderId === order.id) return order;
+            }
+        });
+        product = products.find(product => product.id === match.params.id);       
+    } else {
+        displayOrders = orders;
+    }
 
     return (
         <div>
             <TableContainer component={Paper} style={{width: '100%', overflowX: 'auto'}}>
-                <Table border={2} sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                <Table border={0} sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                     <TableHead>
-                    <TableRow  style={{backgroundColor:'cornsilk'}}>
+                    <TableRow >
+                    <TableCell align="center" colSpan={3}>
+                        {
+                            match.path.includes('users') ? `${displayOrders[0].user.username}'s Orders` : match.path.includes('products') ? `Orders With ${product.name}` : 'All Orders'
+                        }
+                    </TableCell>
+                    </TableRow>
+                    <TableRow style={{backgroundColor:'cornsilk'}}>
                     <TableCell></TableCell>
                         <TableCell>Date Ordered</TableCell>
                         <TableCell>Status</TableCell>
@@ -34,9 +59,9 @@ const AdminOrders = ({orders, orderItems, history}) => {
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                        {orders.map((order, idx) => (
+                        {displayOrders.map((order, idx) => (
                             <TableRow
-                            border={3}
+                            border={1}
                             key={order.id}
                             sx={{ '&:last-child td, &:last-child th': { border: 1 } }}
                             >
@@ -46,9 +71,8 @@ const AdminOrders = ({orders, orderItems, history}) => {
                                     <TableCell >{order.date}</TableCell>
                                     <TableCell >{order.isCart ? 'Cart' : 'Closed'}</TableCell>
                                     <TableCell >
-        //TODO path to admin/orders/users/userId
-                                        <Link to={`/admin/orders/${order.id}`}>
-                                        {order.user.username}
+                                        <Link to={`/admin/orders/users/${order.user.id}`}>
+                                            {order.user.username}
                                         </Link>
                                     </TableCell>
                                     <TableCell >
@@ -73,11 +97,13 @@ const AdminOrders = ({orders, orderItems, history}) => {
 /**
  * CONTAINER
  */
-const mapState = (state, {history}) => {
+const mapState = (state, {history, match}) => {
   return {
     orders: state.orders,
     orderItems: state.orderItems,
     history: history,
+    match: match,
+    products: state.products
   }
 }
 
