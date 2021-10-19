@@ -36,6 +36,33 @@ User.prototype.generateToken = function() {
   return jwt.sign({id: this.id}, process.env.JWT)
 }
 
+User.prototype.findPastOrders = async function() {
+  const orders = await db.models.order.findAll({
+    where: {
+      userId: this.id,
+      isCart: false
+    },
+    include: {
+      model: db.models.orderItem,
+      include: db.models.product
+    }
+  });
+  return orders;
+}
+
+User.prototype.findCartOrder = async function() {
+  const order = await db.models.order.findOne({
+    where: {
+      userId: this.id,
+      isCart: true
+    },
+    include: {
+      model: db.models.orderItem,
+      include: db.models.product
+    }
+  });
+  return order;
+}
 /**
  * classMethods
  */

@@ -33,14 +33,15 @@ async function seed() {
     Product.create({ name: "Macaroni", inventory: 100, price: 8, imageUrl: 'https://images.eatthismuch.com/site_media/img/4857_laurabedo_da2c9648-14a9-47fd-bff3-3c1d66ad3fa7.png', description: "Macaroni is shaped like narrow tubes. Made with durum wheat, macaroni is commonly cut in short lengths; curved macaroni may be referred to as elbow macaroni."}),
     Product.create({ name: "Rigatoni", inventory: 100, price: 8, imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/84/Rigatoni.jpg', description: "Rigatoni are a form of tube-shaped pasta of varying lengths and diameters originating in Italy. They are larger than penne and ziti, and sometimes slightly curved, though not as curved as elbow macaroni."})
   ]);
-  const [penne, mafaldine, spaghetti, garganelli, macaroni] = products.map(product => product);
+  const [penne, mafaldine, spaghetti, garganelli, macaroni, rigatoni] = products.map(product => product);
 
   //Creating orders
   const orders = await Promise.all([
     Order.create({isCart: true, isOpen: true, userId: andy.id }),
+    Order.create({isCart: false, isOpen: false, userId: andy.id }),
     Order.create({isCart: false, isOpen: false, userId: andy.id })
     ])
-  const [order1, order2] = orders.map(order => order);
+  const [order1, order2, order3] = orders.map(order => order);
 
   //Creating order items
   const orderItems = await Promise.all([
@@ -48,7 +49,18 @@ async function seed() {
     OrderItem.create({quantity: 3, productId: garganelli.id, orderId: order1.id}),
     OrderItem.create({quantity: 4, productId: spaghetti.id, orderId: order2.id}),
     OrderItem.create({quantity: 1, productId: mafaldine.id, orderId: order2.id}),
+    OrderItem.create({quantity: 1, productId: rigatoni.id, orderId: order3.id}),
+    OrderItem.create({quantity: 1, productId: macaroni.id, orderId: order3.id}),
   ]);
+
+  const andysCart = await andy.findCartOrder();
+  const andysOrders = await andy.findPastOrders();
+  const corinnesCart = await corinne.findCartOrder();
+  const corinnesOrders = await corinne.findPastOrders();
+  console.log(andysCart);
+  console.log(andysOrders);
+  console.log(corinnesCart);
+  console.log(corinnesOrders);
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${products.length} products`);
