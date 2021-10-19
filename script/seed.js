@@ -37,11 +37,12 @@ async function seed() {
 
   //Creating orders
   const orders = await Promise.all([
-    Order.create({isCart: true, isOpen: true, userId: andy.id }),
-    Order.create({isCart: false, isOpen: false, userId: andy.id }),
-    Order.create({isCart: false, isOpen: false, userId: andy.id })
+    Order.create({isCart: true, userId: andy.id }),
+    Order.create({isCart: false, userId: andy.id }),
+    Order.create({isCart: false, userId: corinne.id }),
+    Order.create({isCart: true, userId: alex.id })
     ])
-  const [order1, order2, order3] = orders.map(order => order);
+  const [order1, order2, order3, order4] = orders.map(order => order);
 
   //Creating order items
   const orderItems = await Promise.all([
@@ -52,7 +53,9 @@ async function seed() {
     OrderItem.create({quantity: 5, productId: mafaldine.id, orderId: order2.id}),
     OrderItem.create({quantity: 6, productId: rigatoni.id, orderId: order2.id}),
     OrderItem.create({quantity: 7, productId: macaroni.id, orderId: order3.id}),
-    OrderItem.create({quantity: 10, productId: penne.id, orderId: order3.id}),
+    OrderItem.create({quantity: 9, productId: penne.id, orderId: order3.id}),
+    OrderItem.create({quantity: 4, productId: macaroni.id, orderId: order4.id}),
+    OrderItem.create({quantity: 2, productId: spaghetti.id, orderId: order4.id}),
   ]);
 
   console.log(`seeded ${users.length} users`);
@@ -79,7 +82,8 @@ async function seed() {
     orders: {
       order1,
       order2,
-      order3
+      order3,
+      order4
     }
   };
 }

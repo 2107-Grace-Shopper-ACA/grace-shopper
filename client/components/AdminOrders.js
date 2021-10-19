@@ -1,10 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
-import { Link, useHistory } from 'react-router-dom';
-import AdminProductForm from './AdminProductForm';
-import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
-import Dialog from '@material-ui/core/Dialog';
+import { Link } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -17,13 +13,14 @@ import {loadUsers} from '../store';
 /**
  * COMPONENT
  */
-const AdminOrders = ({orders, orderItems, match, products, history}) => {
+const AdminOrders = ({orders, orderItems, match, products}) => {
     useEffect(() => {
         loadUsers();
     }, []);
-    const tableCols = 6;
+    const tableCols = 7;
 
     let displayOrders, product;
+
     if (match.path.includes('users')){
         displayOrders = orders.filter(order => order.userId === +match.params.id);
     } else if (match.path.includes('products')){
@@ -37,6 +34,23 @@ const AdminOrders = ({orders, orderItems, match, products, history}) => {
     } else {
         displayOrders = orders;
     }
+
+    displayOrders = displayOrders.map(order => {
+        const totalQuantity = order.orderItems.reduce((accum, item) => {
+            accum += item.quantity;
+            return accum;
+        }, 0);
+        return (
+            {
+                ...order,
+                totalQuantity
+            }
+        )
+    })
+
+    if (!displayOrders.length || (match.path.includes('products') && !product)) {
+        return '...loading';
+    }   
 
     return (
         <div>
@@ -52,11 +66,24 @@ const AdminOrders = ({orders, orderItems, match, products, history}) => {
                     </TableRow>
                     <TableRow style={{backgroundColor:'cornsilk'}}>
                     <TableCell></TableCell>
-                        <TableCell>Date Ordered</TableCell>
-                        <TableCell>Status</TableCell>
-                        <TableCell>Purchaser</TableCell>
-                        <TableCell>Order ID</TableCell>
-                        <TableCell >Total</TableCell>
+                        <TableCell>
+                            Date Ordered
+                        </TableCell>
+                        <TableCell>
+                            Order ID
+                        </TableCell>
+                        <TableCell>
+                            Status
+                        </TableCell>
+                        <TableCell>
+                            Purchaser
+                        </TableCell>
+                        <TableCell>
+                            Total Items
+                        </TableCell>
+                        <TableCell >
+                            Total
+                        </TableCell>
                     </TableRow>
                     </TableHead>
                     <TableBody>
@@ -69,25 +96,31 @@ const AdminOrders = ({orders, orderItems, match, products, history}) => {
                                     <TableCell component="th" scope="row">
                                         {idx + 1}
                                     </TableCell>
-                                    <TableCell >{order.date}</TableCell>
-                                    <TableCell >{order.isCart ? 'Cart' : 'Closed'}</TableCell>
                                     <TableCell >
-                                        <Link to={`/admin/orders/users/${order.user.id}`}>
-                                            {order.user.username}
-                                        </Link>
+                                        {order.date}
                                     </TableCell>
                                     <TableCell >
                                         <Link to={`/admin/orders/${order.id}`}>
                                         {order.id}
                                         </Link>
                                     </TableCell>
-                                    <TableCell >${orderItems.filter(orderItem => 
-                                    orderItem.orderId === order.id)
-                                    .reduce((accum, orderItem) => {
-                                        accum += +orderItem.product.price * orderItem.quantity; return accum;}, 0)
+                                    <TableCell >
+                                        {order.isCart ? 'Cart' : 'Closed'}
+                                    </TableCell>
+                                    <TableCell >
+                                        <Link to={`/admin/orders/users/${order.user.id}`}>
+                                            {order.user.username}
+                                        </Link>
+                                    </TableCell>
+                                    <TableCell>
+                                        {order.totalQuantity}
+                                    </TableCell>
+                                    <TableCell >
+                                        ${orderItems.filter(orderItem => orderItem.orderId === order.id).reduce((accum, orderItem) => 
+                                            {accum += +orderItem.product.price * orderItem.quantity; return accum;}, 0)
                                     }</TableCell>
                             </TableRow>
-                    ))}
+                        ))}
                     </TableBody>
                 </Table>
             </TableContainer>

@@ -1,10 +1,6 @@
-import React, {useState, Component, useEffect} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
-import { Link, useHistory } from 'react-router-dom';
-import AdminProductForm from './AdminProductForm';
-import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
-import Dialog from '@material-ui/core/Dialog';
+import { Link } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -21,13 +17,20 @@ const AdminSingleOrder = ({order, orderItems }) => {
     // useEffect(()=> {
     //     loadAdminOrders();
     // }, []);
-    const tableCols = 6;
+    const tableCols = 7;
 
     const total = orderItems.reduce((accum, orderItem) => {
         accum += +orderItem.product.price * orderItem.quantity;
         return accum;
     }, 0);
+
+    const totalItems = orderItems.reduce((accum, orderItem) => {
+        accum += orderItem.quantity;
+        return accum;
+    }, 0);
     
+    if (!order) return '...loading'
+
         return (
             <div>
                 <TableContainer component={Paper} style={{width: '100%', overflowX: 'auto'}}>
@@ -53,6 +56,9 @@ const AdminSingleOrder = ({order, orderItems }) => {
                                     Order Status
                                 </TableCell>
                                 <TableCell>
+                                    Items 
+                                </TableCell>
+                                <TableCell>
                                     Total
                                 </TableCell>
                             </TableRow>
@@ -73,6 +79,9 @@ const AdminSingleOrder = ({order, orderItems }) => {
                                     {order.isCart ? 'Cart' : 'Closed'}
                                 </TableCell>
                                 <TableCell>
+                                    {totalItems}
+                                </TableCell>
+                                <TableCell>
                                     ${total}
                                 </TableCell>
                             </TableRow>
@@ -82,6 +91,7 @@ const AdminSingleOrder = ({order, orderItems }) => {
                                 <TableCell >Quantity</TableCell>
                                 <TableCell >Price</TableCell>
                                 <TableCell >Sub Total</TableCell>
+                                <TableCell ></TableCell>
                                 <TableCell ></TableCell>
                             </TableRow>
                         </TableHead>
@@ -100,11 +110,17 @@ const AdminSingleOrder = ({order, orderItems }) => {
                                                 {orderItem.product.name}
                                             </Link>
                                         </TableCell>
-                                        <TableCell >{orderItem.quantity}</TableCell>
-                                        <TableCell >${+orderItem.product.price}</TableCell>
-                                        <TableCell >${orderItem.quantity * +orderItem.product.price}</TableCell>
                                         <TableCell >
+                                            {orderItem.quantity}
                                         </TableCell>
+                                        <TableCell >
+                                            ${+orderItem.product.price}
+                                        </TableCell>
+                                        <TableCell >
+                                            ${orderItem.quantity * +orderItem.product.price}
+                                        </TableCell>
+                                        <TableCell ></TableCell>
+                                        <TableCell ></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
