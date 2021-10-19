@@ -1,110 +1,101 @@
-import React, { Component } from 'react'
+import React, {useState, Component, useEffect} from 'react'
 import {connect} from 'react-redux'
-import { addProduct, editProduct } from '../store'
+import { Link, useHistory } from 'react-router-dom';
+import AdminProductForm from './AdminProductForm';
+import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
+import Dialog from '@material-ui/core/Dialog';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
+import { loadAdminOrders } from '../store';
 /**
- * CLASS COMPONENT
+ * COMPONENT
  */
-
-//getting warning about changing controlled input
-//TODO: handle errors
-class AdminSingleOrder extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            name: '',
-            inventory: '',
-            price: '',
-            description: '',
-            imageUrl: '',
-            error: ''
-        }
-        this.onChange = this.onChange.bind(this);
-        this.handleClick = this.handleClick.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-        this.fillForm = this.fillForm.bind(this);
-    }
-    fillForm(){
-        const { name, inventory, price, description, imageUrl } = this.props.product
-        this.setState({name, inventory, price, description, imageUrl});
-    }
-    componentDidMount(){
-        this.fillForm();
-    }
-    componentDidUpdate(prevProps){
-        if(prevProps.product !== this.props.product){
-            this.fillForm();
-        }
-    }
+const AdminSingleOrder = ({order, orderItems }) => {
+    useEffect(()=> {
+        loadAdminOrders();
+    }, []);
     
+    const total = orderItems.reduce((accum, orderItem) => {
+        accum += +orderItem.product.price * orderItem.quantity;
+        return accum;
+    }, 0);
+    console.log(order)
 
-    onChange(ev) {
-        const change = {};
-        change[ev.target.name] = ev.target.value;
-        this.setState(change);
-    }
-    async onSubmit(ev){
-        ev.preventDefault();
-        try{
-            await this.props.editProduct({...this.props.product, ...this.state});
-        } 
-        catch (ex){
-            console.log(ex);
-            this.setState({error: ex.response.data.error});       
-        }
-    }
-    render () {
-        const { name, inventory, price, imageUrl, description } = this.state;
-        const { handleClick, onChange, onSubmit } = this;
-        const { product } = this.props;
 
+    
         return (
             <div>
-                    TODO: ADD SINGLE ORDER
-                <form onSubmit={onSubmit}>
-                    {/* <label>
-                        Order:
-                    </label>
-                        <input name='name' value={name} onChange={onChange} />
-                    <label>
-                        Price:
-                    </label>
-                        <input name='price' value={price} onChange={onChange} />
-                    <label>
-                        Inventory:
-                    </label>
-                        <input name='inventory' value={inventory} onChange={onChange} />
-                    <label>
-                        Description:
-                    </label>
-                        <textarea rows='10' cols='50' name='description' value={description} onChange={onChange} />
-                    <label>
-                        Image URL:
-                    </label>
-                        <textarea rows='10' cols='50' name='imageUrl' value={imageUrl} onChange={onChange} /> */}
-                    <br/>
-                    <button>Edit</button>
-                </form>
-                <button value={order.id} onClick={handleClick}>Delete Order</button>
+                <TableContainer component={Paper} style={{width: '100%', overflowX: 'auto'}}>
+                    <Table border={2} sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                        <TableHead>
+                        <TableRow  style={{backgroundColor:'cornsilk'}}>
+                        <TableCell></TableCell>
+                            <TableCell>Date Ordered</TableCell>
+                            <TableCell>Status</TableCell>
+                            <TableCell>Purchaser</TableCell>
+                            <TableCell>Order ID</TableCell>
+                            <TableCell >Product Name</TableCell>
+                            <TableCell >Quantity</TableCell>
+                            <TableCell >Price</TableCell>
+                            <TableCell >Total</TableCell>
+                        </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {orderItems.map((orderItem, idx) => (
+                                <TableRow
+                                border={3}
+                                key={orderItem.id}
+                                sx={{ '&:last-child td, &:last-child th': { border: 1 } }}
+                                >
+                                        <TableCell component="th" scope="row">
+                                            {idx + 1}
+                                        </TableCell>
+                                        <TableCell >{order.date}</TableCell>
+                                        <TableCell >{order.isCart ? 'Cart' : 'Closed'}</TableCell>
+                                        <TableCell >
+                                            {order.user.username}
+                                        </TableCell>
+                                        <TableCell >
+                                            {order.id}
+                                        </TableCell>
+                                        <TableCell >{orderItem.product.name}</TableCell>
+                                        <TableCell >{orderItem.quantity}</TableCell>
+                                        <TableCell >{+orderItem.product.price}</TableCell>
+                                        <TableCell >{orderItem.quantity * +orderItem.product.price}</TableCell>
+                                </TableRow>
+                        ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </div>
         )
-    }
+
 }
+
+
 
 /**
  * CONTAINER
  */
-const mapState = (state, {match}) => {
+const mapState = (state, {match, history}) => {
   return {
-    order: state.orders.find(order => order.id === match.params.id) || {}
+    match: match,
+    order: state.orders.find(order => order.id === match.params.id),
+    orderItems: state.orderItems.filter(orderItem => orderItem.orderId === match.params.id),
+    // products: state.products,
+    // users: state.users
   }
 }
-
-const mapDispatch = (dispatch, { history }) => {
+const mapDispatch = (dispatch) => {
     return {
-        editProduct: (product) => dispatch(editProduct(product, history)),
-        
+        loadAdminOrders: () => dispatch(loadAdminOrders()),
     }
 }
-
-export default connect(mapState, mapDispatch)(AdminSingleOrder)
+export default connect(mapState)(AdminSingleOrder)

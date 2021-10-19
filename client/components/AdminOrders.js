@@ -12,41 +12,24 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import orderItems from '../store/orderItems';
 
 /**
  * COMPONENT
  */
-const AdminOrders = ({orders, history}) => {
-
-//dialog box
-    const [open, setOpen] = useState(false);
-    const handleOpen = (ev) => {
-        ev.persist()
-        setOpen(true);
-    }
-    const handleClose = (ev) => {
-        ev.preventDefault();
-        setOpen(false);
-    }
-//
+const AdminOrders = ({orders, orderItems, history}) => {
 
     return (
         <div>
-            <Dialog onClose={handleClose} open={open}>
-                <AdminProductForm handleClose={handleClose} history={history}/>
-            </Dialog>
             <TableContainer component={Paper} style={{width: '100%', overflowX: 'auto'}}>
                 <Table border={2} sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                     <TableHead>
                     <TableRow  style={{backgroundColor:'cornsilk'}}>
-                        <TableCell width='5%'><Button onClick={handleOpen} size='small' color='primary' variant='contained'>Add Product</Button></TableCell>
+                    <TableCell></TableCell>
                         <TableCell>Date Ordered</TableCell>
                         <TableCell>Status</TableCell>
                         <TableCell>Purchaser</TableCell>
                         <TableCell>Order ID</TableCell>
-                        <TableCell >Product Name</TableCell>
-                        <TableCell >Quantity</TableCell>
-                        <TableCell >Price</TableCell>
                         <TableCell >Total</TableCell>
                     </TableRow>
                     </TableHead>
@@ -60,12 +43,12 @@ const AdminOrders = ({orders, history}) => {
                                     <TableCell component="th" scope="row">
                                         {idx + 1}
                                     </TableCell>
-                                    <TableCell >TO DO</TableCell>
-                                    <TableCell >{order.isCart}</TableCell>
+                                    <TableCell >{order.date}</TableCell>
+                                    <TableCell >{order.isCart ? 'Cart' : 'Closed'}</TableCell>
                                     <TableCell >
         //TODO path to admin/orders/users/userId
                                         <Link to={`/admin/orders/${order.id}`}>
-                                        PURCHASER
+                                        {order.user.username}
                                         </Link>
                                     </TableCell>
                                     <TableCell >
@@ -73,10 +56,11 @@ const AdminOrders = ({orders, history}) => {
                                         {order.id}
                                         </Link>
                                     </TableCell>
-                                    <TableCell >PRODUCT NAME</TableCell>
-                                    <TableCell >quantity</TableCell>
-                                    <TableCell >price</TableCell>
-                                    <TableCell >total</TableCell>
+                                    <TableCell >${orderItems.filter(orderItem => 
+                                    orderItem.orderId === order.id)
+                                    .reduce((accum, orderItem) => {
+                                        accum += +orderItem.product.price * orderItem.quantity; return accum;}, 0)
+                                    }</TableCell>
                             </TableRow>
                     ))}
                     </TableBody>

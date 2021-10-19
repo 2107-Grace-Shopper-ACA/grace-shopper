@@ -45,24 +45,56 @@ async function seed() {
 
   //Creating order items
   const orderItems = await Promise.all([
-    OrderItem.create({quantity: 2, productId: penne.id, orderId: order1.id}),
-    OrderItem.create({quantity: 3, productId: garganelli.id, orderId: order1.id}),
-    OrderItem.create({quantity: 4, productId: spaghetti.id, orderId: order2.id}),
-    OrderItem.create({quantity: 1, productId: mafaldine.id, orderId: order2.id}),
-    OrderItem.create({quantity: 1, productId: rigatoni.id, orderId: order3.id}),
-    OrderItem.create({quantity: 1, productId: macaroni.id, orderId: order3.id}),
+    OrderItem.create({quantity: 2, productId: macaroni.id, orderId: order1.id}),
+    OrderItem.create({quantity: 3, productId: penne.id, orderId: order1.id}),
+    OrderItem.create({quantity: 3, productId: spaghetti.id, orderId: order1.id}),
+    OrderItem.create({quantity: 4, productId: macaroni.id, orderId: order2.id}),
+    OrderItem.create({quantity: 5, productId: mafaldine.id, orderId: order2.id}),
+    OrderItem.create({quantity: 6, productId: rigatoni.id, orderId: order2.id}),
+    OrderItem.create({quantity: 7, productId: macaroni.id, orderId: order3.id}),
+    OrderItem.create({quantity: 10, productId: penne.id, orderId: order3.id}),
   ]);
 
   const andysCart = await andy.findCartOrder();
   const andysOrders = await andy.findPastOrders();
   const corinnesCart = await corinne.findCartOrder();
   const corinnesOrders = await corinne.findPastOrders();
-  console.log(andysCart);
-  console.log(andysOrders);
-  console.log(corinnesCart);
-  console.log(corinnesOrders);
+  // console.log(andysCart);
+  // console.log(andysOrders);
+  // console.log(corinnesCart);
+  // console.log(corinnesOrders);
   const order2details = await order2.findDetails();
   console.log(order2details);
+  // should be {
+  //   user: 'Andy'
+  //   total: 120,
+  //   [
+  //     {
+  //       productName: 'Macaroni',
+  //       quantity: 4,
+  //       price: 8,
+  //       newInventory: 96,
+  //       subtotal: 32
+  //     },
+  //     {
+  //       productName: 'Mafaldine',
+  //       quantity: 5,
+  //       price: 8,
+  //       newInventory: 95,
+  //       subtotal: 40
+  //     },
+  //     {
+  //       productName: 'Rigatoni',
+  //       quantity: 6,
+  //       price: 8,
+  //       newInventory: 94,
+  //       subtotal: 48
+  //     }
+  //   ]
+  // }
+
+  const macaroniSold = await macaroni.totalSold();
+  console.log(macaroniSold); //should be 21
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${products.length} products`);
@@ -76,9 +108,20 @@ async function seed() {
       alex,
       stanley
     },
-    products,
+    products: {
+      rigatoni,
+      macaroni,
+      mafaldine,
+      garganelli,
+      spaghetti,
+      penne
+    },
     orderItems,
-    orders
+    orders: {
+      order1,
+      order2,
+      order3
+    }
   };
 }
 

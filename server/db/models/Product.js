@@ -50,7 +50,23 @@ module.exports = Product;
 /**
  * instanceMethods
  */
-
+Product.prototype.totalSold = async function () {
+    const totalSold = await db.models.orderItem.findAll({
+        where: {
+            productId: this.id,
+        },
+        include: {
+            model: db.models.order,
+            where: {
+                isCart: false
+            }
+        }
+    });
+    return totalSold.reduce((accum, item) => {
+       accum += item.quantity;
+       return accum; 
+    },0);
+}
 
 /**
  * classMethods

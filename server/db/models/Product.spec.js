@@ -14,6 +14,5 @@ describe('Product model', () => {
     expect(products).to.be.an('array');
     expect(products.length).to.equal(6);
   })
-
   
 }) // end describe('Product model')

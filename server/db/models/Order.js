@@ -1,7 +1,7 @@
 const Sequelize = require ('sequelize')
 const db = require('../db')
 
-const {UUID, UUIDV4, BOOLEAN} = Sequelize
+const {UUID, UUIDV4, BOOLEAN, DATE, NOW} = Sequelize
 
 const Order = db.define('order', {
     id: {
@@ -13,10 +13,16 @@ const Order = db.define('order', {
     isCart: {
         type: BOOLEAN,
         defaultValue: true
+    },
+    date: {
+        type: DATE,
+        defaultValue: NOW
     }
 })
 
 Order.prototype.findDetails = async function() {
+    const user = await db.models.user.findByPk(this.userId);
+
     const orderItems = await db.models.orderItem.findAll({
         where: {
             orderId: this.id
@@ -39,6 +45,9 @@ Order.prototype.findDetails = async function() {
         };
     });
     return {
+        id: this.id,
+        date: this.date,
+        user: user.username,
         total,
         details
     };
