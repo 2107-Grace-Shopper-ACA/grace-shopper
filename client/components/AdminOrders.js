@@ -62,7 +62,7 @@ const AdminOrders = ({orders, orderItems, match, products}) => {
     return (
         <div>
             <TableContainer component={Paper} style={{width: '100%', overflowX: 'auto'}}>
-                <Table border={0} sx={{ minWidth: 650 }} size="small">
+                <Table border={3} sx={{ minWidth: 650 }} size="small">
                     <TableHead>
                     <TableRow style={{backgroundColor:'dodgerblue'}}>
                     <TableCell align="center" colSpan={tableCols} style={header}>

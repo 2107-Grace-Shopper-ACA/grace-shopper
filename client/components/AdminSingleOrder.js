@@ -40,7 +40,7 @@ const AdminSingleOrder = ({order, orderItems }) => {
         return (
             <div>
                 <TableContainer component={Paper} style={{width: '100%', overflowX: 'auto'}}>
-                    <Table border={0} sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                    <Table border={3} sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                         <TableHead>
                             <TableRow style={{backgroundColor:'dodgerblue'}}>
                                 <TableCell align="center" colSpan={tableCols} style={header}>
