@@ -5,6 +5,7 @@ const { pluralize } = require('inflection');
 
 module.exports = router
 //we'll have to change the other apis to reflect what is relevant to be shown for admin/not admin
+
 Object.entries(db.models).forEach( entry => {
   const _path = pluralize(entry[0]);
   const model = entry[1];
@@ -31,6 +32,23 @@ Object.entries(db.models).forEach( entry => {
       next(ex);
     }
   });
+  router.post(`/${_path}`, isLoggedIn, isAdmin, async(req, res, next) => {
+    try {
+      let item;
+      if (_path === 'products'){
+          const { name, inventory, price, imageUrl, description, isActive, onSale } = req.body
+          item = (await model.create({name, inventory: +inventory, price, imageUrl, description, isActive, onSale}));
+      }
+      if (_path === 'users'){
+        const { username, password, isAdmin } = req.body
+        item = (await model.create({ username, password, isAdmin}));
+      }
+      res.send(item);
+    } catch (ex) {
+      next(ex);
+    }
+  });
+
   router.put(`/${_path}/:id`, isLoggedIn, isAdmin, async(req, res, next) => {
     try {
       const item = await model.findByPk(req.params.id);

@@ -4,6 +4,9 @@ import { Link } from "react-router-dom"
 import {createOrder, createOrderItem, editOrderItem} from '../store'
 
 const Products = ({ products, orders, auth, orderItems, createOrder, createOrderItem, editOrderItem}) => {
+
+  products = products.sort((a, b) => {return a.name < b.name ? -1 : 1});
+
   return (
     <div id="product-gallery">
       {products.map((product) => {

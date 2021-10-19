@@ -5,13 +5,13 @@ const TOKEN = 'token'
  * ACTION TYPES
  */
  const LOAD_USERS = 'LOAD_USERS'
- const DELETE_USER = 'DELETE_USER'
+ const ADD_USER = 'ADD_USER'
  const EDIT_USER = 'EDIT_USER'
  /**
   * ACTION CREATORS
   */
  const _loadUsers = (users) => ({ type: LOAD_USERS, users });
- const _deleteUser = (id) => ({ type: DELETE_USER, id });
+ const _addUser = (user) => ({ type: ADD_USER, user });
  const _editUser = (user) => ({ type: EDIT_USER, user });
 
  /**
@@ -50,19 +50,16 @@ const TOKEN = 'token'
   };
 };
 
-export const deleteUser = (id, history) => {
+export const addUser = (user, history) => {
   return async (dispatch) => {
     const token = window.localStorage.getItem(TOKEN);
     if (token){
-      await axios({
-        url: `/api/admin/users/${id}`,
-        method: 'delete',
-        data: id,
+      const added = (await axios.post(`/api/admin/users/`, user, {
         headers: {
           authorization: token
         }
-      })
-      dispatch(_deleteUser(id));
+      })).data;
+      dispatch(_addUser(added));
       history.push('/admin/users');
     };
   }
@@ -77,8 +74,8 @@ export const deleteUser = (id, history) => {
              return action.users;
          case EDIT_USER:
               return state.map(user => user.id === +action.user.id ? action.user : user)
-         case DELETE_USER: 
-              return state.filter(user => user.id !== +action.id)
+         case ADD_USER: 
+              return [...state, action.user]
          default:
              return state
      }

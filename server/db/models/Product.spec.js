@@ -10,10 +10,8 @@ describe('Product model', () => {
   beforeEach(async() => {
     products = (await seed()).products;
   })
-  it('seed populates four products', () => {
-    expect(products).to.be.an('array');
-    expect(products.length).to.equal(6);
+  it('seed populates six products', () => {
+    expect(products).to.have.all.keys(['penne', 'spaghetti', 'mafaldine', 'garganelli', 'rigatoni', 'macaroni']);
   })
-
   
 }) // end describe('Product model')
