@@ -61,6 +61,8 @@ async function seed() {
   console.log(andysOrders);
   console.log(corinnesCart);
   console.log(corinnesOrders);
+  const order2details = await order2.findDetails();
+  console.log(order2details);
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${products.length} products`);
