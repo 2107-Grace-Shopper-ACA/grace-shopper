@@ -29,7 +29,13 @@ const AdminSingleOrder = ({order, orderItems }) => {
         return accum;
     }, 0);
     
+    orderItems = orderItems.sort((a, b) => {return a.product.name < b.product.name ? -1 : 1});
+
     if (!order) return '...loading'
+
+//styling    
+    const header = {fontWeight: 'bold'}
+//
 
         return (
             <div>
@@ -37,46 +43,54 @@ const AdminSingleOrder = ({order, orderItems }) => {
                     <Table border={0} sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                         <TableHead>
                             <TableRow style={{backgroundColor:'dodgerblue'}}>
-                                <TableCell align="center" colSpan={tableCols}>
+                                <TableCell align="center" colSpan={tableCols} style={header}>
                                     ORDER DETAILS
                                 </TableCell>
                             </TableRow>
                             <TableRow style={{backgroundColor:'cornsilk'}}>
                                 <TableCell></TableCell>
-                                <TableCell align="left">
+                                <TableCell style={header}>
                                     Date
                                 </TableCell>
-                                <TableCell align="left">
+                                <TableCell style={header}>
                                     Order ID
                                 </TableCell>
-                                <TableCell align="left">
+                                <TableCell style={header}>
                                     Purchaser
                                 </TableCell>
-                                <TableCell align="left">
+                                <TableCell style={header}>
                                     Order Status
                                 </TableCell>
-                                <TableCell>
+                                <TableCell style={header}>
                                     Items 
                                 </TableCell>
-                                <TableCell>
+                                <TableCell style={header}>
                                     Total
                                 </TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell></TableCell>
-                                <TableCell align="left">
+                                <TableCell >
                                     {order.date}
                                 </TableCell>
-                                <TableCell align="left">
+                                <TableCell >
                                     {order.id}
                                 </TableCell>
-                                <TableCell align="left">
+                                <TableCell >
                                     <Link to={`/admin/orders/users/${order.user.id}`}>
                                         {order.user.username}
                                     </Link>
                                 </TableCell>
-                                <TableCell align="left">
-                                    {order.isCart ? 'Cart' : 'Closed'}
+                                <TableCell >
+                                {
+                                    order.isCart ? 
+                                        <Link to={`/admin/orders/open`}>
+                                            Cart
+                                        </Link>
+                                    :   <Link to={`/admin/orders/closed`}>
+                                            Closed
+                                        </Link>
+                                }
                                 </TableCell>
                                 <TableCell>
                                     {totalItems}
@@ -87,10 +101,18 @@ const AdminSingleOrder = ({order, orderItems }) => {
                             </TableRow>
                             <TableRow  style={{backgroundColor:'cornsilk'}}>
                             <TableCell></TableCell>
-                                <TableCell >Product Name</TableCell>
-                                <TableCell >Quantity</TableCell>
-                                <TableCell >Price</TableCell>
-                                <TableCell >Sub Total</TableCell>
+                                <TableCell style={header}>
+                                    Product Name
+                                </TableCell>
+                                <TableCell style={header}>
+                                    Quantity
+                                </TableCell>
+                                <TableCell style={header}>
+                                    Price
+                                </TableCell>
+                                <TableCell style={header}>
+                                    Sub Total
+                                </TableCell>
                                 <TableCell ></TableCell>
                                 <TableCell ></TableCell>
                             </TableRow>
@@ -102,7 +124,7 @@ const AdminSingleOrder = ({order, orderItems }) => {
                                 key={orderItem.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
-                                        <TableCell component="th" scope="row">
+                                        <TableCell component="th" scope="row" style={header}>
                                             {idx + 1}
                                         </TableCell>
                                         <TableCell >

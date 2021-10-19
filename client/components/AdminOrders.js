@@ -31,10 +31,14 @@ const AdminOrders = ({orders, orderItems, match, products}) => {
             }
         });
         product = products.find(product => product.id === match.params.id);       
+    } else if (match.path.includes('open')){
+        displayOrders = orders.filter(order => order.isCart);
+    } else if (match.path.includes('closed')){
+        displayOrders = orders.filter(order => !order.isCart);
     } else {
         displayOrders = orders;
     }
-
+        
     displayOrders = displayOrders.map(order => {
         const totalQuantity = order.orderItems.reduce((accum, item) => {
             accum += item.quantity;
@@ -52,36 +56,47 @@ const AdminOrders = ({orders, orderItems, match, products}) => {
         return '...loading';
     }   
 
+//styling    
+    const header = {fontWeight: 'bold'}
+//
     return (
         <div>
             <TableContainer component={Paper} style={{width: '100%', overflowX: 'auto'}}>
-                <Table border={0} sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                <Table border={0} sx={{ minWidth: 650 }} size="small">
                     <TableHead>
                     <TableRow style={{backgroundColor:'dodgerblue'}}>
-                    <TableCell align="center" colSpan={tableCols}>
+                    <TableCell align="center" colSpan={tableCols} style={header}>
                         {
-                            match.path.includes('users') ? `${displayOrders[0].user.username.toUpperCase()}'S ORDERS` : match.path.includes('products') ? `ORDERS WITH ${product.name.toUpperCase()}` : 'ALL ORDERS'
+                            match.path.includes('users') ? 
+                                `${displayOrders[0].user.username.toUpperCase()}'S ORDERS` 
+                            : match.path.includes('products') ? 
+                                `ORDERS WITH ${product.name.toUpperCase()}` 
+                            : match.path.includes('open') ?
+                                'OPEN ORDERS'
+                            : match.path.includes('closed') ?
+                                'CLOSED ORDERS'
+                            : 'ALL ORDERS'
                         }
                     </TableCell>
                     </TableRow>
                     <TableRow style={{backgroundColor:'cornsilk'}}>
                     <TableCell></TableCell>
-                        <TableCell>
+                        <TableCell style={header}>
                             Date Ordered
                         </TableCell>
-                        <TableCell>
+                        <TableCell style={header}>
                             Order ID
                         </TableCell>
-                        <TableCell>
+                        <TableCell style={header}>
                             Status
                         </TableCell>
-                        <TableCell>
+                        <TableCell style={header}>
                             Purchaser
                         </TableCell>
-                        <TableCell>
+                        <TableCell style={header}>
                             Total Items
                         </TableCell>
-                        <TableCell >
+                        <TableCell style={header} >
                             Total
                         </TableCell>
                     </TableRow>
@@ -93,7 +108,7 @@ const AdminOrders = ({orders, orderItems, match, products}) => {
                             key={order.id}
                             sx={{ '&:last-child td, &:last-child th': { border: 1 } }}
                             >
-                                    <TableCell component="th" scope="row">
+                                    <TableCell component="th" scope="row" style={header}>
                                         {idx + 1}
                                     </TableCell>
                                     <TableCell >
@@ -105,7 +120,15 @@ const AdminOrders = ({orders, orderItems, match, products}) => {
                                         </Link>
                                     </TableCell>
                                     <TableCell >
-                                        {order.isCart ? 'Cart' : 'Closed'}
+                                        {
+                                            order.isCart ? 
+                                                <Link to={`/admin/orders/open`}>
+                                                    Cart
+                                                </Link>
+                                            :   <Link to={`/admin/orders/closed`}>
+                                                    Closed
+                                                </Link>
+                                        }
                                     </TableCell>
                                     <TableCell >
                                         <Link to={`/admin/orders/users/${order.user.id}`}>

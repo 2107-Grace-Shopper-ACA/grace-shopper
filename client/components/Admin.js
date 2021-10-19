@@ -27,6 +27,8 @@ export const Admin = props => {
       <Route path='/admin/orders/:id' exact component={AdminSingleOrder} />
       <Route path='/admin/orders/users/:id' exact component={AdminOrders} />
       <Route path='/admin/orders/products/:id' exact component={AdminOrders} />
+      <Route path='/admin/orders/open' exact component={AdminOrders} />
+      <Route path='/admin/orders/closed' exact component={AdminOrders} />
     </div>
 
   )

@@ -18,6 +18,8 @@ import Paper from '@material-ui/core/Paper';
  */
 const AdminProducts = ({products, history}) => {
 
+products = products.sort((a, b) => {return a.name < b.name ? -1 : 1});
+
 //dialog box
     const [open, setOpen] = useState(false);
     const handleOpen = (ev) => {
