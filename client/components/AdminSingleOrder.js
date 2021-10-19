@@ -18,9 +18,9 @@ import { loadAdminOrders } from '../store';
  * COMPONENT
  */
 const AdminSingleOrder = ({order, orderItems }) => {
-    useEffect(()=> {
-        loadAdminOrders();
-    }, []);
+    // useEffect(()=> {
+    //     loadAdminOrders();
+    // }, []);
     
     const total = orderItems.reduce((accum, orderItem) => {
         accum += +orderItem.product.price * orderItem.quantity;

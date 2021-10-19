@@ -55,17 +55,17 @@ async function seed() {
     OrderItem.create({quantity: 10, productId: penne.id, orderId: order3.id}),
   ]);
 
-  const andysCart = await andy.findCartOrder();
-  const andysOrders = await andy.findPastOrders();
-  const corinnesCart = await corinne.findCartOrder();
-  const corinnesOrders = await corinne.findPastOrders();
-  // console.log(andysCart);
-  // console.log(andysOrders);
-  // console.log(corinnesCart);
-  // console.log(corinnesOrders);
-  const order2details = await order2.findDetails();
-  console.log(order2details);
-  // should be {
+  // const andysCart = await andy.findCartOrder();
+  // const andysOrders = await andy.findPastOrders();
+  // const corinnesCart = await corinne.findCartOrder();
+  // const corinnesOrders = await corinne.findPastOrders();
+  // // console.log(andysCart);
+  // // console.log(andysOrders);
+  // // console.log(corinnesCart);
+  // // console.log(corinnesOrders);
+  // const order2details = await order2.findDetails();
+  // console.log(order2details);
+  // // should be {
   //   user: 'Andy'
   //   total: 120,
   //   [
@@ -93,8 +93,8 @@ async function seed() {
   //   ]
   // }
 
-  const macaroniSold = await macaroni.totalSold();
-  console.log(macaroniSold); //should be 21
+  // const macaroniSold = await macaroni.totalSold();
+  // console.log(macaroniSold); //should be 21
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${products.length} products`);
