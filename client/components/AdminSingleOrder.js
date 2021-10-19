@@ -21,7 +21,8 @@ const AdminSingleOrder = ({order, orderItems }) => {
     // useEffect(()=> {
     //     loadAdminOrders();
     // }, []);
-    
+    const tableCols = 6;
+
     const total = orderItems.reduce((accum, orderItem) => {
         accum += +orderItem.product.price * orderItem.quantity;
         return accum;
@@ -32,21 +33,57 @@ const AdminSingleOrder = ({order, orderItems }) => {
                 <TableContainer component={Paper} style={{width: '100%', overflowX: 'auto'}}>
                     <Table border={0} sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                         <TableHead>
-                        <TableRow >
-                            <TableCell align="center" colSpan={4}>
-                                Order ID {order.id}
-                            </TableCell>
-                        </TableRow>
-                        <TableRow  style={{backgroundColor:'cornsilk'}}>
-                        <TableCell></TableCell>
-                            <TableCell>Date Ordered</TableCell>
-                            <TableCell>Status</TableCell>
-                            <TableCell>Purchaser</TableCell>
-                            <TableCell >Product Name</TableCell>
-                            <TableCell >Quantity</TableCell>
-                            <TableCell >Price</TableCell>
-                            <TableCell >Total</TableCell>
-                        </TableRow>
+                            <TableRow style={{backgroundColor:'dodgerblue'}}>
+                                <TableCell align="center" colSpan={tableCols}>
+                                    ORDER DETAILS
+                                </TableCell>
+                            </TableRow>
+                            <TableRow style={{backgroundColor:'cornsilk'}}>
+                                <TableCell></TableCell>
+                                <TableCell align="left">
+                                    Date
+                                </TableCell>
+                                <TableCell align="left">
+                                    Order ID
+                                </TableCell>
+                                <TableCell align="left">
+                                    Purchaser
+                                </TableCell>
+                                <TableCell align="left">
+                                    Order Status
+                                </TableCell>
+                                <TableCell>
+                                    Total
+                                </TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell></TableCell>
+                                <TableCell align="left">
+                                    {order.date}
+                                </TableCell>
+                                <TableCell align="left">
+                                    {order.id}
+                                </TableCell>
+                                <TableCell align="left">
+                                    <Link to={`/admin/orders/users/${order.user.id}`}>
+                                        {order.user.username}
+                                    </Link>
+                                </TableCell>
+                                <TableCell align="left">
+                                    {order.isCart ? 'Cart' : 'Closed'}
+                                </TableCell>
+                                <TableCell>
+                                    ${total}
+                                </TableCell>
+                            </TableRow>
+                            <TableRow  style={{backgroundColor:'cornsilk'}}>
+                            <TableCell></TableCell>
+                                <TableCell >Product Name</TableCell>
+                                <TableCell >Quantity</TableCell>
+                                <TableCell >Price</TableCell>
+                                <TableCell >Sub Total</TableCell>
+                                <TableCell ></TableCell>
+                            </TableRow>
                         </TableHead>
                         <TableBody>
                             {orderItems.map((orderItem, idx) => (
@@ -58,13 +95,6 @@ const AdminSingleOrder = ({order, orderItems }) => {
                                         <TableCell component="th" scope="row">
                                             {idx + 1}
                                         </TableCell>
-                                        <TableCell >{order.date}</TableCell>
-                                        <TableCell >{order.isCart ? 'Cart' : 'Closed'}</TableCell>
-                                        <TableCell >
-                                            <Link to={`/admin/orders/users/${order.user.id}`}>
-                                                {order.user.username}
-                                            </Link>
-                                        </TableCell>
                                         <TableCell >
                                             <Link to={`/admin/orders/products/${orderItem.product.id}`}>
                                                 {orderItem.product.name}
@@ -73,8 +103,10 @@ const AdminSingleOrder = ({order, orderItems }) => {
                                         <TableCell >{orderItem.quantity}</TableCell>
                                         <TableCell >${+orderItem.product.price}</TableCell>
                                         <TableCell >${orderItem.quantity * +orderItem.product.price}</TableCell>
+                                        <TableCell >
+                                        </TableCell>
                                 </TableRow>
-                        ))}
+                            ))}
                         </TableBody>
                     </Table>
                 </TableContainer>

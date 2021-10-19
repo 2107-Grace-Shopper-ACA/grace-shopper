@@ -21,7 +21,8 @@ const AdminOrders = ({orders, orderItems, match, products, history}) => {
     useEffect(() => {
         loadUsers();
     }, []);
-    
+    const tableCols = 6;
+
     let displayOrders, product;
     if (match.path.includes('users')){
         displayOrders = orders.filter(order => order.userId === +match.params.id);
@@ -42,10 +43,10 @@ const AdminOrders = ({orders, orderItems, match, products, history}) => {
             <TableContainer component={Paper} style={{width: '100%', overflowX: 'auto'}}>
                 <Table border={0} sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                     <TableHead>
-                    <TableRow >
-                    <TableCell align="center" colSpan={3}>
+                    <TableRow style={{backgroundColor:'dodgerblue'}}>
+                    <TableCell align="center" colSpan={tableCols}>
                         {
-                            match.path.includes('users') ? `${displayOrders[0].user.username}'s Orders` : match.path.includes('products') ? `Orders With ${product.name}` : 'All Orders'
+                            match.path.includes('users') ? `${displayOrders[0].user.username.toUpperCase()}'S ORDERS` : match.path.includes('products') ? `ORDERS WITH ${product.name.toUpperCase()}` : 'ALL ORDERS'
                         }
                     </TableCell>
                     </TableRow>
