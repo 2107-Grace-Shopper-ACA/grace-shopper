@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import { addProduct, deleteProduct, editProduct } from '../store'
-import axios from 'axios';
 import AdminProductForm from './AdminProductForm';
 /**
  * CLASS COMPONENT

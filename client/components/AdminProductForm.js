@@ -37,16 +37,16 @@ class AdminProductForm extends Component {
         change[ev.target.name] = ev.target.type === 'checkbox' ? ev.target.checked : ev.target.value;
         this.setState(change);
     }
-//TODO NEED TO GET CHECKBOX TO EDIT PROPERLY
+
     async onSubmit(ev){
         ev.preventDefault();
         const { name, inventory, price, imageUrl, description, isActive, onSale } = this.state;
-        const { history, handleClose } = this.props;
+        const { history, handleClose, action, editProduct, addProduct, product } = this.props;
         try{
-            if(this.props.action === 'edit'){
-                await this.props.editProduct({...this.props.product, name, inventory, price, imageUrl, description, isActive, onSale }, history);
+            if(action === 'edit'){
+                await editProduct({...product, name, inventory, price, imageUrl, description, isActive, onSale }, history);
             } else {
-                await this.props.addProduct({name, inventory, price, imageUrl, description, isActive, onSale }, history);
+                await addProduct({name, inventory, price, imageUrl, description, isActive, onSale }, history);
 //TODO figure out synthetic event re handling close                
                 handleClose(ev);
             }

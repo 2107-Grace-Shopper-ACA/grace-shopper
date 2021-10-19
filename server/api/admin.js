@@ -38,10 +38,10 @@ Object.entries(db.models).forEach( entry => {
           const { name, inventory, price, imageUrl, description, isActive, onSale } = req.body
           item = (await model.create({name, inventory: +inventory, price, imageUrl, description, isActive, onSale}));
       }
-      // if (_path === 'users'){
-      //   const { username, isAdmin } = req.body
-      //   await item.update({...item, username, isAdmin});
-      // }
+      if (_path === 'users'){
+        const { username, password, isAdmin } = req.body
+        item = (await model.create({ username, password, isAdmin}));
+      }
       res.send(item);
     } catch (ex) {
       next(ex);
