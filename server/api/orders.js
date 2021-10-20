@@ -5,9 +5,9 @@ const {
 module.exports = router
 
 router.get('/', async (req, res, next) => {
-  const user = await User.findByToken(req.headers.authorization)
-
+  
   try {
+    const user = await User.findByToken(req.headers.authorization)
     if (user) {
       const orders = await Order.findAll({
         where: {

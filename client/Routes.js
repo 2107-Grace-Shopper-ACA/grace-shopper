@@ -25,7 +25,7 @@ class Routes extends Component {
 
   //TODO Build out to load orders each time there is a change in user - Alex
   componentDidUpdate(prevProps) {
-    if((!prevProps.auth.id && prevProps.auth.id) || (prevProps.auth.id !== this.props.auth.id)){
+    if((!prevProps.auth.id && this.props.auth.id) || (prevProps.auth.id !== this.props.auth.id)){
       this.props.loadOrders()
       this.props.loadOrderItems() //Toggling this comment while debugging
     }

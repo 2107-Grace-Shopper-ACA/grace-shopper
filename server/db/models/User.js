@@ -10,12 +10,12 @@ const SALT_ROUNDS = 5;
 
 const User = db.define('user', {
   //Eventually we should have users be UUID but this breaks too many things for what I'm currently testing
-  id: {
-    type: UUID,
-    defaultValue: UUIDV4,
-    allowNull: false,
-    primaryKey: true
-  },
+  // id: {
+  //   type: UUID,
+  //   defaultValue: UUIDV4,
+  //   allowNull: false,
+  //   primaryKey: true
+  // },
   username: {
     type: STRING,
     unique: true,
@@ -59,9 +59,10 @@ User.authenticate = async function({ username, password }){
 };
 
 User.findByToken = async function(token) {
+  console.log(token)
   try {
     const {id} = await jwt.verify(token, process.env.JWT)
-    const user = User.findByPk(id)
+    const user = await User.findByPk(id)
     if (!user) {
       throw 'nooo'
     }

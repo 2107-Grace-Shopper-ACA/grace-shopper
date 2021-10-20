@@ -6,8 +6,8 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   //Gets our logged in user
-  const user = await User.findByToken(req.headers.authorization)
   try {
+    const user = await User.findByToken(req.headers.authorization)
     //Gets an array of all the orders for our user
     const orders = await Order.findAll({
       where: {
