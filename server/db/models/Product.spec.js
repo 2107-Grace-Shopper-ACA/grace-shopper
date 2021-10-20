@@ -10,8 +10,8 @@ describe('Product model', () => {
   beforeEach(async() => {
     products = (await seed()).products;
   })
-  it('seed populates six products', () => {
-    expect(products).to.have.all.keys(['penne', 'spaghetti', 'mafaldine', 'garganelli', 'rigatoni', 'macaroni']);
+  it('seed populates 27 products', () => {
+    expect(products).to.have.all.keys(["farfalle", "orecchiette", "rotini", "orzo", "ditalini", "stelline", "spaghetti", "capellini", "vermicelli", "linguine", "tagliatelle", "fettuccine", "pappardelle", "bucatini", "lasagna", "penne", "rigatoni", "macaroni", "cannelloni", "manicotti", "ziti", "ravioli", "tortellini", "cappelletti", "agnolotti", "fagottini", "mezzelune"]);
   })
   
 }) // end describe('Product model')
