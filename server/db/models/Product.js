@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const {STRING, TEXT, INTEGER, DECIMAL, BOOLEAN, UUID, UUIDV4} = Sequelize;
+const {STRING, TEXT, INTEGER, DECIMAL, BOOLEAN, UUID, UUIDV4, ENUM} = Sequelize;
 
 const Product = db.define('product', {
     id: {
@@ -42,6 +42,10 @@ const Product = db.define('product', {
         type: BOOLEAN,
         allowNull: false,
         defaultValue: false
+    },
+    category: {
+        type: ENUM ('Small Pastas', 'Ribbon-Cut', 'Tube-Shaped', 'Stuffed'),
+        allowNull: false
     }
 });
 
