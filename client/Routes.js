@@ -7,6 +7,11 @@ import {me, loadProducts, loadOrders, loadOrderItems} from './store'
 import Cart from './components/Cart'
 import Products from './components/Products';
 import SingleProduct from './components/SingleProduct';
+import Admin from './components/Admin';
+import Orders from './components/Orders';
+import SingleOrder from './components/SingleOrder';
+import Settings from './components/Settings';
+
 
 
 /**
@@ -27,7 +32,7 @@ class Routes extends Component {
   }
 
   render() {
-    const {isLoggedIn} = this.props
+    const {isLoggedIn, auth} = this.props
 
     return (
       <div>
@@ -37,6 +42,12 @@ class Routes extends Component {
             <Route path="/cart" component={Cart} />
             <Route path="/products/:productId" component={SingleProduct} />
             <Route path="/products" exact component={Products} />
+            {
+              !!auth.isAdmin && <Route path="/admin" component={Admin} />
+            }
+            <Route path="/orders" exact component={Orders} />
+            <Route path="/orders/:orderId" component={SingleOrder} />
+            <Route path="/settings" component={Settings} />
             <Redirect to="/home" />
           </Switch>
         ) : (

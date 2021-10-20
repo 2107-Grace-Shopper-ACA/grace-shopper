@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout, loadOrders} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn, orderItems}) => (
+const Navbar = ({handleClick, isLoggedIn, orderItems, auth}) => (
   <div>
     <h1>Pasta Peddler</h1>
     <nav>
@@ -19,6 +19,9 @@ const Navbar = ({handleClick, isLoggedIn, orderItems}) => (
             Logout
           </a>
           <Link to ="/cart">Cart({orderItems.reduce((accu, cur) => {return accu + cur.quantity}, 0)})</Link>
+          {
+            !!auth.isAdmin && <Link to="/admin">Admin</Link>
+          }
         </div>
       ) : (
         <div>
@@ -40,7 +43,8 @@ const Navbar = ({handleClick, isLoggedIn, orderItems}) => (
 const mapState = state => {
   return {
     isLoggedIn: !!state.auth.id,
-    orderItems: state.orderItems
+    orderItems: state.orderItems,
+    auth: state.auth
   }
 }
 

@@ -1,18 +1,20 @@
 import axios from 'axios'
 
-const TOKEN = 'token' //They have this in auth so I guess we'll use it even though it'd be easy enough to type out - Alex
+const TOKEN = 'token'
+
 
 /**
  * ACTION TYPES
  */
  const LOAD_ORDERS = 'LOAD_ORDERS'
  const CREATE_ORDER = 'CREATE_ORDER'
-
+ const LOAD_ADMIN_ORDERS = 'LOAD_ADMIN_ORDERS'
  /**
   * ACTION CREATORS
   */
  const _loadOrders = (orders) => ({ type: LOAD_ORDERS, orders });
  const _createOrder = (order) => ({ type: CREATE_ORDER, order});
+ const _loadAdminOrders = (orders) => ({ type: LOAD_ADMIN_ORDERS, orders});
  /**
   * THUNK CREATORS
   */
@@ -37,6 +39,20 @@ const TOKEN = 'token' //They have this in auth so I guess we'll use it even thou
     dispatch(_createOrder(order));
   };
 };
+
+export const loadAdminOrders = () => {
+  return async (dispatch) => {
+    const token = window.localStorage.getItem(TOKEN);
+    if (token){
+      const orders = (await axios.get(`/api/admin/orders`, {
+        headers: {
+          authorization: token
+        }
+      })).data;
+      dispatch(_loadAdminOrders(orders));
+    }
+  }
+}
  /**
   * REDUCER
   */
@@ -47,6 +63,9 @@ const TOKEN = 'token' //They have this in auth so I guess we'll use it even thou
              return action.orders;
          case CREATE_ORDER:
              return [...state, action.order];
+//THIS IS NEVER GETTING CALLED??
+         case LOAD_ADMIN_ORDERS: 
+             return [...state, action.orders];
          default:
              return state
      }

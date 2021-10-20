@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const {STRING, TEXT, INTEGER, DECIMAL, UUID, UUIDV4} = Sequelize;
+const {STRING, TEXT, INTEGER, DECIMAL, BOOLEAN, UUID, UUIDV4} = Sequelize;
 
 const Product = db.define('product', {
     id: {
@@ -32,6 +32,16 @@ const Product = db.define('product', {
         validate: {
             notEmpty: false
         }
+    },
+    isActive: {
+        type: BOOLEAN,
+        allowNull: false,
+        defaultValue: true
+    },
+    onSale: {
+        type: BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 });
 

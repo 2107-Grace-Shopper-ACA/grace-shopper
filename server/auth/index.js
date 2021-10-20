@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const { models: { User }} = require('../db')
+const { isLoggedIn } = require('../middleware')
+
 module.exports = router
 
 router.post('/login', async (req, res, next) => {
@@ -24,9 +26,9 @@ router.post('/signup', async (req, res, next) => {
   }
 })
 
-router.get('/me', async (req, res, next) => {
+router.get('/me', isLoggedIn, async (req, res, next) => {
   try {
-    res.send(await User.findByToken(req.headers.authorization))
+    res.send(req.user)
   } catch (ex) {
     next(ex)
   }

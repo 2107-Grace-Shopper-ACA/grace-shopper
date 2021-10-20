@@ -1,15 +1,22 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom"
 import {createOrder, createOrderItem, editOrderItem} from '../store'
 
 const Products = ({ products, orders, auth, orderItems, createOrder, createOrderItem, editOrderItem}) => {
+
+  products = products.sort((a, b) => {return a.name < b.name ? -1 : 1});
+
   return (
     <div id="product-gallery">
       {products.map((product) => {
         return (
           <div key={product.id}>
+            <Link to={`/products/${product.id}`}>
             <h4>{product.name}</h4>
             <img src={product.imageUrl || "https://i.gifer.com/MNu.gif"}></img>
+            </Link>
+            <div>${product.price}</div>
             <label htmlFor="product-quantity">Quantity:</label>
             <input type="number" id={`${product.id}-quantity`} defaultValue="1" min="1" max="9"/>
             <button type="button" onClick={async (ev) => {
