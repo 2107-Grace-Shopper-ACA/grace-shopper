@@ -14,11 +14,11 @@ const SingleOrder = ({orders, match}) => {
             <h4>{orderItem.product.name}</h4>
             <h4>Quantity: {orderItem.quantity}</h4>
             <h4>Price: ${orderItem.product.price}</h4>
-            {/* {why is this getting NaN?} */}
-            <h4>Subtotal: ${orderItem.quanitity*(orderItem.product.price*1)}</h4>
+            <h4>Subtotal: ${orderItem.quantity*(orderItem.product.price*1)}</h4>
           </div>
         );
       })}
+        <h4>Order Total: ${orderItems.reduce((accu, cur) => accu + cur.quantity*cur.product.price, 0)}</h4>
         <Link to={"/orders"}><h4>Back</h4></Link>
         </div>        
     )

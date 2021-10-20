@@ -1,7 +1,7 @@
 const Sequelize = require ('sequelize')
 const db = require('../db')
 
-const {UUID, UUIDV4, BOOLEAN, DATE, NOW} = Sequelize
+const {UUID, UUIDV4, BOOLEAN, DATE, NOW, ENUM} = Sequelize
 
 const Order = db.define('order', {
     id: {
@@ -19,6 +19,10 @@ const Order = db.define('order', {
     date: {
         type: DATE,
         defaultValue: NOW
+    },
+    status: {
+        type:ENUM('pending', 'shipped', 'delivered'),
+        defaultValue: 'pending'
     }
 })
 

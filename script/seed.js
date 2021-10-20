@@ -26,14 +26,35 @@ async function seed() {
 
   // Creating Products
   const products = await Promise.all([
-    Product.create({ name: "Penne", inventory: 100, price: 8, imageUrl: 'http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcR6C21-woAMTfWxaFtxw1ZMBfnqq3jhDhNdaW3DgwvEIPrhdFlfviAZ_kfqlyXP2HcIE2QzdNo-UZitZ_KOen8', description: "Penne is an extruded type of pasta with cylinder-shaped pieces, their ends cut at an angle. Penne is the plural form of the Italian penna, deriving from Latin penna, and is a cognate of the English word pen. When this format was created, it was intended to imitate the then-ubiquitous fountain pen's steel nibs." }),
-    Product.create({ name: "Mafaldine", inventory: 100, price: 8, imageUrl: 'https://mobkitchen-objects.imgix.net/recipes/9K8A4161-4.jpg?auto=format&crop=focalpoint&domain=mobkitchen-objects.imgix.net&fit=crop&fp-x=0.5&fp-y=0.5&h=1300&ixlib=php-3.3.0&q=82&w=1300&s=f6d1cff31b151eea765c890308f780a8', description: "Mafaldine, also known as reginette (Italian for little queens), or simply mafalda or mafalde, is a type of ribbon-shaped pasta. It is usually served with a more delicate sauce. Mafaldine were named in honor of Princess Mfalda of Savoy (thus the alernative name of 'little queens')." }),
-    Product.create({ name: "Spaghetti", inventory: 100, price: 8, imageUrl: 'https://www.zimbokitchen.com/wp-content/uploads/2012/12/spaghetti2.png', description: "Spaghetti is a long, thin, solid, cylindrical pasta. It is a staple food of traditional Italian cuisine." }),
-    Product.create({ name: "Garganelli", inventory: 100, price: 8, imageUrl: 'https://www.qbcucina.com/wp-content/uploads/2020/05/Garganelli-1.jpg', description: "Garganelli are a type of egg-based pasta formed by rolling a flat, square noodle into a cylindrical shape. Garganelli resembles ribbed quills with points at both ends." }),
-    Product.create({ name: "Macaroni", inventory: 100, price: 8, imageUrl: 'https://images.eatthismuch.com/site_media/img/4857_laurabedo_da2c9648-14a9-47fd-bff3-3c1d66ad3fa7.png', description: "Macaroni is shaped like narrow tubes. Made with durum wheat, macaroni is commonly cut in short lengths; curved macaroni may be referred to as elbow macaroni."}),
-    Product.create({ name: "Rigatoni", inventory: 100, price: 8, imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/84/Rigatoni.jpg', description: "Rigatoni are a form of tube-shaped pasta of varying lengths and diameters originating in Italy. They are larger than penne and ziti, and sometimes slightly curved, though not as curved as elbow macaroni."})
+    Product.create({ name: "Farfalle", inventory: 100, price: 8, imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Farfalle_Pasta.JPG', description: "Bowtie-shaped pieces named after the Italian word for “butterfly,” farfalla.", category: 'Small Pastas' }),
+    Product.create({ name: "Orecchiette", inventory: 100, price: 9, imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/1/17/Orecchiette_Pasta.JPG', description: "Concave, somewhat flattened little shells. Originated in Southern Italy with a name meaning “small ear.”", category: 'Small Pastas' }),
+    Product.create({ name: "Rotini", inventory: 100, price: 9, imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9dceDtvtAlGZOXS8b_29O2-3YrTpLhfIhCg&usqp=CAU', description: "Tight corkscrews that are especially good at holding onto thick sauces. You may also see them labeled as “fusilli.”", category: 'Small Pastas' }),
+    Product.create({ name: "Orzo", inventory: 100, price: 10, imageUrl: 'https://chefsmandala.com/wp-content/uploads/2018/02/Orzo-Pasta-shutterstock_110331179.jpg', description: "Small noodles shaped like grains of rice. These are often added to garden salads, pasta salads and soups.", category: 'Small Pastas' }),
+    Product.create({ name: "Ditalini", inventory: 100, price: 9, imageUrl: 'https://www.the-pasta-project.com/wp-content/uploads/2016/12/Ditali-lisce-2.jpg', description: "Small tube-like shapes, commonly used in pasta e fagioli. The name means “small thimbles” in Italian.", category: 'Small Pastas'}),
+    Product.create({ name: "Stelline", inventory: 100, price: 8, imageUrl: 'https://cdn.tasteatlas.com/images/ingredients/b7472a37d1e04a988f44ef191617d747.jpg?w=600&h=450', description: "Tiny, star-shaped noodles that cook in just 5 minutes. These are best used in soups, as they tend to get lost in saucy or meat-based dishes.", category: 'Small Pastas'}),
+    Product.create({ name: "Spaghetti", inventory: 100, price: 7, imageUrl: 'https://t4.ftcdn.net/jpg/01/89/14/61/360_F_189146140_cOFAAWlB5FQ5yVeoKpExjVuZ5CSXEiXg.jpg', description: "The standard (and most popular) long noodle with a medium density.", category: 'Ribbon-Cut'}),
+    Product.create({ name: "Capellini", inventory: 100, price: 10, imageUrl: 'https://www.bullcityoliveoil.com/uploads/1/2/6/3/126303318/s942546161701459853_p260_i1_w1200.jpeg', description: "With ultra-thin strands that measure between 0.85 and 0.92 millimeters, this pasta is delicate and falls apart if overcooked. It’s often labeled as “angel hair” pasta.", category: 'Ribbon-Cut'}),
+    Product.create({ name: "Vermicelli", inventory: 100, price: 9, imageUrl: 'https://image.freepik.com/free-photo/uncooked-vermicelli-pasta-background_245047-192.jpg', description: "Traditional pasta, similar to spaghetti but slightly thicker. Translates to “little worms” in Italian.", category: 'Ribbon-Cut'}),
+    Product.create({ name: "Linguine", inventory: 100, price: 9, imageUrl: 'https://images.squarespace-cdn.com/content/v1/5772b09946c3c4cc1dd76e51/1472051844546-XB37YA0X83ME3A6GP84O/Dom%27s+Linguine+plain+11.jpg?format=1000w', description: "Strands of pasta with rounded edges that are wider than spaghetti.", category: 'Ribbon-Cut'}),
+    Product.create({ name: "Tagliatelle", inventory: 100, price: 7, imageUrl: 'https://rms.condenast.it/rms/public/5d8/4e4/c29/thumb_4163_1200_670_0_0_auto.jpg', description: "Made of egg-enriched dough, this medium-wide and toothsome noodle can stand up to meaty sauces.", category: 'Ribbon-Cut'}),
+    Product.create({ name: "Fettuccine", inventory: 100, price: 8, imageUrl: 'https://www.westend61.de/images/0000063400pw/uncooked-pasta-close-up-AKF00095.jpg', description: "Flat, thick noodles with a name meaning “little ribbons” in Italian.", category: 'Ribbon-Cut'}),
+    Product.create({ name: "Pappardelle", inventory: 100, price: 9, imageUrl: 'https://nuts.com/images/rackcdn/ed910ae2d60f0d25bcb8-80550f96b5feb12604f4f720bfefb46d.ssl.cf1.rackcdn.com/0f295d4c4ee03c24-cYzopRZ2-large.jpg', description: "Large, broad, flat noodles, wider than fettuccine. Made with egg added to the dough.", category: 'Ribbon-Cut'}),
+    Product.create({ name: "Bucatini", inventory: 100, price: 9, imageUrl: 'https://businesstimesnow.com/wp-content/uploads/2020/10/Enjoy-Your-Evening-with-Bucatini-Pasta-Dish-1.jpg', description: "Rounded strands that look like spaghetti; however, unlike spaghetti, bucatini has a long hole running through its center. May also be called perciatelli.", category: 'Ribbon-Cut'}),
+    Product.create({ name: "Lasagna", inventory: 100, price: 10, imageUrl: 'https://veganglutenfreelife.com/wp-content/uploads/2020/04/Lasagna-roll-noodles-4-x-3-1024x768.jpg', description: "Sheets of pasta rolled out to medium thickness. Usually layered with sauce, cheese, veggies, and/or meats, while baked into a classic Italian American casserole (or simmered in soup).", category: 'Ribbon-Cut'}),
+    Product.create({ name: "Penne", inventory: 100, price: 7, imageUrl: 'https://www.the-pasta-project.com/wp-content/uploads/2017/03/penne-lisce.jpg', description: "Cylinder-shaped pieces that come to a small point on both ends. The name is derived from the Italian word penna, which means “pen.”", category: 'Tube-Shaped'}),
+    Product.create({ name: "Rigatoni", inventory: 100, price: 9, imageUrl: 'https://freefoodphotos.com/imagelibrary/bread/rigatoni_pasta.jpg', description: "Slightly curved, tubed-shaped pastas, usually larger than penne. The name is derived from the Italian word rigato, which means “ridged” or “lined.”", category: 'Tube-Shaped'}),
+    Product.create({ name: "Macaroni", inventory: 100, price: 8, imageUrl: 'https://www.yummymummyclub.ca/sites/default/files/styles/large/public/field/image/pasta-dried.jpg?itok=SEY_UQ3J', description: "Technically, “macaroni” is a general word to categorize small and medium dried-pasta shapes. In America, it has become somewhat synonymous with elbow macaroni, the small curved tubes traditionally used in mac and cheese and pasta salads.", category: 'Tube-Shaped'}),
+    Product.create({ name: "Cannelloni", inventory: 100, price: 7, imageUrl: 'https://freefoodphotos.com/imagelibrary/bread/cannelloni_dried.jpg', description: "Smooth tubes, most often covered in sauce and baked after stuffing.", category: 'Tube-Shaped'}),
+    Product.create({ name: "Manicotti", inventory: 100, price: 9, imageUrl: 'https://preparedfoodphotos.com/samples/Njk0MTIzZDViZTYwNWI1/OTkzZDViZTYwNWI1/Uncooked-Manicotti-on-a-Plate.jpg', description: "Large tubes, similar to cannelloni but with ridges. This shape originated in Italian American cuisine and is also baked after stuffing.", category: 'Tube-Shaped'}),
+    Product.create({ name: "Ziti", inventory: 100, price: 8, imageUrl: 'https://theheritagecook.com/wp-content/uploads/2013/08/CutZiti.jpg', description: "Hollow, straw-shaped noodles that are smaller and narrower than rigatoni and frequently baked into saucy, cheesy casseroles.", category: 'Tube-Shaped'}),
+    Product.create({ name: "Ravioli", inventory: 100, price: 12, imageUrl: 'https://cdn.shopify.com/s/files/1/0274/1374/1657/products/Ravioli2048.jpg?v=1621829103', description: "Two flat sheets of pasta that form a dumpling-like structure for cheese filling.", category: 'Stuffed'}),
+    Product.create({ name: "Tortellini", inventory: 100, price: 15, imageUrl: 'https://images.eatthismuch.com/site_media/img/5286_brittbae93_2f9c645e-9139-4ab5-8bf3-1f08980b834e.png', description: "Little rings filled with cheese. Tortelloni is similar to tortellini, but is about two times larger.", category: 'Stuffed'}),
+    Product.create({ name: "Cappelletti", inventory: 100, price: 12, imageUrl: 'https://www.thespruceeats.com/thmb/_lHzloc-HBS6cJHeRiRGZQ-n760=/3367x2244/filters:no_upscale():max_bytes(150000):strip_icc()/cappelletti-little-hats-of-filled-pasta-4054301-step-06-d0eb7edaa69f42ef9080b3595736cec0.jpg', description: "Small, filled pasta, folded diagonally so they resemble the shape of a hat.", category: 'Stuffed'}),
+    Product.create({ name: "Agnolotti", inventory: 100, price: 16, imageUrl: 'https://images.squarespace-cdn.com/content/5a678c0718b27d534f591b05/1518724880441-90YJ7ITQ1SF3XGJCN83B/Roasted+Squash+Agnolotti+2000.jpg?format=1500w&content-type=image%2Fjpeg', description: "Small, crimped pillows, with cheese fillings similar to ravioli.", category: 'Stuffed'}),
+    Product.create({ name: "Fagottini", inventory: 100, price: 18, imageUrl: 'https://www.marcellinaincucina.com/wp-content/uploads/2021/08/fagottini-1-3.jpg', description: "Little bundles of pasta, filled with carrots, onions, and greens beans, as well as ricotta cheese.", category: 'Stuffed'}),
+    Product.create({ name: "Mezzelune", inventory: 100, price: 15, imageUrl: 'https://t3.ftcdn.net/jpg/00/41/98/36/360_F_41983677_bMs9W1gDrrZFgYq7awHgE55m1X4zZLT0.jpg', description: "Crimped semicircles stuffed with cheese.", category: 'Stuffed'})
   ]);
-  const [penne, mafaldine, spaghetti, garganelli, macaroni, rigatoni] = products.map(product => product);
+  const [farfalle, orecchiette, rotini, orzo, ditalini, stelline, spaghetti, capellini, vermicelli, linguine, tagliatelle, fettuccine, pappardelle, bucatini, lasagna, penne, rigatoni, macaroni, cannelloni, manicotti, ziti, ravioli, tortellini, cappelletti, agnolotti, fagottini, mezzelune] = products.map(product => product);
 
   //Creating orders
   const orders = await Promise.all([
@@ -46,16 +67,16 @@ async function seed() {
 
   //Creating order items
   const orderItems = await Promise.all([
-    OrderItem.create({quantity: 2, productId: macaroni.id, orderId: order1.id}),
-    OrderItem.create({quantity: 3, productId: penne.id, orderId: order1.id}),
-    OrderItem.create({quantity: 3, productId: spaghetti.id, orderId: order1.id}),
-    OrderItem.create({quantity: 4, productId: macaroni.id, orderId: order2.id}),
-    OrderItem.create({quantity: 5, productId: mafaldine.id, orderId: order2.id}),
-    OrderItem.create({quantity: 6, productId: rigatoni.id, orderId: order2.id}),
-    OrderItem.create({quantity: 7, productId: macaroni.id, orderId: order3.id}),
-    OrderItem.create({quantity: 9, productId: penne.id, orderId: order3.id}),
-    OrderItem.create({quantity: 4, productId: macaroni.id, orderId: order4.id}),
-    OrderItem.create({quantity: 2, productId: spaghetti.id, orderId: order4.id}),
+    OrderItem.create({quantity: 2, productId: macaroni.id, orderId: order1.id, userId: order1.userId}),
+    OrderItem.create({quantity: 3, productId: penne.id, orderId: order1.id, userId: order1.userId}),
+    OrderItem.create({quantity: 3, productId: spaghetti.id, orderId: order1.id, userId: order1.userId}),
+    OrderItem.create({quantity: 4, productId: macaroni.id, orderId: order2.id, userId: order2.userId}),
+    OrderItem.create({quantity: 5, productId: manicotti.id, orderId: order2.id, userId: order2.userId}),
+    OrderItem.create({quantity: 6, productId: rigatoni.id, orderId: order2.id, userId: order2.userId}),
+    OrderItem.create({quantity: 7, productId: macaroni.id, orderId: order3.id, userId: order3.userId}),
+    OrderItem.create({quantity: 9, productId: penne.id, orderId: order3.id, userId: order3.userId}),
+    OrderItem.create({quantity: 4, productId: macaroni.id, orderId: order4.id, userId: order4.userId}),
+    OrderItem.create({quantity: 2, productId: spaghetti.id, orderId: order4.id, userId: order4.userId}),
   ]);
 
   console.log(`seeded ${users.length} users`);
@@ -72,12 +93,33 @@ async function seed() {
     },
 
     products: {
-      rigatoni,
-      macaroni,
-      mafaldine,
-      garganelli,
-      spaghetti,
-      penne
+      farfalle, 
+      orecchiette, 
+      rotini, 
+      orzo, 
+      ditalini, 
+      stelline, 
+      spaghetti, 
+      capellini, 
+      vermicelli, 
+      linguine, 
+      tagliatelle, 
+      fettuccine, 
+      pappardelle, 
+      bucatini, 
+      lasagna, 
+      penne, 
+      rigatoni, 
+      macaroni, 
+      cannelloni, 
+      manicotti, 
+      ziti, 
+      ravioli, 
+      tortellini, 
+      cappelletti, 
+      agnolotti, 
+      fagottini, 
+      mezzelune
     },
     orderItems,
     orders: {

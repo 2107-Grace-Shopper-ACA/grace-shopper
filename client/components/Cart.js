@@ -27,12 +27,14 @@ const Cart = ({ orders, orderItems }) => {
               <ul>
                 {/*For debugging*/}
                 <li>Quantity: {orderItem.quantity}</li>
+                <li>Price: {orderItem.product.price}</li>
                 <li>UserId: {orderItem.userId}</li>
                 <li>Order: {orderItem.orderId}</li>
               </ul>
             </div>
           )
         })}
+        {`Subtotal: $${orderItems.filter(orderItem => orderItem.orderId === cartOrder.id).reduce((accu, cur) => {return accu + cur.quantity*cur.product.price}, 0)}`}
       </div>
       {/* 
       Even having this live on this page prevents the working div from updating!!!

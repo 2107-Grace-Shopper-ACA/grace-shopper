@@ -19,10 +19,10 @@ describe('Product routes', () => {
         .expect(200)
 
       expect(res.body).to.be.an('array');
-      expect(res.body.length).to.equal(6);
+      expect(res.body.length).to.equal(27);
     });
     it('GET /api/products/:productId', async () => {
-      const product = await Product.create({name: 'test', inventory: 4, price: 3});
+      const product = await Product.create({name: 'test', inventory: 4, price: 3, category:'Small Pastas'});
       const res = await request(app)
         .get(`/api/products/${product.id}`)
         .expect(200)
