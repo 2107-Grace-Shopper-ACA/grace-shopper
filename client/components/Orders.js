@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 const Orders = ({ orders }) => {
   return (
     <div id="order-gallery">
-      {orders.map((order) => {
+      {orders.filter(order => !order.isCart).map((order) => {
         return (
           <div key={order.id}>
             {/* {need to figure out formatting of date} */}
