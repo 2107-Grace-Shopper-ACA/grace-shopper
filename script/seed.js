@@ -46,16 +46,16 @@ async function seed() {
 
   //Creating order items
   const orderItems = await Promise.all([
-    OrderItem.create({quantity: 2, productId: macaroni.id, orderId: order1.id}),
-    OrderItem.create({quantity: 3, productId: penne.id, orderId: order1.id}),
-    OrderItem.create({quantity: 3, productId: spaghetti.id, orderId: order1.id}),
-    OrderItem.create({quantity: 4, productId: macaroni.id, orderId: order2.id}),
-    OrderItem.create({quantity: 5, productId: mafaldine.id, orderId: order2.id}),
-    OrderItem.create({quantity: 6, productId: rigatoni.id, orderId: order2.id}),
-    OrderItem.create({quantity: 7, productId: macaroni.id, orderId: order3.id}),
-    OrderItem.create({quantity: 9, productId: penne.id, orderId: order3.id}),
-    OrderItem.create({quantity: 4, productId: macaroni.id, orderId: order4.id}),
-    OrderItem.create({quantity: 2, productId: spaghetti.id, orderId: order4.id}),
+    OrderItem.create({quantity: 2, productId: macaroni.id, orderId: order1.id, userId: order1.userId}),
+    OrderItem.create({quantity: 3, productId: penne.id, orderId: order1.id, userId: order1.userId}),
+    OrderItem.create({quantity: 3, productId: spaghetti.id, orderId: order1.id, userId: order1.userId}),
+    OrderItem.create({quantity: 4, productId: macaroni.id, orderId: order2.id, userId: order2.userId}),
+    OrderItem.create({quantity: 5, productId: mafaldine.id, orderId: order2.id, userId: order2.userId}),
+    OrderItem.create({quantity: 6, productId: rigatoni.id, orderId: order2.id, userId: order2.userId}),
+    OrderItem.create({quantity: 7, productId: macaroni.id, orderId: order3.id, userId: order3.userId}),
+    OrderItem.create({quantity: 9, productId: penne.id, orderId: order3.id, userId: order3.userId}),
+    OrderItem.create({quantity: 4, productId: macaroni.id, orderId: order4.id, userId: order4.userId}),
+    OrderItem.create({quantity: 2, productId: spaghetti.id, orderId: order4.id, userId: order4.userId}),
   ]);
 
   console.log(`seeded ${users.length} users`);
