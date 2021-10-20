@@ -61,7 +61,7 @@ async function seed() {
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${products.length} products`);
   console.log(`seeded ${orders.length} orders`);
-  console.log(`seeded ${orderItems.length} order items`);
+  //console.log(`seeded ${orderItems.length} order items`);
   console.log(`seeded successfully`);
   return {
     users: {
@@ -70,6 +70,7 @@ async function seed() {
       alex,
       stanley
     },
+
     products: {
       rigatoni,
       macaroni,
@@ -85,6 +86,7 @@ async function seed() {
       order3,
       order4
     }
+
   };
 }
 
