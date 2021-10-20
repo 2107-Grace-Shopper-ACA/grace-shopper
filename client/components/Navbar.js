@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout, loadOrders} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn, orderItems, auth}) => (
+const Navbar = ({handleClick, isLoggedIn, orderItems, orders, auth}) => (
   <div>
     <h1>Pasta Peddler</h1>
     <nav>
@@ -18,7 +18,7 @@ const Navbar = ({handleClick, isLoggedIn, orderItems, auth}) => (
           }}>
             Logout
           </a>
-          <Link to ="/cart">Cart({orderItems.reduce((accu, cur) => {return accu + cur.quantity}, 0)})</Link>
+          <Link to ="/cart">Cart({orderItems.filter(orderItem => orderItem.orderId === (orders.find(order => order.isCart)).id).reduce((accu, cur) => {return accu + cur.quantity}, 0)})</Link>
           {
             !!auth.isAdmin && <Link to="/admin">Admin</Link>
           }
@@ -29,7 +29,7 @@ const Navbar = ({handleClick, isLoggedIn, orderItems, auth}) => (
           <Link to="/products">Products</Link>
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
-          <Link to ="/cart">Cart({orderItems.reduce((accu, cur) => {return accu + cur.quantity}, 0)})</Link>
+          <Link to ="/cart">Cart({orderItems.filter(orderItem => orderItem.orderId === (orders.find(order => order.isCart)).id).reduce((accu, cur) => {return accu + cur.quantity}, 0)})</Link>
         </div>
       )}
     </nav>
@@ -44,6 +44,7 @@ const mapState = state => {
   return {
     isLoggedIn: !!state.auth.id,
     orderItems: state.orderItems,
+    orders: state.orders,
     auth: state.auth
   }
 }
