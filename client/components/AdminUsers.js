@@ -57,7 +57,8 @@ const AdminUsers = ({users, history, loadUsers}) => {
                     {users.map((user, idx) => (
                         <TableRow
                         border={3}
-                        sx={{ '&:last-child td, &:last-child th': { border: 1, key: `${user.id}` } }}
+                        key={user.id}
+                        sx={{ '&:last-child td, &:last-child th': { border: 1 } }}
                         >
                             <TableCell component="th" scope="row">
                                 {idx + 1}
