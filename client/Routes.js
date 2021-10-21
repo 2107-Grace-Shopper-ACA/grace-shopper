@@ -11,7 +11,9 @@ import Admin from './components/Admin';
 import Orders from './components/Orders';
 import SingleOrder from './components/SingleOrder';
 import Settings from './components/Settings';
-
+import ManageAddress from './components/ManageAddress';
+import UpdateLoginInfo from './components/UpdateLoginInfo';
+import UpdatePersonalInfo from './components/UpdatePersonalInfo';
 
 
 /**
@@ -47,7 +49,10 @@ class Routes extends Component {
             }
             <Route path="/orders" exact component={Orders} />
             <Route path="/orders/:orderId" component={SingleOrder} />
-            <Route path="/settings" component={Settings} />
+            <Route path="/settings" exact component={Settings} />
+            <Route path="/settings/manageAddress" exact component={ManageAddress} />
+            <Route path="/settings/updateLoginInfo" exact component={UpdateLoginInfo} />
+            <Route path="/settings/updatePersonalInfo" exact component={UpdatePersonalInfo} />
             <Redirect to="/home" />
           </Switch>
         ) : (
