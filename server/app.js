@@ -45,6 +45,8 @@ app.post("/create-checkout-session", async (req, res) => {
 // Change Order to not in cart and update order date to be NOW
 //Create new cart order so we dont get errors in the product page
 //TODO: need to deduct from inventory
+//TODO: when you click back while in stripe it resets cart to 0
+//TODO: find the right place to move this stuff
     const order = await Order.findByPk(orderId);
 
     await order.update({...order, isCart: false, date: order.updatedAt});
