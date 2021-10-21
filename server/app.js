@@ -4,8 +4,6 @@ const express = require('express')
 const morgan = require('morgan')
 const app = express()
 
-const OrderItem = require('./db/models/OrderItem');
-const Product = require('./db/models/Product');
 const Order = require('./db/models/Order');
 
 module.exports = app
