@@ -53,8 +53,8 @@ Object.entries(db.models).forEach( entry => {
     try {
       const item = await model.findByPk(req.params.id);
       if (_path === 'products'){
-          const { name, inventory, price, imageUrl, description } = req.body
-          await item.update({...item, name, inventory: +inventory, price, imageUrl, description});
+          const { name, inventory, price, imageUrl, description, isActive, onSale } = req.body
+          await item.update({...item, name, inventory: +inventory, price, imageUrl, description, isActive, onSale});
       }
       if (_path === 'users'){
         const { username, isAdmin } = req.body
