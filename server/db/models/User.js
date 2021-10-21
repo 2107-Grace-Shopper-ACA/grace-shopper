@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-const {STRING, UUID, UUIDV4, BOOLEAN} = Sequelize;
+const {STRING, UUID, UUIDV4, BOOLEAN, INTEGER } = Sequelize;
 
 const db = require('../db')
 const jwt = require('jsonwebtoken')
@@ -28,6 +28,18 @@ const User = db.define('user', {
     type: BOOLEAN,
     allowNull: false,
     defaultValue: false
+  },
+  email: {
+    type: STRING,
+    validate: {
+      isEmail: true
+    }
+  },
+  phoneNumber: {
+    type: INTEGER,
+    validate: {
+      len: [10, 10]
+    }
   }
 })
 
