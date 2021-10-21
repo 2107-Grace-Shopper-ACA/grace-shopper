@@ -42,10 +42,6 @@ const Product = db.define('product', {
         type: BOOLEAN,
         allowNull: false,
         defaultValue: false
-    },
-    category: {
-        type: ENUM ('Small Pastas', 'Ribbon-Cut', 'Tube-Shaped', 'Stuffed'),
-        allowNull: false
     }
 });
 
