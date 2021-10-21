@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
-import {me, loadProducts, loadOrders, loadOrderItems} from './store'
+import {me, loadProducts, loadOrders, loadOrderItems, loadCategories} from './store'
 import Cart from './components/Cart'
 import Products from './components/Products';
 import SingleProduct from './components/SingleProduct';
@@ -84,9 +84,10 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me());
-      dispatch(loadProducts())
-      dispatch(loadOrders())
-      dispatch(loadOrderItems())
+      dispatch(loadProducts());
+      dispatch(loadOrders());
+      dispatch(loadOrderItems());
+      dispatch(loadCategories());
     },
     loadProducts(){
       dispatch(loadProducts())

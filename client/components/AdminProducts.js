@@ -63,7 +63,7 @@ const AdminProducts = ({products, history}) => {
           {
               id: product.id,
               name: product.name,
-              category: product.category,
+              category: product.category.name,
               description: product.description,
               price: +product.price,
               inventory: product.inventory,
