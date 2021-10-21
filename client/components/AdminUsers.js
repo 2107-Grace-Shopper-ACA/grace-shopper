@@ -14,7 +14,6 @@ import Clear from '@material-ui/icons/Clear';
 import Edit from '@material-ui/icons/Edit';
 import Search from '@material-ui/icons/Search';
 
-
 /**
  * CLASS COMPONENT
  */

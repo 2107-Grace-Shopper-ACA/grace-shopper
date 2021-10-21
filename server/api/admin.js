@@ -90,8 +90,8 @@ Object.entries(db.models).forEach( entry => {
     try {
       let item;
       if (_path === 'products'){
-          const { name, inventory, price, imageUrl, description, isActive, onSale } = req.body
-          item = (await model.create({name, inventory: +inventory, price, imageUrl, description, isActive, onSale}));
+          const { name, inventory, price, imageUrl, description, isActive, onSale, category } = req.body
+          item = (await model.create({name, inventory: +inventory, price, imageUrl, description, isActive, onSale, category}));
       }
       if (_path === 'users'){
         const { username, password, isAdmin } = req.body
@@ -107,8 +107,8 @@ Object.entries(db.models).forEach( entry => {
     try {
       const item = await model.findByPk(req.params.id);
       if (_path === 'products'){
-          const { name, inventory, price, imageUrl, description, isActive, onSale } = req.body
-          await item.update({...item, name, inventory: +inventory, price, imageUrl, description, isActive, onSale});
+          const { name, inventory, price, imageUrl, description, isActive, onSale, category } = req.body
+          await item.update({...item, name, inventory: +inventory, price, imageUrl, description, isActive, onSale, category});
       }
       if (_path === 'users'){
         const { username, isAdmin } = req.body
