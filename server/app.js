@@ -44,9 +44,11 @@ app.post("/create-checkout-session", async (req, res) => {
 
 // Change Order to not in cart and update order date to be NOW
 //Create new cart order so we dont get errors in the product page
+//TODO: need to deduct from inventory
     const order = await Order.findByPk(orderId);
-    await order.update({...order, isCart: false, date: Date.now()});
-    await Order.create({isCart: true});
+
+    await order.update({...order, isCart: false, date: order.updatedAt});
+    await Order.create({isCart: true, userId: order.userId});
     res.json({ url: session.url })
 
   } catch (err) {
