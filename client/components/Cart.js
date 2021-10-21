@@ -1,17 +1,65 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { connect } from 'react-redux'
 
 const Cart = ({ orders, orderItems }) => {
+  const order = orders.find(order => order.isCart);
+  const cartItems = orderItems.filter(orderItem => orderItem.orderId === order.id).map(item => {
+    return (
+//TODO: need to only send id and quantity for security
+      {
+        quantity: item.quantity,
+        price: +item.product.price * 100,
+        name: item.product.name,
+        orderItemId: item.id
+      }
+    )
+  })
+
+  const handleClick = async() => {
+    fetch("/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // Send along all the information about the items
+        body: JSON.stringify({
+          items: cartItems,
+          orderId: order.id
+        }),
+      })
+        .then(res => {
+          if (res.ok) return res.json()
+          // If there is an error then make sure we catch that
+          return res.json().then(e => Promise.reject(e))
+        })
+        .then(({ url }) => {
+          // On success redirect the customer to the returned URL
+          window.location = url
+        })
+        .catch(e => {
+          console.error(e.error)
+        })
+}
+
+
 
   //Prevents a crash on a hard reload
+  
+  
   if(orders.length === 0) return 'Your cart is empty!'
 
   const cartOrder = orders.find((order) => order.isCart)
 
-  if(cartOrder.orderItems.length === 0) return 'Your cart is empty!'
+  if(!cartOrder || cartOrder.orderItems.length === 0) return 'Your cart is empty!'
 
   return (
     <div>
+    
+      <button onClick={handleClick}>
+        Checkout
+      </button>
+    
+      
       {`Order ID: ${cartOrder.id}`}
       <div>
         {orderItems.filter(orderItem => orderItem.orderId === cartOrder.id).map(orderItem => {

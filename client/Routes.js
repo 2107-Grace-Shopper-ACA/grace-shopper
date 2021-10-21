@@ -48,6 +48,8 @@ class Routes extends Component {
             <Route path="/orders" exact component={Orders} />
             <Route path="/orders/:orderId" component={SingleOrder} />
             <Route path="/settings" component={Settings} />
+            <Route path="/checkout/success" exact component={Home} />
+  //TODO: make a route for failure
             <Redirect to="/home" />
           </Switch>
         ) : (
