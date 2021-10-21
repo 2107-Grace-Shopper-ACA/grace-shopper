@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
 import { Link, Route, withRouter } from 'react-router-dom';
 import AdminNavbar from './AdminNavbar';
@@ -8,12 +8,17 @@ import AdminProducts from './AdminProducts';
 import AdminSingleProduct from './AdminSingleProduct';
 import AdminOrders from './AdminOrders';
 import AdminSingleOrder from './AdminSingleOrder';
-
+import { loadAdminOrders, loadAdminOrderItems, loadUsers } from '../store';
 /**
  * COMPONENT
  */
-export const Admin = props => {
-  const {username} = props
+ export const Admin = ({username, loadUsers, loadAdminOrders, loadAdminOrderItems}) => {
+
+  useEffect(() => {
+    loadUsers();
+    loadAdminOrders();
+    loadAdminOrderItems();
+  }, [])
 
   return (
     <div>
@@ -42,5 +47,12 @@ const mapState = state => {
     username: state.auth.username
   }
 }
+const mapDispatch = dispatch => {
+  return {
+    loadUsers: () => dispatch(loadUsers()),
+    loadAdminOrders: () => dispatch(loadAdminOrders()),
+    loadAdminOrderItems: () => dispatch(loadAdminOrderItems())
+  }
+}
 
-export default withRouter(connect(mapState)(Admin))
+export default withRouter(connect(mapState, mapDispatch)(Admin))

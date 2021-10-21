@@ -8,21 +8,27 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {loadUsers} from '../store';
+import {loadAdminOrders, loadAdminOrderItems} from '../store';
+
+//TODO  will have to component did update in main app to account for admin store stuff
 
 /**
  * COMPONENT
  */
-const AdminOrders = ({orders, orderItems, match, products}) => {
+const AdminOrders = ({orders, orderItems, match, products, loadAdminOrderItems, loadAdminOrders}) => {
+    
+//TODO not sure if i need this
     useEffect(() => {
-        loadUsers();
+        loadAdminOrderItems();
+        loadAdminOrders();
     }, []);
+    
     const tableCols = 7;
 
     let displayOrders, product;
 
     if (match.path.includes('users')){
-        displayOrders = orders.filter(order => order.userId === +match.params.id);
+        displayOrders = orders.filter(order => order.userId === match.params.id);
     } else if (match.path.includes('products')){
         const items = orderItems.filter(orderItem => orderItem.productId === match.params.id);
         displayOrders = orders.filter(order => {
@@ -38,7 +44,7 @@ const AdminOrders = ({orders, orderItems, match, products}) => {
     } else {
         displayOrders = orders;
     }
-        
+    
     displayOrders = displayOrders.map(order => {
         const totalQuantity = order.orderItems.reduce((accum, item) => {
             accum += item.quantity;
@@ -57,7 +63,8 @@ const AdminOrders = ({orders, orderItems, match, products}) => {
     }   
 
 //styling    
-    const header = {fontWeight: 'bold'}
+    const header = {fontWeight: 'bold'};
+    const link = {color: 'darkblue', textDecoration: 'none'}
 //
     return (
         <div>
@@ -115,23 +122,23 @@ const AdminOrders = ({orders, orderItems, match, products}) => {
                                         {order.date}
                                     </TableCell>
                                     <TableCell >
-                                        <Link to={`/admin/orders/${order.id}`}>
+                                        <Link style={link} to={`/admin/orders/${order.id}`}>
                                         {order.id}
                                         </Link>
                                     </TableCell>
                                     <TableCell >
                                         {
                                             order.isCart ? 
-                                                <Link to={`/admin/orders/open`}>
-                                                    Cart
+                                                <Link style={link} to={`/admin/orders/open`}>
+                                                    Open
                                                 </Link>
-                                            :   <Link to={`/admin/orders/closed`}>
+                                            :   <Link style={link} to={`/admin/orders/closed`}>
                                                     Closed
                                                 </Link>
                                         }
                                     </TableCell>
                                     <TableCell >
-                                        <Link to={`/admin/orders/users/${order.user.id}`}>
+                                        <Link style={link} to={`/admin/orders/users/${order.user.id}`}>
                                             {order.user.username}
                                         </Link>
                                     </TableCell>
@@ -156,12 +163,18 @@ const AdminOrders = ({orders, orderItems, match, products}) => {
  */
 const mapState = (state, {history, match}) => {
   return {
-    orders: state.orders,
-    orderItems: state.orderItems,
+    orders: state.adminOrders,
+    orderItems: state.adminOrderItems,
     history: history,
     match: match,
     products: state.products
   }
 }
+const mapDispatch = dispatch => {
+    return {
+        loadAdminOrderItems: () => dispatch(loadAdminOrderItems()),
+        loadAdminOrders: () => dispatch(loadAdminOrders())
+    }
+}
 
-export default connect(mapState)(AdminOrders)
+export default connect(mapState, mapDispatch)(AdminOrders)
