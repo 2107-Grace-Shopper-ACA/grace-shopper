@@ -1,84 +1,103 @@
 import React, { useState, useEffect } from 'react'
 import {connect} from 'react-redux'
-import { Link } from 'react-router-dom'
 
 import { loadUsers } from '../store'
 import AdminUserForm from './AdminUserForm';
-import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
+
 import Dialog from '@material-ui/core/Dialog';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import MaterialTable from 'material-table';
+import { forwardRef } from 'react';
+import AddBox from '@material-ui/icons/AddBox';
+import ArrowDownward from '@material-ui/icons/ArrowDownward';
+import Check from '@material-ui/icons/Check';
+import Clear from '@material-ui/icons/Clear';
+import Edit from '@material-ui/icons/Edit';
+import Search from '@material-ui/icons/Search';
+
+
 /**
  * CLASS COMPONENT
  */
 const AdminUsers = ({users, history, loadUsers}) => {
+    
+    const tableIcons = {
+        Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
+        Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
+        Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
+        ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+        Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
+        SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
+        ThirdStateCheck: forwardRef(() => ''),
+      };
+    
+      const columns = [
+        { title: 'User Name', field: 'username' },
+        { title: 'Password', field: 'password' },
+        { title: 'Admin', field: 'isAdmin', type: 'boolean' },
+      ];
+    
+      // Material Table Columns Rows
+      const data = users.sort((a,b) => a.username < b.username).map((user) =>  { return (
+          {
+              username: user.username, 
+              password: user.password, 
+              isAdmin: user.isAdmin ,
+              id: user.id
+          }
+      )
+      });
+       
 
     //dialog box
     const [open, setOpen] = useState(false);
     const handleOpen = (ev) => {
-        ev.persist()
+        // ev.persist()
         setOpen(true);
     }
-    const handleClose = (ev) => {
-        ev.preventDefault();
+    const handleClose = () => {
         setOpen(false);
     }
 //
     useEffect(() => {
         loadUsers();
     }, []);
-    
 
+    
     if (!users){
         return '...loading'
     }
     return (
-        <>
+    <>
         <Dialog onClose={handleClose} open={open}>
             <AdminUserForm handleClose={handleClose} history={history}/>
         </Dialog>
-        <TableContainer component={Paper} style={{width: '100%', overflowX: 'auto'}}>
-            <Table border={2} sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-                <TableHead>
-                <TableRow  style={{backgroundColor:'cornsilk'}}>
-                    <TableCell width='5%'><Button onClick={handleOpen} size='small' color='primary' variant='contained'>Add User</Button></TableCell>
-                    <TableCell>User Name</TableCell>
-                    <TableCell >Password</TableCell>
-                    <TableCell >Admin</TableCell>
-                </TableRow>
-                </TableHead>
-                <TableBody>
-                    {users.map((user, idx) => (
-                        <TableRow
-                        border={3}
-                        key={user.id}
-                        sx={{ '&:last-child td, &:last-child th': { border: 1 } }}
-                        >
-                            <TableCell component="th" scope="row">
-                                {idx + 1}
-                            </TableCell>
-                            <TableCell >
-                                <Link to={`/admin/users/${user.id}`}>
-                                {user.username}
-                                </Link>
-                            </TableCell>
-                            <TableCell >{user.password}</TableCell>
-                            <TableCell padding='checkbox'>
-                                <Checkbox disabled checked={user.isAdmin} /> 
-                            </TableCell>
-                        </TableRow>
-                ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
-            
-        </>    
+        <MaterialTable
+          title="Users"
+          icons={tableIcons}
+          columns={columns}
+          data={data}
+          actions={[
+              {
+                  icon: AddBox,
+                  tooltip: 'Add User',
+                  isFreeAction: true,
+                  onClick: ()=>handleOpen(),
+              },
+              {
+                  icon: Edit,
+                  tooltip: 'Edit User',
+                  isFreeAction: false,
+                  onClick: (ev, rowData) => history.push(`/admin/users/${rowData.id}`)
+              }
+          ]}
+          options={{
+              paging: false
+          }}
+          style={{
+              margin: '2rem'
+          }}
+        />  
+    </>    
     )
 }
 
