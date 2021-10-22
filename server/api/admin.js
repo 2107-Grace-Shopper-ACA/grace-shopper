@@ -119,10 +119,16 @@ Object.entries(db.models).forEach( entry => {
           res.send(_item)
       }
       else if (_path === 'users'){
+        console.log("YAYYYYYYYYYYYYYYYYYYY")
         const { username, isAdmin } = req.body
         await item.update({...item, username, isAdmin});
         res.send(item);
-      } else {
+      } else if (_path === 'orders'){
+        const { isCart, status } = req.body;
+        await item.update({...item, isCart, status});
+        res.send(item)
+      } 
+      else {
         res.send(item);
       }
     } catch (ex) {

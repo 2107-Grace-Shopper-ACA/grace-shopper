@@ -11,7 +11,7 @@ import Admin from './components/Admin';
 import Orders from './components/Orders';
 import SingleOrder from './components/SingleOrder';
 import Settings from './components/Settings';
-
+import Success from './components/Success'
 
 
 /**
@@ -46,10 +46,10 @@ class Routes extends Component {
               !!auth.isAdmin && <Route path="/admin" component={Admin} />
             }
             <Route path="/orders" exact component={Orders} />
-            <Route path="/orders/:orderId" component={SingleOrder} />
+            <Route path="/orders/:orderId" exact component={SingleOrder} />
+            <Route path="/checkout/success" exact component={Success} />
+            <Route path="/checkout/cancel" component={Cart} />
             <Route path="/settings" component={Settings} />
-            <Route path="/checkout/success" exact component={Home} />
-  //TODO: make a route for failure
             <Redirect to="/home" />
           </Switch>
         ) : (

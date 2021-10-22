@@ -1,8 +1,11 @@
 import React, {useEffect, forwardRef} from 'react'
+import { useState } from 'react';
 import {connect} from 'react-redux'
 import { Link } from 'react-router-dom';
-import {loadAdminOrders, loadAdminOrderItems} from '../store';
+import {loadAdminOrders, loadAdminOrderItems, editAdminOrder} from '../store';
 
+import Dialog from '@material-ui/core/Dialog';
+import AdminOrderForm from './AdminOrderForm';
 import MaterialTable from 'material-table';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -25,7 +28,7 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 /**
  * COMPONENT
  */
-const AdminOrders = ({orders, orderItems, match, products, loadAdminOrderItems, loadAdminOrders}) => {
+const AdminOrders = ({orders, orderItems, match, products, loadAdminOrderItems, loadAdminOrders, editOrder}) => {
     
 //TODO not sure if i need this
     useEffect(() => {
@@ -88,7 +91,7 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrderItems, 
     // Material Table Columns
     const columns = [
     { title: 'Date', field: 'date', type: 'date' },
-    { title: 'Order ID', field: 'orderId' },
+    { title: 'Order ID', field: 'orderId'},
     { title: 'Open ?', field: 'isCart', type: 'boolean'},
     { title: 'Purchaser', field: 'purchaser'},
     { title: 'Total Items', field: 'totalItems', type: 'numeric', filtering: false},
@@ -121,7 +124,44 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrderItems, 
             }
         )
     });
+    // const [columns, setColumns] = useState([
+    // { title: 'Date', field: 'date', type: 'date' },
+    // { title: 'Order ID', field: 'orderId'},
+    // { title: 'Open ?', field: 'isCart', type: 'boolean'},
+    // { title: 'Purchaser', field: 'purchaser'},
+    // { title: 'Total Items', field: 'totalItems', type: 'numeric', filtering: false},
+    // { title: 'Total', field: 'total', type: 'currency', filtering: false},
 
+    // ]);
+
+    // // Material Table Rows
+    // const [data, setData] = useState(
+    //     displayOrders.map( order => {
+    //         return (
+    //             {
+    //                 date: order.date, 
+    //                 orderId: order.id, 
+    //                 isCart: order.isCart ,
+    //                 purchaser: order.user.username,
+    //                 totalItems: order.totalQuantity,
+    //                 total: order.total,
+    //                 orderDetail: order.orderItems.map(item => {
+    //                     return (
+    //                         {
+    //                         name: <Link style={{color: 'darkBlue'}} to={`/admin/orders/products/${item.product.id}`}>
+    //                                 {item.product.name}
+    //                             </Link>,
+    //                         quantity: item.quantity,
+    //                         price: item.product.price,
+    //                         subtotal: item.quantity * +item.product.price
+    //                         }
+    //                     )
+    //                 })
+    //             }
+    //         )
+    //     })
+    // ) 
+    
     
     if (!displayOrders.length) {
         return '...loading';
@@ -138,14 +178,19 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrderItems, 
                     filtering: true,
                     headerStyle: {backgroundColor: 'dodgerBlue'}
                 }}
-                actions={[
-                    {
-                        icon: Edit,
-                        tooltip: 'Edit Order',
-                        isFreeAction: false,
-                        
-                    }
-                ]}
+                // editable={{
+                //     onRowUpdate: (newData, oldData) =>
+                //     new Promise((resolve, reject) => {
+                //       setTimeout(() => {
+                //         const dataUpdate = [...data];
+                //         const index = oldData.tableData.id;
+                //         dataUpdate[index] = newData;
+                //         setData([...dataUpdate]);
+          
+                //         resolve();
+                //       }, 1000)
+                //     }),
+                // }}
                 style={{
                     margin: '2rem',
                     backgroundColor: 'aliceblue'
@@ -194,7 +239,8 @@ const mapState = (state, {history, match}) => {
 const mapDispatch = dispatch => {
     return {
         loadAdminOrderItems: () => dispatch(loadAdminOrderItems()),
-        loadAdminOrders: () => dispatch(loadAdminOrders())
+        loadAdminOrders: () => dispatch(loadAdminOrders()),
+        editOrder: (order) => dispatch(editAdminOrder(order))
     }
 }
 
