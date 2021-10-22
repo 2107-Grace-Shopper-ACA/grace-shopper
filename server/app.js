@@ -3,6 +3,9 @@ const path = require('path')
 const express = require('express')
 const morgan = require('morgan')
 const app = express()
+
+const Order = require('./db/models/Order');
+
 module.exports = app
 //corinne's comment
 // logging middleware
@@ -11,6 +14,48 @@ app.use(morgan('dev'))
 // body parsing middleware
 app.use(express.json())
 
+const stripe = require('stripe')('sk_test_51JmQ2ABj1g9TrN0Oc56w5ehAiaCGqvZKLHAdmNsmDP5lTWyyy3MjpwVrzHj9hVpMi669k4BgaTAHTliTouWTmoYf000RamHzJl');
+
+const YOUR_DOMAIN = 'http://localhost:8080/checkout';
+
+app.post("/create-checkout-session", async (req, res) => {
+  try {
+    const {items, orderId} = req.body;
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: items.map( (item) => {
+        return {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: item.name,
+            },
+            unit_amount: item.price,
+          },
+          quantity: item.quantity,
+        }
+      }),
+      mode: "payment",
+      success_url: `${YOUR_DOMAIN}/success`,
+      cancel_url: `${YOUR_DOMAIN}/cancel`,
+    })
+
+// Change Order to not in cart and update order date to be NOW
+//Create new cart order so we dont get errors in the product page
+//TODO: need to deduct from inventory
+//TODO: when you click back while in stripe it resets cart to 0
+//TODO: find the right place to move this stuff
+    const order = await Order.findByPk(orderId);
+
+    await order.update({...order, isCart: false, date: order.updatedAt});
+    await Order.create({isCart: true, userId: order.userId});
+    res.json({ url: session.url })
+
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+  
 // auth and api routes
 app.use('/auth', require('./auth'))
 app.use('/api', require('./api'))

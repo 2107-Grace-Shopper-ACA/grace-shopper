@@ -6,7 +6,7 @@ import {createOrder, createOrderItem, editOrderItem} from '../store'
 const Products = ({ products, orders, auth, orderItems, createOrder, createOrderItem, editOrderItem}) => {
 
   products = products.sort((a, b) => {return a.name < b.name ? -1 : 1});
-
+//TODO: we can change the logic below now that a cart order is created after someone makes a sale
   return (
     <div id="product-gallery">
       {products.map((product) => {

@@ -6,7 +6,6 @@ import { addUser, editUser, logout } from '../store'
  * CLASS COMPONENT
  */
 
-//getting warning about changing controlled input
 //TODO: handle errors
 class AdminUserForm extends Component {
     constructor(props){
@@ -37,7 +36,7 @@ class AdminUserForm extends Component {
     async onSubmit(ev){
         ev.preventDefault();
         const { username, isAdmin, password } = this.state;
-        const { history, handleClose, action, editUser, addUser, user, logout } = this.props;
+        const { history, handleClose, action, editUser, addUser, user } = this.props;
         try{
             if(action === 'edit'){
                 await editUser({...user, username, isAdmin}, history);
@@ -63,7 +62,7 @@ class AdminUserForm extends Component {
                     <label>
                         Username:
                     </label>
-                        <input name='username' value={username} onChange={onChange} />
+                        <input name='username' value={username || ''} onChange={onChange} />
                         
                         {
                             action !== 'edit' ? 
@@ -71,7 +70,7 @@ class AdminUserForm extends Component {
                             <label>
                                 Password:
                             </label>
-                            <input name='password' value={password} onChange={onChange} /> 
+                            <input name='password' value={password || ''} onChange={onChange} /> 
                         </>    
                             : ''
                         }
