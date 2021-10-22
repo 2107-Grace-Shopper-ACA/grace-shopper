@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
 import AdminProductForm from './AdminProductForm';
 import Dialog from '@material-ui/core/Dialog';
@@ -63,7 +63,7 @@ const AdminProducts = ({products, history}) => {
           {
               id: product.id,
               name: product.name,
-              category: product.category,
+              category: product.category.name,
               description: product.description,
               price: +product.price,
               inventory: product.inventory,

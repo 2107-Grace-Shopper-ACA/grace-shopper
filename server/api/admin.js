@@ -6,6 +6,7 @@ const User = require('../db/models/User');
 const OrderItem = require('../db/models/OrderItem');
 const Product = require('../db/models/Product');
 const Order = require('../db/models/Order');
+const Category = require('../db/models/Category');
 
 module.exports = router
 //we'll have to change the other apis to reflect what is relevant to be shown for admin/not admin
@@ -90,10 +91,13 @@ Object.entries(db.models).forEach( entry => {
     try {
       let item;
       if (_path === 'products'){
-          const { name, inventory, price, imageUrl, description, isActive, onSale } = req.body
-          item = (await model.create({name, inventory: +inventory, price, imageUrl, description, isActive, onSale}));
+          const { name, inventory, price, imageUrl, description, isActive, onSale, categoryId } = req.body
+          const _item = (await model.create({name, inventory: inventory, price: +price, imageUrl, description, isActive, onSale, categoryId}));
+          item = await model.findByPk(_item.id, {
+            include: Category
+          })
       }
-      if (_path === 'users'){
+      else if (_path === 'users'){
         const { username, password, isAdmin } = req.body
         item = (await model.create({ username, password, isAdmin}));
       }
@@ -107,14 +111,20 @@ Object.entries(db.models).forEach( entry => {
     try {
       const item = await model.findByPk(req.params.id);
       if (_path === 'products'){
-          const { name, inventory, price, imageUrl, description, isActive, onSale } = req.body
-          await item.update({...item, name, inventory: +inventory, price, imageUrl, description, isActive, onSale});
+          const { name, inventory, price, imageUrl, description, isActive, onSale, categoryId } = req.body
+          await item.update({...item, name, inventory: inventory, price: +price, imageUrl, description, isActive, onSale, categoryId});
+          const _item = await model.findByPk(item.id, {
+            include: Category
+          })
+          res.send(_item)
       }
-      if (_path === 'users'){
+      else if (_path === 'users'){
         const { username, isAdmin } = req.body
         await item.update({...item, username, isAdmin});
-    }
-      res.send(item);
+        res.send(item);
+      } else {
+        res.send(item);
+      }
     } catch (ex) {
       next(ex);
     }
