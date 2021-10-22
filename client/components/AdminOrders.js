@@ -170,7 +170,7 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrderItems, 
     return (
         <div>
             <MaterialTable
-                title={match.path.includes('products') ? `Orders For ${product.name}` : "Orders"}
+                title={match.path.includes('products') ? `${product.name} Orders` : "Orders"}
                 icons={tableIcons}
                 columns={columns}
                 data={data}

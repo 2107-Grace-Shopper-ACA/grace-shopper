@@ -50,10 +50,10 @@ const AdminProducts = ({products, history}) => {
       const columns = [
         { title: 'ID', field: 'id', filtering: false },
         { title: 'Product Name', field: 'name', filtering: false  },
-        { title: 'Category', field: 'category' },
+        { title: 'Category', field: 'category', filtering: false },
         { title: 'Description', field: 'description', filtering: false  },
-        { title: 'Price', field: 'price' },
-        { title: 'Inventory', field: 'inventory' },
+        { title: 'Price', field: 'price', filtering: false },
+        { title: 'Inventory', field: 'inventory', filtering: false },
         { title: 'Active', field: 'isActive', type: 'boolean' },
         { title: 'On Sale', field: 'onSale', type: 'boolean' },
       ];
