@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import { addUser, editUser, logout } from '../store'
+import { editLoggedInUser } from '../store'
 
 class UpdateLoginForm extends Component {
     constructor(props){
@@ -15,29 +15,23 @@ class UpdateLoginForm extends Component {
     }
     
     componentDidMount(){
-        if (this.props.action === 'edit'){
-            const { username, password } = this.props.user;
-            this.setState({ username, password });
-        }
+        const { username, password } = this.props.auth;
+        console.log(this.props)
+        this.setState({ username, password });
     }
     
     onChange(ev) {
         const change = {};
-        change[ev.target.name] = ev.target.type === 'checkbox' ?  ev.target.checked : ev.target.value;
+        change[ev.target.name] = ev.target.value;
         this.setState(change);
     }
 
     async onSubmit(ev){
         ev.preventDefault();
         const { username, password } = this.state;
-        const { history, handleClose, action, editUser, addUser, user, logout } = this.props;
+        const { history, editLoggedInUser, user } = this.props;
         try{
-            if(action === 'edit'){
-                await editUser({...user, username}, history);
-            } else {
-                await addUser({username, password}, history);
-                handleClose();
-            }
+                await editLoggedInUser({...user, username, password }, history);
         } 
         catch (ex){
             console.log(ex);
@@ -47,9 +41,8 @@ class UpdateLoginForm extends Component {
     render () {
         const { username, password } = this.state;
         const { onChange, onSubmit } = this;
-        const { action, auth, user } = this.props;
 
-        if (action === 'edit' && !user) return '...loading'
+        if (!this.props.auth) return '...loading'
         return (
             <div>
                 <form onSubmit={onSubmit}>
@@ -57,18 +50,11 @@ class UpdateLoginForm extends Component {
                         Username:
                     </label>
                         <input name='username' value={username} onChange={onChange} />
-                        
-                        {
-                            action !== 'edit' ? 
-                        <>
-                            <label>
-                                Password:
-                            </label>
-                            <input name='password' value={password} onChange={onChange} /> 
-                        </>    
-                            : ''
-                        }
-                    <button>{action === 'edit' }</button>
+                    <label>
+                        Password:
+                    </label>
+                        <input name='password' value={password} onChange={onChange} /> 
+                    <button>Edit User</button>
                 </form>
             </div>
         )
@@ -80,14 +66,12 @@ class UpdateLoginForm extends Component {
  */
 const mapState = state => {
     return {
-        auth: state.auth
+        auth: state.auth,
     }
 }
 const mapDispatch = (dispatch) => {
     return {
-        editUser: (user, history) => dispatch(editUser(user, history)),
-        addUser: (user, history) => dispatch(addUser(user, history)),
-        logout: () => dispatch(logout()),
+        editLoggedInUser: (user, history) => dispatch(editLoggedInUser(user, history)),
     }
 }
 

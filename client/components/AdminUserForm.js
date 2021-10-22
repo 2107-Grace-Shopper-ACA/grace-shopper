@@ -92,7 +92,8 @@ class AdminUserForm extends Component {
  */
 const mapState = state => {
     return {
-        auth: state.auth
+        auth: state.auth,
+        user: state.users.find(user => user.id === +match.params.id) || {},
     }
 }
 const mapDispatch = (dispatch) => {

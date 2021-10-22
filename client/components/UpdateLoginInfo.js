@@ -3,20 +3,16 @@ import { connect } from "react-redux";
 import {Link} from 'react-router-dom'
 import UpdateLoginForm from "./UpdateLoginForm";
 
-const UpdateLoginInfo = ({history, user}) => {
+const UpdateLoginInfo = (props) => {
     return(
         <div id="updateLoginInfo">
-            <UpdateLoginForm history={history} user={user} action={'edit'}/>
+            <UpdateLoginForm />
             <Link to={"/settings"}><h4>Back</h4></Link>
         </div>        
     )
 };
 
-const mapState = (state, {match, history}) => {
-    return {
-        user: state.users.find(user => user.id === match.params.id*1) || {},
-        history: history
-    }
-}
+const mapState = (state)=> state
+
 
 export default connect(mapState)(UpdateLoginInfo);
