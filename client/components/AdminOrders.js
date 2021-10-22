@@ -1,14 +1,24 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, forwardRef} from 'react'
 import {connect} from 'react-redux'
 import { Link } from 'react-router-dom';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import {loadAdminOrders, loadAdminOrderItems} from '../store';
+
+import MaterialTable from 'material-table';
+import AddBox from '@material-ui/icons/AddBox';
+import ArrowDownward from '@material-ui/icons/ArrowDownward';
+import Check from '@material-ui/icons/Check';
+import ChevronLeft from '@material-ui/icons/ChevronLeft';
+import ChevronRight from '@material-ui/icons/ChevronRight';
+import Clear from '@material-ui/icons/Clear';
+import DeleteOutline from '@material-ui/icons/DeleteOutline';
+import Edit from '@material-ui/icons/Edit';
+import FilterList from '@material-ui/icons/FilterList';
+import FirstPage from '@material-ui/icons/FirstPage';
+import LastPage from '@material-ui/icons/LastPage';
+import Remove from '@material-ui/icons/Remove';
+import SaveAlt from '@material-ui/icons/SaveAlt';
+import Search from '@material-ui/icons/Search';
+import ViewColumn from '@material-ui/icons/ViewColumn';
 
 //TODO  will have to component did update in main app to account for admin store stuff
 
@@ -22,14 +32,29 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrderItems, 
         loadAdminOrderItems();
         loadAdminOrders();
     }, []);
-    
-    const tableCols = 7;
+    const tableIcons = {
+        Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
+        Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
+        // Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+        // Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
+        DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
+        Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
+        Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
+        Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
+        FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
+        LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
+        NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
+        PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref} />),
+        ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+        Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
+        SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
+        ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
+        ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
+      };
 
     let displayOrders, product;
 
-    if (match.path.includes('users')){
-        displayOrders = orders.filter(order => order.userId === match.params.id);
-    } else if (match.path.includes('products')){
+    if (match.path.includes('products')){
         const items = orderItems.filter(orderItem => orderItem.productId === match.params.id);
         displayOrders = orders.filter(order => {
             for (const item of items){
@@ -37,10 +62,6 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrderItems, 
             }
         });
         product = products.find(product => product.id === match.params.id);       
-    } else if (match.path.includes('open')){
-        displayOrders = orders.filter(order => order.isCart);
-    } else if (match.path.includes('closed')){
-        displayOrders = orders.filter(order => !order.isCart);
     } else {
         displayOrders = orders;
     }
@@ -50,110 +71,110 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrderItems, 
             accum += item.quantity;
             return accum;
         }, 0);
+        const total = orderItems.filter(orderItem => orderItem.orderId === order.id).
+            reduce((accum, orderItem) => {
+                accum += +orderItem.product.price * orderItem.quantity; 
+                return accum;
+            }, 0)
         return (
             {
                 ...order,
-                totalQuantity
+                totalQuantity,
+                total
             }
         )
     })
-console.log('displayorders, ', displayOrders)
-    if (!displayOrders.length || (match.path.includes('products') && !product)) {
+
+    // Material Table Columns
+    const columns = [
+    { title: 'Date', field: 'date', type: 'date' },
+    { title: 'Order ID', field: 'orderId' },
+    { title: 'Open ?', field: 'isCart', type: 'boolean'},
+    { title: 'Purchaser', field: 'purchaser'},
+    { title: 'Total Items', field: 'totalItems', type: 'numeric', filtering: false},
+    { title: 'Total', field: 'total', type: 'currency', filtering: false},
+
+    ];
+
+    // Material Table Rows
+    const data = displayOrders.map( order => {
+        return (
+            {
+                date: order.date, 
+                orderId: order.id, 
+                isCart: order.isCart ,
+                purchaser: order.user.username,
+                totalItems: order.totalQuantity,
+                total: order.total,
+                orderDetail: order.orderItems.map(item => {
+                    return (
+                        {
+                        name: <Link style={{color: 'darkBlue'}} to={`/admin/orders/products/${item.product.id}`}>
+                                {item.product.name}
+                            </Link>,
+                        quantity: item.quantity,
+                        price: item.product.price,
+                        subtotal: item.quantity * +item.product.price
+                        }
+                    )
+                })
+            }
+        )
+    });
+
+    
+    if (!displayOrders.length) {
         return '...loading';
     }   
 
-//styling    
-    const header = {fontWeight: 'bold'};
-    const link = {color: 'darkblue', textDecoration: 'none'}
-//
     return (
         <div>
-            <TableContainer component={Paper} style={{width: '100%', overflowX: 'auto'}}>
-                <Table border={3} sx={{ minWidth: 650 }} size="small">
-                    <TableHead>
-                    <TableRow style={{backgroundColor:'dodgerblue'}}>
-                    <TableCell align="center" colSpan={tableCols} style={header}>
-                        {
-                            match.path.includes('users') ? 
-                                `${displayOrders[0].user.username.toUpperCase()}'S ORDERS` 
-                            : match.path.includes('products') ? 
-                                `ORDERS WITH ${product.name.toUpperCase()}` 
-                            : match.path.includes('open') ?
-                                'OPEN ORDERS'
-                            : match.path.includes('closed') ?
-                                'CLOSED ORDERS'
-                            : 'ALL ORDERS'
-                        }
-                    </TableCell>
-                    </TableRow>
-                    <TableRow style={{backgroundColor:'cornsilk'}}>
-                    <TableCell></TableCell>
-                        <TableCell style={header}>
-                            Date Ordered
-                        </TableCell>
-                        <TableCell style={header}>
-                            Order ID
-                        </TableCell>
-                        <TableCell style={header}>
-                            Status
-                        </TableCell>
-                        <TableCell style={header}>
-                            Purchaser
-                        </TableCell>
-                        <TableCell style={header}>
-                            Total Items
-                        </TableCell>
-                        <TableCell style={header} >
-                            Total
-                        </TableCell>
-                    </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {displayOrders.map((order, idx) => (
-                            <TableRow
-                            border={1}
-                            key={order.id}
-                            sx={{ '&:last-child td, &:last-child th': { border: 1 } }}
-                            >
-                                    <TableCell component="th" scope="row" style={header}>
-                                        {idx + 1}
-                                    </TableCell>
-                                    <TableCell >
-                                        {order.date}
-                                    </TableCell>
-                                    <TableCell >
-                                        <Link style={link} to={`/admin/orders/${order.id}`}>
-                                        {order.id}
-                                        </Link>
-                                    </TableCell>
-                                    <TableCell >
-                                        {
-                                            order.isCart ? 
-                                                <Link style={link} to={`/admin/orders/open`}>
-                                                    Open
-                                                </Link>
-                                            :   <Link style={link} to={`/admin/orders/closed`}>
-                                                    Closed
-                                                </Link>
-                                        }
-                                    </TableCell>
-                                    <TableCell >
-                                        <Link style={link} to={`/admin/orders/users/${order.userId}`}>
-                                            {order.user.username}
-                                        </Link>
-                                    </TableCell>
-                                    <TableCell>
-                                        {order.totalQuantity}
-                                    </TableCell>
-                                    <TableCell >
-                                        ${orderItems.filter(orderItem => orderItem.orderId === order.id).reduce((accum, orderItem) => 
-                                            {accum += +orderItem.product.price * orderItem.quantity; return accum;}, 0)
-                                    }</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <MaterialTable
+                title={match.path.includes('products') ? `Orders For ${product.name}` : "Orders"}
+                icons={tableIcons}
+                columns={columns}
+                data={data}
+                options={{
+                    filtering: true,
+                    headerStyle: {backgroundColor: 'dodgerBlue'}
+                }}
+                actions={[
+                    {
+                        icon: Edit,
+                        tooltip: 'Edit Order',
+                        isFreeAction: false,
+                        
+                    }
+                ]}
+                style={{
+                    margin: '2rem',
+                    backgroundColor: 'aliceblue'
+                }}
+                detailPanel={rowData => {
+                    return (
+                        <MaterialTable
+                            
+                            icons={tableIcons}
+                            columns={[
+                                { title: 'Product Name', field: 'name'},
+                                { title: 'Quantity', field: 'quantity' },
+                                { title: 'Price', field: 'price', type: 'currency' },
+                                { title: 'Subtotal', field: 'subtotal', type: 'currency' },
+                              ]}
+                            data={rowData.orderDetail}
+                            options={{
+                                paging: false,
+                                search: false,
+                                toolbar: false,
+                                headerStyle: {backgroundColor: 'dodgerBlue'}
+                            }}
+                            style={{
+                                backgroundColor: "aliceblue"
+                            }}
+                        />
+                    );
+                }}
+            />
         </div>
     )
 }

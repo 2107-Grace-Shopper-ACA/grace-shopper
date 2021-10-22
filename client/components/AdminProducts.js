@@ -112,11 +112,12 @@ const AdminProducts = ({products, history}) => {
               }
           ]}
           options={{
-              paging: false,
-              filtering: true
+              filtering: true,
+              headerStyle: {backgroundColor: 'dodgerBlue'}
           }}
           style={{
-              margin: '2rem'
+              margin: '2rem',
+              backgroundColor: 'aliceblue'
           }}
         />  
         </div>
