@@ -70,14 +70,17 @@ class AdminProductForm extends Component {
                         <input name='name' value={name || ''} onChange={onChange} />
                     <label>
                         Category:
+                        <select value={categoryId} name='categoryId' onChange={onChange}>
+                            <option></option>
+                            {
+                                categories.map(category => {
+                                    return (
+                                        <option key={category.id} value={category.id}>{category.name}</option>
+                                    );
+                                })
+                            }
+                        </select>
                     </label>
-                    <select value={categoryId} onChange={onChange}>
-                        {
-                            categories.map(category => {
-                                <option key={category.id} value={category.id}>{category.name}</option>
-                            })
-                        }
-                    </select>
                     <label>
                         Price:
                     </label>
