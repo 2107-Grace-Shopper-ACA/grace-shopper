@@ -27,15 +27,22 @@ export const loadProducts = () => {
 
 export const editProduct = (product, history) => {
   return async (dispatch) => {
+    let edited;
     const token = window.localStorage.getItem(TOKEN);
     if (token){
-      const edited = (await axios.put(`/api/admin/products/${product.id}`, product, {
-        headers: {
-          authorization: token
-        }
-      })).data;
+      if (window.location.pathname.includes('admin')){
+        edited = (await axios.put(`/api/admin/products/${product.id}`, product, {
+          headers: {
+            authorization: token
+          }
+        })).data;
+      } else {
+        edited = (await axios.put(`/api/products/${product.id}`, product)).data;
+      }
       dispatch(_editProduct(edited));
-      history.push('/admin/products');
+      if (window.location.pathname.includes('admin')){
+        history.push('/admin/products');
+      }
     }
   };
 };

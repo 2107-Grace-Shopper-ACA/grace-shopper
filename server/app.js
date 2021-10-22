@@ -37,6 +37,7 @@ app.post("/create-checkout-session", async (req, res) => {
       }),
       mode: "payment",
       success_url: `${YOUR_DOMAIN}/success`,
+      // success_url: `${YOUR_DOMAIN}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${YOUR_DOMAIN}/cancel`,
     })
 
@@ -45,17 +46,15 @@ app.post("/create-checkout-session", async (req, res) => {
 //TODO: need to deduct from inventory
 //TODO: when you click back while in stripe it resets cart to 0
 //TODO: find the right place to move this stuff
-    const order = await Order.findByPk(orderId);
 
-    await order.update({...order, isCart: false, date: order.updatedAt});
-    await Order.create({isCart: true, userId: order.userId});
     res.json({ url: session.url })
 
   } catch (err) {
     res.status(500).json({ error: err.message })
   }
 })
-  
+
+ 
 // auth and api routes
 app.use('/auth', require('./auth'))
 app.use('/api', require('./api'))

@@ -68,6 +68,15 @@ router.post('/', async (req, res, next) => {
       next(err)
     }
   });
+  router.delete('/:orderItemId', async (req, res, next) => {
+    try {
+      const orderItem = await OrderItem.findByPk(req.params.orderItemId);
+      await orderItem.destroy();
+      res.sendStatus(201)
+    } catch (err) {
+      next(err)
+    }
+  });
 //I think if we want to see all order items in a specific order it should be from /orders/:orderId - C
 // router.get('/:orderId', async (req, res, next) => {
 //     try {

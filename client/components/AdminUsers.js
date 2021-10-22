@@ -112,10 +112,11 @@ const AdminUsers = ({users, history, loadUsers}) => {
               }
           ]}
           options={{
-              paging: false
+            headerStyle: {backgroundColor: 'dodgerBlue'}
           }}
           style={{
-              margin: '2rem'
+              margin: '2rem',
+              backgroundColor: 'aliceblue'
           }}
         />
             

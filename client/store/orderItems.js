@@ -8,12 +8,14 @@ const TOKEN = 'token'
  const LOAD_ORDERITEMS = 'LOAD_ORDERITEMS'
  const CREATE_ORDERITEM = 'CREATE_ORDERITEM'
  const EDIT_ORDERITEM = 'EDIT_ORDERITEM'
+ const DELETE_ORDERITEM = 'DELETE_ORDERITEM'
  /**
   * ACTION CREATORS
   */
  const _loadOrderItems = (orderItems) => ({ type: LOAD_ORDERITEMS, orderItems });
  const _createOrderItem = (orderItem) => ({ type: CREATE_ORDERITEM, orderItem})
  const _editOrderItem = (orderItem) => ({ type: EDIT_ORDERITEM, orderItem})
+ const _deleteOrderItem = (id) => ({ type: DELETE_ORDERITEM, id})
  
  /**
   * THUNK CREATORS
@@ -56,6 +58,12 @@ const TOKEN = 'token'
    }
  }
  
+ export const deleteOrderItem = (id) => {
+   return async(dispatch) => {
+     await axios.delete(`/api/orderItems/${id}`);
+     dispatch(_deleteOrderItem(id));
+   }
+ }
  /**
   * REDUCER
   */
@@ -68,6 +76,8 @@ const TOKEN = 'token'
              return [...state, action.orderItem];
          case EDIT_ORDERITEM:
              return state.map(orderItem => orderItem.id === action.orderItem.id ? action.orderItem : orderItem);
+         case DELETE_ORDERITEM:
+             return state.filter(orderItem => orderItem.id !== action.id);
          default:
              return state
      }

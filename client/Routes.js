@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
-import {me, loadProducts, loadOrders, loadOrderItems} from './store'
+import {me, loadProducts, loadOrders, loadOrderItems, loadCategories} from './store'
 import Cart from './components/Cart'
 import Products from './components/Products';
 import SingleProduct from './components/SingleProduct';
@@ -11,7 +11,7 @@ import Admin from './components/Admin';
 import Orders from './components/Orders';
 import SingleOrder from './components/SingleOrder';
 import Settings from './components/Settings';
-
+import Success from './components/Success'
 
 
 /**
@@ -46,10 +46,10 @@ class Routes extends Component {
               !!auth.isAdmin && <Route path="/admin" component={Admin} />
             }
             <Route path="/orders" exact component={Orders} />
-            <Route path="/orders/:orderId" component={SingleOrder} />
+            <Route path="/orders/:orderId" exact component={SingleOrder} />
+            <Route path="/checkout/success" exact component={Success} />
+            <Route path="/checkout/cancel" component={Cart} />
             <Route path="/settings" component={Settings} />
-            <Route path="/checkout/success" exact component={Home} />
-  //TODO: make a route for failure
             <Redirect to="/home" />
           </Switch>
         ) : (
@@ -84,9 +84,10 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me());
-      dispatch(loadProducts())
-      dispatch(loadOrders())
-      dispatch(loadOrderItems())
+      dispatch(loadProducts());
+      dispatch(loadOrders());
+      dispatch(loadOrderItems());
+      dispatch(loadCategories());
     },
     loadProducts(){
       dispatch(loadProducts())
