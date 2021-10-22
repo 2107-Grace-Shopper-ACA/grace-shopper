@@ -57,7 +57,7 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrderItems, 
             }
         )
     })
-
+console.log('displayorders, ', displayOrders)
     if (!displayOrders.length || (match.path.includes('products') && !product)) {
         return '...loading';
     }   
@@ -138,7 +138,7 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrderItems, 
                                         }
                                     </TableCell>
                                     <TableCell >
-                                        <Link style={link} to={`/admin/orders/users/${order.user.id}`}>
+                                        <Link style={link} to={`/admin/orders/users/${order.userId}`}>
                                             {order.user.username}
                                         </Link>
                                     </TableCell>
