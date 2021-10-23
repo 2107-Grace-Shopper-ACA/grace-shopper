@@ -5,6 +5,7 @@ import { deleteOrderItem, editOrderItem,loadOrderItems } from '../store';
 
 const Cart = ({ orders, orderItems, editOrderItem, deleteOrderItem, loadOrderItems }) => {
   const order = orders.find(order => order.isCart);
+  // let cartItems = orderItems.filter(orderItem => orderItem.orderId === order.id && order.quantity > 0);
   let cartItems = orderItems.filter(orderItem => orderItem.orderId === order.id);
 
 //Prepping items for Stripe PUT request  
