@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
+import { deleteOrderItem, editOrderItem } from '../store';
 
-const Cart = ({ orders, orderItems }) => {
+const Cart = ({ orders, orderItems, editOrderItem, deleteOrderItem }) => {
   const order = orders.find(order => order.isCart);
   const cartItems = orderItems.filter(orderItem => orderItem.orderId === order.id).map(item => {
     return (
@@ -51,12 +52,15 @@ const Cart = ({ orders, orderItems }) => {
   const cartOrder = orders.find((order) => order.isCart)
 //i think we only need to check if there's a cart order bc there can't be orderitems in the cart if there's no cart order until we do the guest stuff //commenting this out for now for debugging
   if(!cartOrder) return 'Your cart is empty!'
+
+//something really weird is happening where it doesn't change when you add an item to an empty cart
   // if(!cartOrder || cartOrder.orderItems.length === 0) return 'Your cart is empty!'
+  if(!cartOrder || !cartItems.length) return 'Your cart is empty!'
 
   return (
     <div>
     
-      <button onClick={handleClick}>
+      <button onClick={handleClick} >
         Checkout
       </button>
     
@@ -75,7 +79,18 @@ const Cart = ({ orders, orderItems }) => {
               ></img>
               <ul>
                 {/*For debugging*/}
-                <li>Quantity: {orderItem.quantity}</li>
+                <li>
+                  Quantity:
+            <input type="number" id={`${orderItem.product.id}-quantity`} defaultValue={orderItem.quantity} min="0" max="9"/>
+            <button type="button" onClick={async (ev) => {
+                if(+document.getElementById(`${orderItem.product.id}-quantity`).value !== 0){
+                  editOrderItem({ id: orderItem.id, quantity: +document.getElementById(`${orderItem.product.id}-quantity`).value})
+                } else {
+                  deleteOrderItem(orderItem.id)
+                }
+              }} 
+              >Change</button>
+                </li>
                 <li>Price: {orderItem.product.price}</li>
                 <li>UserId: {orderItem.userId}</li>
                 <li>Order: {orderItem.orderId}</li>
@@ -110,5 +125,12 @@ const Cart = ({ orders, orderItems }) => {
     </div>
   )
 }
-
-export default connect((state) => state)(Cart)
+const mapDispatch = (dispatch, {history}) => {
+  return (
+    {
+      editOrderItem: (order) => dispatch(editOrderItem(order)),
+      deleteOrderItem: (id) => dispatch(deleteOrderItem(id))
+    }
+  )
+}
+export default connect((state) => state, mapDispatch)(Cart)

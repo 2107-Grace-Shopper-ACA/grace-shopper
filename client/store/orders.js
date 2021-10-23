@@ -8,12 +8,14 @@ const TOKEN = 'token'
  */
  const LOAD_ORDERS = 'LOAD_ORDERS'
  const CREATE_ORDER = 'CREATE_ORDER'
+ const EDIT_ORDER = 'EDIT_ORDER'
 //  const LOAD_ADMIN_ORDERS = 'LOAD_ADMIN_ORDERS'
  /**
   * ACTION CREATORS
   */
  const _loadOrders = (orders) => ({ type: LOAD_ORDERS, orders });
  const _createOrder = (order) => ({ type: CREATE_ORDER, order});
+ const _editOrder = (order) => ({ type: EDIT_ORDER, order});
 //  const _loadAdminOrders = (orders) => ({ type: LOAD_ADMIN_ORDERS, orders});
  /**
   * THUNK CREATORS
@@ -32,6 +34,7 @@ const TOKEN = 'token'
      dispatch(_loadOrders(orders));
    };
  };
+ //TODO: add try catches? do these need to be protected w token?
  
  export const createOrder = (_order) => {
   return async (dispatch) => {
@@ -39,20 +42,13 @@ const TOKEN = 'token'
     dispatch(_createOrder(order));
   };
 };
+export const editOrder = (_order) => {
+  return async (dispatch) => {
+    const { data: order } = await axios.put(`/api/orders/${_order.id}`, _order);
+    dispatch(_editOrder(order));
+  };
+};
 
-// export const loadAdminOrders = () => {
-//   return async (dispatch) => {
-//     const token = window.localStorage.getItem(TOKEN);
-//     if (token){
-//       const orders = (await axios.get(`/api/admin/orders`, {
-//         headers: {
-//           authorization: token
-//         }
-//       })).data;
-//       dispatch(_loadAdminOrders(orders));
-//     }
-//   }
-// }
  /**
   * REDUCER
   */
@@ -63,9 +59,8 @@ const TOKEN = 'token'
              return action.orders;
          case CREATE_ORDER:
              return [...state, action.order];
-//THIS IS NEVER GETTING CALLED??
-        //  case LOAD_ADMIN_ORDERS: 
-        //      return [...state, action.orders];
+         case EDIT_ORDER: 
+             return state.map(order => order.id === action.order.id ? action.order : order);
          default:
              return state
      }

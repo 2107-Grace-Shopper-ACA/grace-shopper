@@ -7,7 +7,6 @@ import AdminSingleUser from './AdminSingleUser';
 import AdminProducts from './AdminProducts';
 import AdminSingleProduct from './AdminSingleProduct';
 import AdminOrders from './AdminOrders';
-import AdminSingleOrder from './AdminSingleOrder';
 import { loadAdminOrders, loadAdminOrderItems, loadUsers } from '../store';
 /**
  * COMPONENT
@@ -29,11 +28,7 @@ import { loadAdminOrders, loadAdminOrderItems, loadUsers } from '../store';
       <Route path='/admin/products' exact component={AdminProducts} />
       <Route path='/admin/products/:id' component={AdminSingleProduct} />
       <Route path='/admin/orders' exact component={AdminOrders} />
-      <Route path='/admin/orders/:id' exact component={AdminSingleOrder} />
-      <Route path='/admin/orders/users/:id' exact component={AdminOrders} />
       <Route path='/admin/orders/products/:id' exact component={AdminOrders} />
-      <Route path='/admin/orders/open' exact component={AdminOrders} />
-      <Route path='/admin/orders/closed' exact component={AdminOrders} />
     </div>
 
   )

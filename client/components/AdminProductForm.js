@@ -18,7 +18,7 @@ class AdminProductForm extends Component {
             imageUrl: '',
             isActive: true,
             onSale: false,
-            category: '',
+            categoryId: '',
             error: ''
         }
         this.onChange = this.onChange.bind(this);
@@ -27,8 +27,8 @@ class AdminProductForm extends Component {
     
     componentDidMount(){
         if (this.props.action === 'edit'){
-            const { name, inventory, price, description, imageUrl, category } = this.props.product;
-            this.setState({name, inventory, price, description, imageUrl, category});
+            const { name, inventory, price, description, imageUrl, categoryId } = this.props.product;
+            this.setState({name, inventory, price, description, imageUrl, categoryId});
         }
     }
 
@@ -40,13 +40,13 @@ class AdminProductForm extends Component {
 
     async onSubmit(ev){
         ev.preventDefault();
-        const { name, inventory, price, imageUrl, description, isActive, onSale,  category} = this.state;
+        const { name, inventory, price, imageUrl, description, isActive, onSale,  categoryId} = this.state;
         const { history, handleClose, action, editProduct, addProduct, product } = this.props;
         try{
             if(action === 'edit'){
-                await editProduct({...product, name, inventory, price, imageUrl, description, isActive, onSale,  category}, history);
+                await editProduct({...product, name, inventory, price, imageUrl, description, isActive, onSale,  categoryId}, history);
             } else {
-                await addProduct({name, inventory, price, imageUrl, description, isActive, onSale,  category}, history);
+                await addProduct({name, inventory, price, imageUrl, description, isActive, onSale,  categoryId}, history);
 //TODO figure out synthetic event re handling close                
                 handleClose();
             }
@@ -57,9 +57,9 @@ class AdminProductForm extends Component {
         }
     }
     render () {
-        const { name, inventory, price, imageUrl, description, isActive, onSale,  category} = this.state;
+        const { name, inventory, price, imageUrl, description, isActive, onSale,  categoryId} = this.state;
         const { onChange, onSubmit } = this;
-        const { action } = this.props;
+        const { action, categories } = this.props;
 
         return (
             <div>
@@ -70,21 +70,17 @@ class AdminProductForm extends Component {
                         <input name='name' value={name || ''} onChange={onChange} />
                     <label>
                         Category:
+                        <select value={categoryId} name='categoryId' onChange={onChange}>
+                            <option></option>
+                            {
+                                categories.map(category => {
+                                    return (
+                                        <option key={category.id} value={category.id}>{category.name}</option>
+                                    );
+                                })
+                            }
+                        </select>
                     </label>
-                    //Need to fix enum 
-                    {/* <select value={category} onChange={onChange}>
-                        {
-                            categories.map(_category => {
-                                <option value={_category}>{_category}</option>
-                            })
-                        }
-                    </select> */}
-                        {/* <select value={category} onChange={onChange}>
-                            <option value='Small Pastas'>Small Pastas</option>
-                            <option value='Ribbon-Cut'>Ribbon-Cut</option>
-                            <option value='Tube-Shaped'>Tube-Shaped</option>
-                            <option value='Stuffed'>Stuffed</option>
-                        </select> */}
                     <label>
                         Price:
                     </label>
@@ -122,10 +118,7 @@ class AdminProductForm extends Component {
  */
 const mapState = (state) => {
     return {
-        categories: state.products.reduce((accum, product) => {
-            if (!accum.includes(product.category)) accum.push(product.category);
-            return accum;
-        },[])
+        categories: state.categories
     }
 }
 const mapDispatch = (dispatch) => {

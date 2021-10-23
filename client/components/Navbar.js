@@ -36,6 +36,10 @@ return (
             Logout
           </a>
           {/* <Link to ="/cart">Cart({orderItems.filter(orderItem => orderItem.orderId === (orders.find(order => order.isCart)).id).reduce((accu, cur) => {return accu + cur.quantity}, 0)})</Link> */}
+  {/* //don't know why this doesn't work */}
+          {/* {
+            !window.location.pathname.includes('success') ? <Link to ="/cart">Cart({findCartLength()})</Link> : ''
+          } */}
           <Link to ="/cart">Cart({findCartLength()})</Link>
           
           {
@@ -48,7 +52,8 @@ return (
           <Link to="/products">Products</Link>
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
-          <Link to ="/cart">Cart({orderItems.filter(orderItem => orderItem.orderId === (orders.find(order => order.isCart)).id).reduce((accu, cur) => {return accu + cur.quantity}, 0)})</Link>
+          <Link to ="/cart">Cart({findCartLength()})</Link>
+          {/* <Link to ="/cart">Cart({orderItems.filter(orderItem => orderItem.orderId === (orders.find(order => order.isCart)).id).reduce((accu, cur) => {return accu + cur.quantity}, 0)})</Link> */}
         </div>
       )}
     </nav>
@@ -58,7 +63,7 @@ return (
 /**
  * CONTAINER
  */
-const mapState = state => {
+const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth.id,
     orderItems: state.orderItems,
