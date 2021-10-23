@@ -2,24 +2,30 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import { editLoggedInUser } from '../store'
 
-class UpdateLoginForm extends Component {
+class UpdatePersonalInfo extends Component {
     constructor(props){
         super(props);
+        const {auth} = this.props
         this.state = {
-            username: '',
-            password: '',
-            email: '',
-            phoneNumber: '',
+            username: auth.id? auth.username : '',
+            password: auth.id? auth.password : '',
+            email: auth.id? auth.email : '',
+            phoneNumber: auth.id? auth.phoneNumber : '',
+            streetAddress: auth.id? auth.streetAddress : '',
+            city: auth.id? auth.city : '',
+            state: auth.id? auth.state : '',
+            zipcode: auth.id? auth.zipcode : '',
             error: ''
         }
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
     
-    componentDidMount(){
-        const { username, password, email, phoneNumber } = this.props.auth;
-        console.log(this.props)
-        this.setState({ username, password, email, phoneNumber });
+    componentDidUpdate (prevProps){
+        const { username, password, email, phoneNumber, streetAddress, city, state, zipcode } = this.props.auth;
+        if(!prevProps.auth.id && this.props.auth.id) {
+            this.setState({ username, password, email, phoneNumber, streetAddress, city, state, zipcode });
+        }
     }
     
     onChange(ev) {
@@ -30,18 +36,18 @@ class UpdateLoginForm extends Component {
 
     async onSubmit(ev){
         ev.preventDefault();
-        const { username, password, email, phoneNumber } = this.state;
-        const { history, editLoggedInUser, user } = this.props;
+        console.log(this.state)
+        const { username, password, email, phoneNumber, streetAddress, city, state, zipcode } = this.state;
+        const { history, editLoggedInUser, auth } = this.props;
         try{
-                await editLoggedInUser({...user, username, password, email, phoneNumber }, history);
+            await editLoggedInUser({...auth, username, password, email, phoneNumber, streetAddress, city, state, zipcode }, history);
         } 
         catch (ex){
-            console.log(ex);
-            this.setState({error: ex.response.data.error});       
+            this.setState({error: ex.response.data.error});  
         }
     }
     render () {
-        const { username, password, email, phoneNumber } = this.state;
+        const { username, password, email, phoneNumber, streetAddress, city, state, zipcode } = this.state;
         const { onChange, onSubmit } = this;
 
         if (!this.props.auth) return '...loading'
@@ -64,7 +70,23 @@ class UpdateLoginForm extends Component {
                         Phone Number:
                     </label>
                         <input name='phoneNumber' value={phoneNumber} onChange={onChange} /> 
-                    <button>Edit User</button>
+                    <label>
+                        Street Address:
+                    </label>
+                        <input name='streetAddress' value={streetAddress} onChange={onChange} /> 
+                    <label>
+                        City:
+                    </label>
+                        <input name='city' value={city} onChange={onChange} /> 
+                    <label>
+                        State:
+                    </label>
+                        <input name='state' value={state} onChange={onChange} /> 
+                    <label>
+                        Zipcode:
+                    </label>
+                        <input name='zipcode' value={zipcode} onChange={onChange} /> 
+                    <button type='submit' disabled={!username || !password}>Edit User</button>
                 </form>
             </div>
         )
@@ -79,10 +101,10 @@ const mapState = state => {
         auth: state.auth,
     }
 }
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, {history}) => {
     return {
-        editLoggedInUser: (user, history) => dispatch(editLoggedInUser(user, history)),
+        editLoggedInUser: (user) => dispatch(editLoggedInUser(user, history)),
     }
 }
 
-export default connect(mapState, mapDispatch)(UpdateLoginForm)
+export default connect(mapState, mapDispatch)(UpdatePersonalInfo)

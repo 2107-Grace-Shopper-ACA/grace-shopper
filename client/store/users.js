@@ -7,7 +7,7 @@ const TOKEN = 'token'
  const LOAD_USERS = 'LOAD_USERS'
  const ADD_USER = 'ADD_USER'
  const EDIT_USER = 'EDIT_USER'
- const EDIT_LOGGEDIN_USER = 'DIT_LOGGEDIN_USER'
+ const EDIT_LOGGEDIN_USER = 'EDIT_LOGGEDIN_USER'
  /**
   * ACTION CREATORS
   */
@@ -71,7 +71,7 @@ export const editLoggedInUser = (user, history) => {
   return async (dispatch) => {
       const {data: edited} = await axios.put(`/api/users/${user.id}`, user)
       dispatch(_editLoggedInUser(edited));
-      history.push('/users');
+      history.push('/home');
     }
   };
  /**

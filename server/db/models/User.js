@@ -31,31 +31,27 @@ const User = db.define('user', {
   },
   email: {
     type: STRING,
-    validate: {
-      isEmail: true
-    }
+    defaultValue: ''
   },
   phoneNumber: {
-    type: INTEGER,
-    validate: {
-      len: [10, 10]
-    }
+    type: STRING,
+    defaultValue: ''
   },
   streetAddress: {
     type: STRING,
-    defaultValue: null
+    defaultValue: ''
   },
   city: {
     type: STRING,
-    defaultValue: null
+    defaultValue: ''
   },
   state: {
     type: STRING,
-    defaultValue: null
+    defaultValue: ''
   },
   zipcode: {
     type: STRING,
-    defaultValue: null
+    defaultValue: ''
   }
 })
 
