@@ -91,7 +91,7 @@ class AdminUserForm extends Component {
  */
 const mapState = state => {
     return {
-        auth: state.auth
+        auth: state.auth,
     }
 }
 const mapDispatch = (dispatch) => {

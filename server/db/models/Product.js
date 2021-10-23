@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const {STRING, TEXT, INTEGER, DECIMAL, BOOLEAN, UUID, UUIDV4, ENUM} = Sequelize;
+const {STRING, TEXT, INTEGER, DECIMAL, BOOLEAN, UUID, UUIDV4} = Sequelize;
 
 const Product = db.define('product', {
     id: {

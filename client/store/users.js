@@ -7,12 +7,14 @@ const TOKEN = 'token'
  const LOAD_USERS = 'LOAD_USERS'
  const ADD_USER = 'ADD_USER'
  const EDIT_USER = 'EDIT_USER'
+ const EDIT_LOGGEDIN_USER = 'EDIT_LOGGEDIN_USER'
  /**
   * ACTION CREATORS
   */
  const _loadUsers = (users) => ({ type: LOAD_USERS, users });
  const _addUser = (user) => ({ type: ADD_USER, user });
  const _editUser = (user) => ({ type: EDIT_USER, user });
+ const _editLoggedInUser = (user) => ({type: EDIT_LOGGEDIN_USER, user})
 
  /**
   * THUNK CREATORS
@@ -64,6 +66,14 @@ export const addUser = (user, history) => {
     };
   }
 };
+
+export const editLoggedInUser = (user, history) => {
+  return async (dispatch) => {
+      const {data: edited} = await axios.put(`/api/users/${user.id}`, user)
+      dispatch(_editLoggedInUser(edited));
+      history.push('/home');
+    }
+  };
  /**
   * REDUCER
   */
@@ -76,6 +86,9 @@ export const addUser = (user, history) => {
               return state.map(user => user.id === +action.user.id ? action.user : user)
          case ADD_USER: 
               return [...state, action.user]
+         case EDIT_LOGGEDIN_USER:
+              return state.map(user => user.id === +action.user.id ? action.user : user)
+              
          default:
              return state
      }
