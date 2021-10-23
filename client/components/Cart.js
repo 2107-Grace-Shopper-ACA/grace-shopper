@@ -47,7 +47,7 @@ const Cart = ({ orders, orderItems, editOrderItem, deleteOrderItem }) => {
   //Prevents a crash on a hard reload
   
   
-  // if(orders.length === 0) return 'Your cart is empty!'
+  if(orders.length === 0) return 'Your cart is empty!'
 
   const cartOrder = orders.find((order) => order.isCart)
 //i think we only need to check if there's a cart order bc there can't be orderitems in the cart if there's no cart order until we do the guest stuff //commenting this out for now for debugging

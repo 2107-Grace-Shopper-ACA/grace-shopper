@@ -4,8 +4,8 @@ import { Link } from "react-router-dom"
 import {createOrder, createOrderItem, editOrderItem} from '../store'
 
 const Products = ({ products, orders, auth, orderItems, createOrder, createOrderItem, editOrderItem}) => {
-
-  products = products.sort((a, b) => {return a.name < b.name ? -1 : 1});
+//TODO: only bring in what we need from the store, like we should only bring in products that are active like in the line below -C
+  products = products.filter(product => product.isActive).sort((a, b) => {return a.name < b.name ? -1 : 1});
 //TODO: we can change the logic below now that a cart order is created after someone makes a sale
   return (
     <div id="product-gallery">
