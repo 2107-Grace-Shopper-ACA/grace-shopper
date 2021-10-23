@@ -22,7 +22,7 @@ return (
           const [quantity, setQuantity] = useState(0);
           
             return (
-                <Grid key={product.id} item xs={7} sm={4} style={{key:`${product.id}`}}>
+                <Grid key={product.id} item xs={75} sm={3} style={{key:`${product.id}`}}>
                 <Card style={{backgroundColor: 'lightgray'}} 
                   sx={{ maxWidth: 300, maxHeight: 200}} 
                   >

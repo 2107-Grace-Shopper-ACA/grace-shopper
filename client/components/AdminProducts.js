@@ -48,6 +48,11 @@ const AdminProducts = ({products, history}) => {
       };
 
       const columns = [
+          {
+              title: "Image",
+              field: 'imageUrl',
+              render: (rowData) => <img srce={rowData.imageUrl} style={{width: 40, borderRadius: "50%"}} />,
+          },
         { title: 'ID', field: 'id', filtering: false },
         { title: 'Product Name', field: 'name', filtering: false  },
         { title: 'Category', field: 'category', filtering: false },
@@ -61,6 +66,7 @@ const AdminProducts = ({products, history}) => {
       // Material Table Columns Rows
       const data = products.map((product) =>  { return (
           {
+              imageurl: product.imageUrl.
               id: product.id,
               name: product.name,
               category: product.category.name,
