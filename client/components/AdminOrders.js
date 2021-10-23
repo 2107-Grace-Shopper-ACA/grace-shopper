@@ -101,7 +101,7 @@ const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrd
 
     // Material Table Rows
     const data = displayOrders.map( order => {
-        // orderItems = orderItems.filter(item => item.id === order.id)
+         orderItems = orderItems.filter(item => item.orderId === order.id)
         return (
             {
                 date: order.date, 
@@ -110,7 +110,7 @@ const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrd
                 purchaser: order.user.username,
                 totalItems: order.totalQuantity,
                 total: order.total,
-                orderDetail: order.orderItems.map(item => {
+                orderDetail: orderItems.map(item => {
                     return (
                         {
                         id: item.id,
