@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
+import { Link } from 'react-router-dom';
 import { editAdminOrder, loadAdminOrders, loadAdminOrderItems } from '../store'
 import AdminOrderItemForm from './AdminOrderItemForm';
 /**
@@ -90,9 +91,11 @@ class AdminOrderForm extends Component {
                             return (
                                 <li key={item.id}>
                                     {
-                                        item.quantity === 0 ? '' :
-                                        <AdminOrderItemForm orderItem={item}/>
+                                        <Link to={`/admin/orderItems/${item.id}`}>
+                                            {item.product.name}
+                                        </Link>
                                     }
+                                    'TODO: ADD MORE'
                                 </li>
                             )
                         })

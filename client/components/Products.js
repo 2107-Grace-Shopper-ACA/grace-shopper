@@ -23,7 +23,9 @@ return (
           
             return (
                 <Grid key={product.id} item xs={7} sm={4} style={{key:`${product.id}`}}>
-                <Card style={{backgroundColor: 'lightgray'}} sx={{ maxWidth: 300, maxHeight: 200}} >
+                <Card style={{backgroundColor: 'lightgray'}} 
+                  sx={{ maxWidth: 300, maxHeight: 200}} 
+                  >
                     <CardActionArea onClick={()=>history.push(`/products/${product.id}`)}>
                         <CardMedia
                             component="img"

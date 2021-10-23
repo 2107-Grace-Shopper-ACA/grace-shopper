@@ -31,10 +31,10 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrderItems, loadAdminOrders}) => {
 //TODO WHY NEED TO REFRESH AFTER EDITING    
 //TODO not sure if i need this
-    useEffect(() => {
-        loadAdminOrderItems();
-        loadAdminOrders();
-    }, []);
+    // useEffect(() => {
+    //     loadAdminOrderItems();
+    //     loadAdminOrders();
+    // }, []);
     
     const tableIcons = {
         Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -101,6 +101,7 @@ const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrd
 
     // Material Table Rows
     const data = displayOrders.map( order => {
+        // orderItems = orderItems.filter(item => item.id === order.id)
         return (
             {
                 date: order.date, 
