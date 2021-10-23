@@ -5,3 +5,9 @@ public/bundle.js.map
 npm-debug.log
 yarn-error.log
 package-lock.json
+public/vendors-node_modules_canvg_lib_index_es_js.bundle.js
+public/vendors-node_modules_canvg_lib_index_es_js.bundle.js.map
+public/vendors-node_modules_dompurify_dist_purify_js.bundle.js
+public/vendors-node_modules_dompurify_dist_purify_js.bundle.js.map
+public/vendors-node_modules_html2canvas_dist_html2canvas_js.bundle.js
+public/vendors-node_modules_html2canvas_dist_html2canvas_js.bundle.js.map
