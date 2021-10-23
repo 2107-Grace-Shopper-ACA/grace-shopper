@@ -119,14 +119,37 @@ Object.entries(db.models).forEach( entry => {
           res.send(_item)
       }
       else if (_path === 'users'){
-        console.log("YAYYYYYYYYYYYYYYYYYYY")
         const { username, isAdmin } = req.body
         await item.update({...item, username, isAdmin});
         res.send(item);
       } else if (_path === 'orders'){
         const { isCart, status } = req.body;
         await item.update({...item, isCart, status});
-        res.send(item)
+        const _item = await model.findByPk(item.id, {
+          include: [
+            {
+              model: OrderItem
+            },
+            {
+              model: User
+            }
+          ]
+        })
+        res.send(_item)
+      } else if (_path === 'orderItems'){
+        const { quantity } = req.body;
+        await item.update({...item, quantity});
+        const _item = await model.findByPk(item.id, {
+          include: [
+            {
+              model: Product
+            },
+            {
+              model: Order
+            }
+          ]
+        })
+        res.send(_item)
       } 
       else {
         res.send(item);
