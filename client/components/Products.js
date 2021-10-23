@@ -3,7 +3,9 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom"
 import { useHistory } from "react-router";
 import {createOrder, createOrderItem, editOrderItem} from '../store'
-import {Button, Box, Grid,Typography, CardActionArea, CardActions, CardContent, Card, CardMedia, InputLabel, MenuItem, FormControl, Select} from '@material-ui/core'
+import {Button, Box, Grid,Typography, CardActionArea, CardActions, CardContent, Card, CardMedia, InputLabel, MenuItem, FormControl, TextField, Select} from '@material-ui/core'
+import AddShoppingCart from '@material-ui/icons/AddShoppingCart'
+import IconButton from '@material-ui/core/IconButton';
 
 const Products = ({ products, orders, auth, orderItems, createOrder, createOrderItem, editOrderItem}) => {
 //TODO: only bring in what we need from the store, like we should only bring in products that are active like in the line below -C
@@ -38,15 +40,36 @@ return (
                             {product.name}
                             </Typography>
                             <hr></hr>
-                            <Typography variant="body1" color="text.primary">
+                            <Typography variant="body1" color="primary">
                             ${product.price}
                             </Typography>
+                            {
+                              product.inventory < 10 ? 
+                              <Typography variant="body2" color="secondary">
+                                Only {product.inventory} left in stock!
+                              </Typography> 
+                              : <br></br>
+                            }
                             <hr></hr>
                         </CardContent>
                     </CardActionArea >
                     <CardActions>
                     <FormControl fullWidth>
-                      <InputLabel >Quantity</InputLabel>
+                      <TextField 
+                          type="number"
+                          InputProps={{
+                              inputProps: { 
+                                  max: product.inventory < 10 ? product.inventory : 10,
+                                  min: 1
+                              }
+                          }}
+                          label="Quantity"
+                          value={quantity || ''}
+                          name={product.id}
+                          size='small'
+                          onChange={(ev)=>setQuantity(ev.target.value)}
+                      />
+                      {/* <InputLabel >Quantity</InputLabel>
                       <Select
                         value={ quantity || ''}
                         label="Quantity"
@@ -60,9 +83,12 @@ return (
                             )
                           })
                         }
-                      </Select>
+                      </Select> */}
                     </FormControl>
-                        <Button color='primary' variant='contained' 
+                    
+                      
+                    
+                        <Button color='primary' variant='outlined'
                           onClick={
                             async (ev) => {
                               let cartOrder = orders.find(order => (order.userId === auth.id) && order.isCart)
@@ -108,7 +134,7 @@ return (
                               }
                           }
                         >
-                            Purchase
+                          <AddShoppingCart color='success'/>
                         </Button>
                     </CardActions>
                 </Card>

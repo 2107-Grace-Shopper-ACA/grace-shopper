@@ -66,7 +66,7 @@ const AdminProducts = ({products, history}) => {
       // Material Table Columns Rows
       const data = products.map((product) =>  { return (
           {
-              imageurl: product.imageUrl.
+              imageurl: product.imageUrl,
               id: product.id,
               name: product.name,
               category: product.category.name,
