@@ -20,6 +20,9 @@ return (
             </Link>
             <div>${product.price}</div>
             <label htmlFor="product-quantity">Quantity:</label>
+            {
+              product.inventory < 11 ? <h6>Only {product.inventory} left in stock!</h6> : ''
+            }
             <input type="number" id={`${product.id}-quantity`} defaultValue="1" min="1" max={product.inventory < 9 ? product.inventory : 9}/>
             <button type="button" onClick={async (ev) => {
               let cartOrder = orders.find(order => (order.userId === auth.id) && order.isCart)
