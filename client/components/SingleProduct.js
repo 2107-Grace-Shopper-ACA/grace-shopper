@@ -15,8 +15,10 @@ const SingleProduct = ({products, match, orders, auth, orderItems, createOrder, 
             <label htmlFor="product-quantity">Quantity:</label>
             <input type="number" id={`${product.id}-quantity`} defaultValue="1" min="1" max="9"/>
             <button type="button" onClick={(ev) => {
-              console.log(document.getElementById(`${product.id}-quantity`).value)
-              let cartOrder = orders.find(order => (order.userId === auth.id) && order.isCart)
+              // console.log(document.getElementById(`${product.id}-quantity`).value)
+              const quantity = +document.getElementById(`${product.id}-quantity`).value;
+
+              let cartOrder = orders.find(order => (order.userId === auth.id) && order.isCart);
               
               //If there is an order that is the cart...
               if(cartOrder){
@@ -24,17 +26,36 @@ const SingleProduct = ({products, match, orders, auth, orderItems, createOrder, 
                 
                 //If there is an orderItem in the cart that matches the orderItem we're trying to add...
                 if(orderItem){
-                  editOrderItem({ id: orderItem.id, quantity: orderItem.quantity + +document.getElementById(`${product.id}-quantity`).value})
+                  if  ((quantity + orderItem.quantity) > product.inventory){
+//TODO: change alert
+                    alert(`Your ${product.name} order quantity exceeds our inventory. YOU WILL GET ${product.inventory} ${product.name} AND YOU'LL LOVE IT!!!!`)
+                    editOrderItem({...orderItem, quantity: product.inventory});
+                  } else {
+                    editOrderItem({ id: orderItem.id, quantity: orderItem.quantity + quantity})
+                  }
 
                   //If there ISN'T an orderItem in the cart that matches the orderItem we're trying to add...
                 } else {
-                  createOrderItem({ orderId: cartOrder.id, productId: product.id, quantity: +document.getElementById(`${product.id}-quantity`).value})
+                  if  (quantity > product.inventory){
+  //TODO: change alert
+                    alert(`Your ${product.name} order quantity exceeds our inventory. YOU WILL GET ${product.inventory} ${product.name} AND YOU'LL LOVE IT!!!!`)
+                    createOrderItem({orderId: cartOrder.id, productId: product.id, quantity: product.inventory, userId: auth.id});
+                  } else {
+                    createOrderItem({ orderId: cartOrder.id, productId: product.id, quantity, userId: auth.id})
+                  }
                 }
 
                 //If there ISN'T an order that is the cart...
               } else {
                 cartOrder = createOrder({userId: auth.id})
-                createOrderItem({ orderId: cartOrder.id, productId: product.id, quantity: +document.getElementById(`${product.id}-quantity`).value})
+                if  (quantity > product.inventory){
+                  //TODO: change alert
+                  alert(`Your ${product.name} order quantity exceeds our inventory. YOU WILL GET ${product.inventory} ${product.name} AND YOU'LL LOVE IT!!!!`)
+                  createOrderItem({orderId: cartOrder.id, productId: product.id, quantity: product.inventory, userId: auth.id});
+                } else {
+                  createOrderItem({ orderId: cartOrder.id, productId: product.id, quantity, userId: auth.id});
+                  
+                }
               } 
               }}>Add to Cart</button>
         </div>        

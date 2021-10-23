@@ -36,17 +36,15 @@ class AdminOrderItemForm extends Component {
 
     async onSubmit(ev){
         ev.preventDefault();
-        console.log(this.state)
         const { quantity} = this.state;
-        const { editOrderItem, orderItem } = this.props;
+        const { deleteOrderItem, editOrderItem, orderItem } = this.props;
 
         try{
-            await editOrderItem({...orderItem, quantity});
-            // if (+quantity === 0){
-            //     await deleteOrderItem(orderItem.id);
-            // }else {
-            //     await editOrderItem({...orderItem, quantity});
-            // }
+            if (+quantity === 0){
+                await deleteOrderItem(orderItem.id);
+            }else {
+                await editOrderItem({...orderItem, quantity});
+            }
         } 
         catch (ex){
             console.log(ex);

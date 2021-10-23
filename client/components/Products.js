@@ -18,7 +18,7 @@ const history = useHistory();
 return (
   <div id="product-gallery">
 
-<Grid container spacing={4}  direction='row' >
+<Grid container style={{margin:'3rem'}} spacing={4}  direction='row' >
     {
         products.map(product => {
           const [quantity, setQuantity] = useState(0);
@@ -26,12 +26,12 @@ return (
             return (
                 <Grid key={product.id} item xs={75} sm={3} style={{key:`${product.id}`}}>
                 <Card style={{backgroundColor: 'lightgray'}} 
-                  sx={{ maxWidth: 300, maxHeight: 200}} 
+                  sx={{ maxWidth: 300, }} 
                   >
                     <CardActionArea onClick={()=>history.push(`/products/${product.id}`)}>
                         <CardMedia
                             component="img"
-                            height="80"
+                            height="30"
                             image={product.imageUrl || "https://i.gifer.com/MNu.gif"}
                             alt="product image"
                         />
@@ -54,7 +54,7 @@ return (
                         </CardContent>
                     </CardActionArea >
                     <CardActions>
-                    <FormControl fullWidth>
+                    <FormControl fullWidth style={{marginBottom: '3rem'}}>
                       <TextField 
                           type="number"
                           InputProps={{
@@ -85,10 +85,7 @@ return (
                         }
                       </Select> */}
                     </FormControl>
-                    
-                      
-                    
-                        <Button color='primary' variant='outlined'
+                        <Button color='primary' variant='outlined' style={{marginBottom: '3rem'}}
                           onClick={
                             async (ev) => {
                               let cartOrder = orders.find(order => (order.userId === auth.id) && order.isCart)

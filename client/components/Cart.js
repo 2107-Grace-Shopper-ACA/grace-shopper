@@ -4,12 +4,13 @@ import { connect } from 'react-redux'
 import { deleteOrderItem, editOrderItem,loadOrderItems } from '../store';
 
 const Cart = ({ orders, orderItems, editOrderItem, deleteOrderItem, loadOrderItems }) => {
-  const order = orders.find(order => order.isCart);
-  // let cartItems = orderItems.filter(orderItem => orderItem.orderId === order.id && order.quantity > 0);
-  let cartItems = orderItems.filter(orderItem => orderItem.orderId === order.id);
-
+  let cartOrder = orders.find(order => order.isCart);
+  let cartItems = orderItems.filter(orderItem => orderItem.orderId === cartOrder.id);
+  
+  if(orders.length === 0 || !cartOrder || cartItems.length === 0) return 'Your cart is empty!'
+  
 //Prepping items for Stripe PUT request  
-  cartItems = cartItems.map(item => {
+  const stripeCartItems = cartItems.map(item => {
     return (
 //TODO: need to only send id and quantity for security
       {
@@ -21,8 +22,6 @@ const Cart = ({ orders, orderItems, editOrderItem, deleteOrderItem, loadOrderIte
     )
   });
 //
-  
-
   const handleClick = async() => {
     fetch("/create-checkout-session", {
         method: "POST",
@@ -31,13 +30,12 @@ const Cart = ({ orders, orderItems, editOrderItem, deleteOrderItem, loadOrderIte
         },
         // Send along all the information about the items
         body: JSON.stringify({
-          items: cartItems,
-          orderId: order.id
+          items: stripeCartItems,
+          orderId: cartOrder.id
         }),
       })
         .then(res => {
           if (res.ok) return res.json()
-          // If there is an error then make sure we catch that
           return res.json().then(e => Promise.reject(e))
         })
         .then(({ url }) => {
@@ -51,26 +49,25 @@ const Cart = ({ orders, orderItems, editOrderItem, deleteOrderItem, loadOrderIte
 
 //trying to update cart if admin edits something
 
-useEffect(() => {
-  loadOrderItems()
-}, [cartItems.length])
+// useEffect(() => {
+//   loadOrderItems()
+// }, [cartItems.length])
 
 //Prevents a crash on a hard reload
 
+//combined this stuff and moved to top
+// if(orders.length === 0) return 'Your cart is empty!'
 
-if(orders.length === 0) return 'Your cart is empty!'
-
-const cartOrder = orders.find((order) => order.isCart)
+// const cartOrder = orders.find((order) => order.isCart)
 //i think we only need to check if there's a cart order bc there can't be orderitems in the cart if there's no cart order until we do the guest stuff //commenting this out for now for debugging
-if(!cartOrder) return 'Your cart is empty!'
+// if(!cartOrder) return 'Your cart is empty!'
 
 //something really weird is happening where it doesn't change when you add an item to an empty cart
   // if(!cartOrder || cartOrder.orderItems.length === 0) return 'Your cart is empty!'
-  if(!cartOrder || !cartItems.length) return 'Your cart is empty!'
+  // if(!cartOrder || !cartItems.length) return 'Your cart is empty!'
 
   return (
     <div>
-    
       <button onClick={handleClick} >
         Checkout
       </button>
@@ -78,7 +75,10 @@ if(!cartOrder) return 'Your cart is empty!'
       
       {`Order ID: ${cartOrder.id}`}
       <div>
-        {orderItems.filter(orderItem => orderItem.orderId === cartOrder.id && orderItem.quantity > 0).map(orderItem => {
+        {cartItems.map(orderItem => {
+          
+          let quantity;
+          
           return (
             <div key={orderItem.id}>
               <h4>{orderItem.product.name}</h4>
@@ -94,12 +94,11 @@ if(!cartOrder) return 'Your cart is empty!'
                   Quantity:
             <input type="number" id={`${orderItem.product.id}-quantity`} defaultValue={orderItem.quantity} min="0" max="9"/>
             <button type="button" onClick={async (ev) => {
-              editOrderItem({ id: orderItem.id, quantity: +document.getElementById(`${orderItem.product.id}-quantity`).value})
-                // if(+document.getElementById(`${orderItem.product.id}-quantity`).value !== 0){
-                //   editOrderItem({ id: orderItem.id, quantity: +document.getElementById(`${orderItem.product.id}-quantity`).value})
-                // } else {
-                //   deleteOrderItem(orderItem.id)
-                // }
+                if( +document.getElementById(`${orderItem.product.id}-quantity`).value !== 0){
+                  editOrderItem({ id: orderItem.id, quantity: +document.getElementById(`${orderItem.product.id}-quantity`).value})
+                } else {
+                  deleteOrderItem(orderItem.id)
+                }
               }} 
               >Change</button>
                 </li>
@@ -110,7 +109,7 @@ if(!cartOrder) return 'Your cart is empty!'
             </div>
           )
         })}
-        {`Subtotal: $${orderItems.filter(orderItem => orderItem.orderId === cartOrder.id).reduce((accu, cur) => {return accu + cur.quantity*cur.product.price}, 0)}`}
+        {`Subtotal: $${cartItems.reduce((accu, cur) => {return accu + cur.quantity*cur.product.price}, 0)}`}
       </div>
       {/* 
       Even having this live on this page prevents the working div from updating!!!
