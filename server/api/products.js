@@ -25,10 +25,10 @@ router.get('/:productId', async (req, res, next) => {
 })
 
 router.put('/:productId', async (req, res, next) => {
-  const {inventory} = req.body;
+  const {inventory, isActive} = req.body;
   try {
     const _product = await Product.findByPk(req.params.productId);
-    await _product.update({..._product, inventory});
+    await _product.update({..._product, inventory, isActive});
     const product = await Product.findByPk(_product.id, {
       include: Category
     });

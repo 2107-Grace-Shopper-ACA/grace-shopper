@@ -30,8 +30,7 @@ export const loadAdminOrders = () => {
     }
   }
 }
-export const editAdminOrder = (order) => {
-  console.log(order)
+export const editAdminOrder = (order, history) => {
   return async (dispatch) => {
     const token = window.localStorage.getItem(TOKEN);
     if (token){
@@ -41,7 +40,7 @@ export const editAdminOrder = (order) => {
         }
       })).data;
       dispatch(_editAdminOrder(adminOrder));
-      console.log('ID IDIDIDIDIDIDIDIDID')
+      history.goBack()
     }
   }
 }

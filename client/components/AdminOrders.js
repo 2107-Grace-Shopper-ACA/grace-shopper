@@ -2,7 +2,7 @@ import React, {useEffect, forwardRef} from 'react'
 import { useState } from 'react';
 import {connect} from 'react-redux'
 import { Link } from 'react-router-dom';
-import {loadAdminOrders, loadAdminOrderItems, editAdminOrder} from '../store';
+import {loadAdminOrders, loadAdminOrderItems} from '../store';
 
 import Dialog from '@material-ui/core/Dialog';
 import AdminOrderForm from './AdminOrderForm';
@@ -28,13 +28,14 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 /**
  * COMPONENT
  */
-const AdminOrders = ({orders, orderItems, match, products, loadAdminOrderItems, loadAdminOrders, editOrder}) => {
-    
+const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrderItems, loadAdminOrders}) => {
+//TODO WHY NEED TO REFRESH AFTER EDITING    
 //TODO not sure if i need this
     useEffect(() => {
         loadAdminOrderItems();
         loadAdminOrders();
     }, []);
+    
     const tableIcons = {
         Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
         Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -87,7 +88,6 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrderItems, 
             }
         )
     })
-
     // Material Table Columns
     const columns = [
     { title: 'Date', field: 'date', type: 'date' },
@@ -112,6 +112,7 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrderItems, 
                 orderDetail: order.orderItems.map(item => {
                     return (
                         {
+                        id: item.id,
                         name: <Link style={{color: 'darkBlue'}} to={`/admin/orders/products/${item.product.id}`}>
                                 {item.product.name}
                             </Link>,
@@ -120,49 +121,12 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrderItems, 
                         subtotal: item.quantity * +item.product.price
                         }
                     )
-                })
+                }),
+                id: order.id
             }
         )
     });
-    // const [columns, setColumns] = useState([
-    // { title: 'Date', field: 'date', type: 'date' },
-    // { title: 'Order ID', field: 'orderId'},
-    // { title: 'Open ?', field: 'isCart', type: 'boolean'},
-    // { title: 'Purchaser', field: 'purchaser'},
-    // { title: 'Total Items', field: 'totalItems', type: 'numeric', filtering: false},
-    // { title: 'Total', field: 'total', type: 'currency', filtering: false},
 
-    // ]);
-
-    // // Material Table Rows
-    // const [data, setData] = useState(
-    //     displayOrders.map( order => {
-    //         return (
-    //             {
-    //                 date: order.date, 
-    //                 orderId: order.id, 
-    //                 isCart: order.isCart ,
-    //                 purchaser: order.user.username,
-    //                 totalItems: order.totalQuantity,
-    //                 total: order.total,
-    //                 orderDetail: order.orderItems.map(item => {
-    //                     return (
-    //                         {
-    //                         name: <Link style={{color: 'darkBlue'}} to={`/admin/orders/products/${item.product.id}`}>
-    //                                 {item.product.name}
-    //                             </Link>,
-    //                         quantity: item.quantity,
-    //                         price: item.product.price,
-    //                         subtotal: item.quantity * +item.product.price
-    //                         }
-    //                     )
-    //                 })
-    //             }
-    //         )
-    //     })
-    // ) 
-    
-    
     if (!displayOrders.length) {
         return '...loading';
     }   
@@ -178,19 +142,14 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrderItems, 
                     filtering: true,
                     headerStyle: {backgroundColor: 'dodgerBlue'}
                 }}
-                // editable={{
-                //     onRowUpdate: (newData, oldData) =>
-                //     new Promise((resolve, reject) => {
-                //       setTimeout(() => {
-                //         const dataUpdate = [...data];
-                //         const index = oldData.tableData.id;
-                //         dataUpdate[index] = newData;
-                //         setData([...dataUpdate]);
-          
-                //         resolve();
-                //       }, 1000)
-                //     }),
-                // }}
+                actions={[
+                    {
+                        icon: Edit,
+                        tooltip: 'Edit Order',
+                        isFreeAction: false,
+                        onClick: (ev, rowData) => history.push(`/admin/orders/${rowData.id}`)
+                    }
+                ]}
                 style={{
                     margin: '2rem',
                     backgroundColor: 'aliceblue'
@@ -201,6 +160,7 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrderItems, 
                             
                             icons={tableIcons}
                             columns={[
+                                { title: 'Order Item ID', field: 'id'},
                                 { title: 'Product Name', field: 'name'},
                                 { title: 'Quantity', field: 'quantity' },
                                 { title: 'Price', field: 'price', type: 'currency' },
@@ -213,6 +173,15 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrderItems, 
                                 toolbar: false,
                                 headerStyle: {backgroundColor: 'dodgerBlue'}
                             }}
+                            actions={[
+                                {
+                                    icon: Edit,
+                                    tooltip: 'Edit Order',
+                                    isFreeAction: false,
+                                    // onClick: (ev, rowData) => console.log(rowData)
+                                    onClick: (ev, rowData) => history.push(`/admin/orderItems/${rowData.id}`)
+                                }
+                            ]}
                             style={{
                                 backgroundColor: "aliceblue"
                             }}
@@ -240,7 +209,6 @@ const mapDispatch = dispatch => {
     return {
         loadAdminOrderItems: () => dispatch(loadAdminOrderItems()),
         loadAdminOrders: () => dispatch(loadAdminOrders()),
-        editOrder: (order) => dispatch(editAdminOrder(order))
     }
 }
 

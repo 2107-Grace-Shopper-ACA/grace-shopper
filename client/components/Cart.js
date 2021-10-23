@@ -1,10 +1,14 @@
 import React, {useState} from 'react'
+import { useEffect } from 'react';
 import { connect } from 'react-redux'
-import { deleteOrderItem, editOrderItem } from '../store';
+import { deleteOrderItem, editOrderItem,loadOrderItems } from '../store';
 
-const Cart = ({ orders, orderItems, editOrderItem, deleteOrderItem }) => {
+const Cart = ({ orders, orderItems, editOrderItem, deleteOrderItem, loadOrderItems }) => {
   const order = orders.find(order => order.isCart);
-  const cartItems = orderItems.filter(orderItem => orderItem.orderId === order.id).map(item => {
+  let cartItems = orderItems.filter(orderItem => orderItem.orderId === order.id);
+
+//Prepping items for Stripe PUT request  
+  cartItems = cartItems.map(item => {
     return (
 //TODO: need to only send id and quantity for security
       {
@@ -14,7 +18,9 @@ const Cart = ({ orders, orderItems, editOrderItem, deleteOrderItem }) => {
         orderItemId: item.id
       }
     )
-  })
+  });
+//
+  
 
   const handleClick = async() => {
     fetch("/create-checkout-session", {
@@ -42,16 +48,20 @@ const Cart = ({ orders, orderItems, editOrderItem, deleteOrderItem }) => {
         })
 }
 
+//trying to update cart if admin edits something
+
+useEffect(() => {
+  loadOrderItems()
+}, [cartItems.length])
+
+//Prevents a crash on a hard reload
 
 
-  //Prevents a crash on a hard reload
-  
-  
-  // if(orders.length === 0) return 'Your cart is empty!'
+if(orders.length === 0) return 'Your cart is empty!'
 
-  const cartOrder = orders.find((order) => order.isCart)
+const cartOrder = orders.find((order) => order.isCart)
 //i think we only need to check if there's a cart order bc there can't be orderitems in the cart if there's no cart order until we do the guest stuff //commenting this out for now for debugging
-  if(!cartOrder) return 'Your cart is empty!'
+if(!cartOrder) return 'Your cart is empty!'
 
 //something really weird is happening where it doesn't change when you add an item to an empty cart
   // if(!cartOrder || cartOrder.orderItems.length === 0) return 'Your cart is empty!'
@@ -67,7 +77,7 @@ const Cart = ({ orders, orderItems, editOrderItem, deleteOrderItem }) => {
       
       {`Order ID: ${cartOrder.id}`}
       <div>
-        {orderItems.filter(orderItem => orderItem.orderId === cartOrder.id).map(orderItem => {
+        {orderItems.filter(orderItem => orderItem.orderId === cartOrder.id && orderItem.quantity > 0).map(orderItem => {
           return (
             <div key={orderItem.id}>
               <h4>{orderItem.product.name}</h4>
@@ -83,11 +93,12 @@ const Cart = ({ orders, orderItems, editOrderItem, deleteOrderItem }) => {
                   Quantity:
             <input type="number" id={`${orderItem.product.id}-quantity`} defaultValue={orderItem.quantity} min="0" max="9"/>
             <button type="button" onClick={async (ev) => {
-                if(+document.getElementById(`${orderItem.product.id}-quantity`).value !== 0){
-                  editOrderItem({ id: orderItem.id, quantity: +document.getElementById(`${orderItem.product.id}-quantity`).value})
-                } else {
-                  deleteOrderItem(orderItem.id)
-                }
+              editOrderItem({ id: orderItem.id, quantity: +document.getElementById(`${orderItem.product.id}-quantity`).value})
+                // if(+document.getElementById(`${orderItem.product.id}-quantity`).value !== 0){
+                //   editOrderItem({ id: orderItem.id, quantity: +document.getElementById(`${orderItem.product.id}-quantity`).value})
+                // } else {
+                //   deleteOrderItem(orderItem.id)
+                // }
               }} 
               >Change</button>
                 </li>
@@ -129,7 +140,8 @@ const mapDispatch = (dispatch, {history}) => {
   return (
     {
       editOrderItem: (order) => dispatch(editOrderItem(order)),
-      deleteOrderItem: (id) => dispatch(deleteOrderItem(id))
+      deleteOrderItem: (id) => dispatch(deleteOrderItem(id)),
+      loadOrderItems: () => dispatch(loadOrderItems())
     }
   )
 }

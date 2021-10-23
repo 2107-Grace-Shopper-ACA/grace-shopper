@@ -22,13 +22,17 @@ const Success = ({auth, order, editOrder, createOrder, orderItems, editProduct, 
         }
     });
 
-
-    console.log(products, newInventory)
     const handleClick = async() => {
+        console.log(products, newInventory)
         await editOrder({...order, date: new Date(), isCart: false});
         await createOrder({userId: auth.id, isCart: true});
         await Promise.all(products.map((product, idx) => {
-            editProduct({...product, inventory: newInventory[idx]});
+            console.log(newInventory[idx], typeof newInventory[idx])
+            if (newInventory[idx] > 0){
+                editProduct({...product, inventory: newInventory[idx]});
+            } else {
+                editProduct({...product, inventory: newInventory[idx], isActive: false});
+            }
         }))
         history.push('/home');
     }

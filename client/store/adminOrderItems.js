@@ -6,13 +6,14 @@ const TOKEN = 'token'
  * ACTION TYPES
  */
  const LOAD_ADMIN_ORDERITEMS = 'LOAD_ADMIN_ORDERITEMS'
- 
+ const EDIT_ADMIN_ORDERITEM = 'EDIT_ADMIN_ORDERITEM'
+ const DELETE_ADMIN_ORDERITEM = 'DELETE_ADMIN_ORDERITEM'
  /**
   * ACTION CREATORS
   */
  const _loadAdminOrderItems = (adminOrderItems) => ({ type: LOAD_ADMIN_ORDERITEMS, adminOrderItems });
-//  const _createOrderItem = (orderItem) => ({ type: CREATE_ORDERITEM, orderItem})
-//  const _editOrderItem = (orderItem) => ({ type: EDIT_ORDERITEM, orderItem})
+ const _editAdminOrderItem = (orderItem) => ({ type: EDIT_ADMIN_ORDERITEM, orderItem});
+ const _deleteAdminOrderItem = (id) => ({ type: DELETE_ADMIN_ORDERITEM, id});
  
  /**
   * THUNK CREATORS
@@ -32,19 +33,35 @@ export const loadAdminOrderItems = () => {
   }
 }
 
-//  export const createOrderItem = (item) => {
-//    return async(dispatch) => {
-//      const { data: orderItem } = await axios.post('/api/orderItems', item);
-//      dispatch(_createOrderItem(orderItem));
-//    }
-//  }
+ export const deleteAdminOrderItem = (id) => {
+   return async(dispatch) => {
+    const token = window.localStorage.getItem(TOKEN);
+    if (token){
+      await axios.delete(`/api/admin/orderItems/${id}`, {
+        headers: {
+          authorization: token
+        }
+      });
+     dispatch(_deleteAdminOrderItem(id));
+   }
+ }
+}
 
-//  export const editOrderItem = (orderItem) => {
-//    return async(dispatch) => {
-//      const { data: updated } = await axios.put(`/api/orderItems/${orderItem.id}`, orderItem);
-//      dispatch(_editOrderItem(updated));
-//    }
-//  }
+ export const editAdminOrderItem = (item, history) => {
+  return async (dispatch) => {
+    const token = window.localStorage.getItem(TOKEN);
+    if (token){
+      const adminOrderItem = (await axios.put(`/api/admin/orderItems/${item.id}`, item, {
+        headers: {
+          authorization: token
+        }
+      })).data;
+      dispatch(_editAdminOrderItem(adminOrderItem));
+      // history.push(`admin/orders/${adminOrderItem.orderId}`)
+      history.goBack()
+    }
+  }
+}
  
  /**
   * REDUCER
@@ -54,10 +71,10 @@ export const loadAdminOrderItems = () => {
      switch(action.type) {
          case LOAD_ADMIN_ORDERITEMS:
              return action.adminOrderItems;
-        //  case CREATE_ORDERITEM:
-        //      return [...state, action.orderItem];
-        //  case EDIT_ORDERITEM:
-        //      return state.map(orderItem => orderItem.id === action.orderItem.id ? action.orderItem : orderItem);
+         case DELETE_ADMIN_ORDERITEM:
+             return state.filter(item => item.id !== action.id)
+         case EDIT_ADMIN_ORDERITEM:
+             return state.map(item => item.id === action.orderItem.id ? action.orderItem : item);
          default:
              return state
      }
