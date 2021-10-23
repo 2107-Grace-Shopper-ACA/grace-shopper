@@ -4,7 +4,10 @@ import { deleteOrderItem, editOrderItem } from '../store';
 
 const Cart = ({ orders, orderItems, editOrderItem, deleteOrderItem }) => {
   const order = orders.find(order => order.isCart);
-  const cartItems = orderItems.filter(orderItem => orderItem.orderId === order.id).map(item => {
+  let cartItems = orderItems.filter(orderItem => orderItem.orderId === order.id);
+
+//Prepping items for Stripe PUT request  
+  cartItems = cartItems.map(item => {
     return (
 //TODO: need to only send id and quantity for security
       {
@@ -14,7 +17,9 @@ const Cart = ({ orders, orderItems, editOrderItem, deleteOrderItem }) => {
         orderItemId: item.id
       }
     )
-  })
+  });
+//
+  
 
   const handleClick = async() => {
     fetch("/create-checkout-session", {
