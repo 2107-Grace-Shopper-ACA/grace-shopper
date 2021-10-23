@@ -40,6 +40,22 @@ const User = db.define('user', {
     validate: {
       len: [10, 10]
     }
+  },
+  streetAddress: {
+    type: STRING,
+    defaultValue: null
+  },
+  city: {
+    type: STRING,
+    defaultValue: null
+  },
+  state: {
+    type: STRING,
+    defaultValue: null
+  },
+  zipcode: {
+    type: STRING,
+    defaultValue: null
   }
 })
 
