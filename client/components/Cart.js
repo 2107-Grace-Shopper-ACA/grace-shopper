@@ -47,19 +47,21 @@ const Cart = ({ orders, orderItems, editOrderItem, deleteOrderItem, loadOrderIte
           console.error(e.error)
         })
 }
-//trying to update cart with new price if admin edits price
+
+//trying to update cart if admin edits something
+
 useEffect(() => {
   loadOrderItems()
-}, [])
+}, [cartItems.length])
 
-  //Prevents a crash on a hard reload
-  
-  
-  if(orders.length === 0) return 'Your cart is empty!'
+//Prevents a crash on a hard reload
 
-  const cartOrder = orders.find((order) => order.isCart)
+
+if(orders.length === 0) return 'Your cart is empty!'
+
+const cartOrder = orders.find((order) => order.isCart)
 //i think we only need to check if there's a cart order bc there can't be orderitems in the cart if there's no cart order until we do the guest stuff //commenting this out for now for debugging
-  if(!cartOrder) return 'Your cart is empty!'
+if(!cartOrder) return 'Your cart is empty!'
 
 //something really weird is happening where it doesn't change when you add an item to an empty cart
   // if(!cartOrder || cartOrder.orderItems.length === 0) return 'Your cart is empty!'
@@ -75,7 +77,7 @@ useEffect(() => {
       
       {`Order ID: ${cartOrder.id}`}
       <div>
-        {orderItems.filter(orderItem => orderItem.orderId === cartOrder.id).map(orderItem => {
+        {orderItems.filter(orderItem => orderItem.orderId === cartOrder.id && orderItem.quantity > 0).map(orderItem => {
           return (
             <div key={orderItem.id}>
               <h4>{orderItem.product.name}</h4>
@@ -91,11 +93,12 @@ useEffect(() => {
                   Quantity:
             <input type="number" id={`${orderItem.product.id}-quantity`} defaultValue={orderItem.quantity} min="0" max="9"/>
             <button type="button" onClick={async (ev) => {
-                if(+document.getElementById(`${orderItem.product.id}-quantity`).value !== 0){
-                  editOrderItem({ id: orderItem.id, quantity: +document.getElementById(`${orderItem.product.id}-quantity`).value})
-                } else {
-                  deleteOrderItem(orderItem.id)
-                }
+              editOrderItem({ id: orderItem.id, quantity: +document.getElementById(`${orderItem.product.id}-quantity`).value})
+                // if(+document.getElementById(`${orderItem.product.id}-quantity`).value !== 0){
+                //   editOrderItem({ id: orderItem.id, quantity: +document.getElementById(`${orderItem.product.id}-quantity`).value})
+                // } else {
+                //   deleteOrderItem(orderItem.id)
+                // }
               }} 
               >Change</button>
                 </li>

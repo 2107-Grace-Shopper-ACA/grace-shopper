@@ -36,7 +36,7 @@ async function seed() {
 
   // Creating Products
   const products = await Promise.all([
-    Product.create({ name: "Farfalle", inventory: 3, price: 8, imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Farfalle_Pasta.JPG', description: "Bowtie-shaped pieces named after the Italian word for “butterfly,” farfalla.", categoryId: smallPastas.id }),
+    Product.create({ name: "Farfalle", inventory: 100, price: 8, imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Farfalle_Pasta.JPG', description: "Bowtie-shaped pieces named after the Italian word for “butterfly,” farfalla.", categoryId: smallPastas.id }),
     Product.create({ name: "Orecchiette", inventory: 100, price: 9, imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/1/17/Orecchiette_Pasta.JPG', description: "Concave, somewhat flattened little shells. Originated in Southern Italy with a name meaning “small ear.”", categoryId: smallPastas.id }),
     Product.create({ name: "Rotini", inventory: 100, price: 9, imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9dceDtvtAlGZOXS8b_29O2-3YrTpLhfIhCg&usqp=CAU', description: "Tight corkscrews that are especially good at holding onto thick sauces. You may also see them labeled as “fusilli.”", categoryId: smallPastas.id }),
     Product.create({ name: "Orzo", inventory: 100, price: 10, imageUrl: 'https://chefsmandala.com/wp-content/uploads/2018/02/Orzo-Pasta-shutterstock_110331179.jpg', description: "Small noodles shaped like grains of rice. These are often added to garden salads, pasta salads and soups.", categoryId: smallPastas.id }),
