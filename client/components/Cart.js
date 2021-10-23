@@ -10,8 +10,6 @@ const Cart = ({ orders, orderItems, editOrderItem, deleteOrderItem, loadOrderIte
 
 //Prepping items for Stripe PUT request  
   cartItems = cartItems.map(item => {
-    if(item.quantity > 0)
-    console.log(item)
     return (
 //TODO: need to only send id and quantity for security
       {
