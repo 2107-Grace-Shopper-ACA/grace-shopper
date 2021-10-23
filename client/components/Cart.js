@@ -1,8 +1,9 @@
 import React, {useState} from 'react'
+import { useEffect } from 'react';
 import { connect } from 'react-redux'
-import { deleteOrderItem, editOrderItem } from '../store';
+import { deleteOrderItem, editOrderItem,loadOrderItems } from '../store';
 
-const Cart = ({ orders, orderItems, editOrderItem, deleteOrderItem }) => {
+const Cart = ({ orders, orderItems, editOrderItem, deleteOrderItem, loadOrderItems }) => {
   const order = orders.find(order => order.isCart);
   let cartItems = orderItems.filter(orderItem => orderItem.orderId === order.id);
 
@@ -46,8 +47,10 @@ const Cart = ({ orders, orderItems, editOrderItem, deleteOrderItem }) => {
           console.error(e.error)
         })
 }
-
-
+//trying to update cart with new price if admin edits price
+useEffect(() => {
+  loadOrderItems()
+}, [])
 
   //Prevents a crash on a hard reload
   
@@ -134,7 +137,8 @@ const mapDispatch = (dispatch, {history}) => {
   return (
     {
       editOrderItem: (order) => dispatch(editOrderItem(order)),
-      deleteOrderItem: (id) => dispatch(deleteOrderItem(id))
+      deleteOrderItem: (id) => dispatch(deleteOrderItem(id)),
+      loadOrderItems: () => dispatch(loadOrderItems())
     }
   )
 }
