@@ -76,9 +76,6 @@ const Cart = ({ orders, orderItems, editOrderItem, deleteOrderItem, loadOrderIte
       {`Order ID: ${cartOrder.id}`}
       <div>
         {cartItems.map(orderItem => {
-          
-          let quantity;
-          
           return (
             <div key={orderItem.id}>
               <h4>{orderItem.product.name}</h4>
