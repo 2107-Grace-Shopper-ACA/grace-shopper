@@ -22,7 +22,7 @@ return (
     {
         products.map(product => {
             return (
-                <Grid item xs={7} sm={4}>
+                <Grid item xs={12} sm={8} md={6} lg={3} xl={2}>
                   <ProductCard product={product} />
                 </Grid>
             );
