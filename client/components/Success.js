@@ -55,112 +55,113 @@ const Success = ({auth, order, editOrder, createOrder, orderItems, editProduct, 
             <h3>Success!</h3>
             <h3>Click the Button or Else!</h3>
             <button onClick={handleClick}>BACK TO PASTA</button>
-        </div>
-//         <div>
-//         <h3>Success, {auth.username}!</h3>
-//         <button onClick={handleClick}>BACK TO PASTA PEDDLER</button>
-//         <Typography variant="h6" style={{color: '#8f8a8a', marginLeft: '1.5rem'}}>Order # {order.id} Was Placed
-//         </Typography>
-//         <br></br>
-//         <Typography variant="h6" style={{color: '#8f8a8a', marginLeft: '1.5rem'}}>
-//             Maybe Something Will Happen
-//         </Typography>
+        
+        <div>
+        <h3>Success, {auth.username}!</h3>
+        
+        {/* <Typography variant="h6" style={{color: '#8f8a8a', marginLeft: '1.5rem'}}>Order # {order.id} Was Placed
+        </Typography> */}
+        {/* <br></br>
+        <Typography variant="h6" style={{color: '#8f8a8a', marginLeft: '1.5rem'}}>
+            Maybe Something Will Happen
+        </Typography>
 
-//         <Grid className="cart" container style={{margin:'2rem'}} display='flex' direction='column' xs={7} >
-//               <Card>
-//               <Typography variant="h6" >Order Date: {order.date}</Typography>
-//               <Typography variant='subtitle1'>
-//                     Order ID: {order.id}
-//               </Typography>
-//               <hr></hr>
-//                 <Box display='flex' >
-//                   <CardContent>
-//                     <CardMedia
-//                       component="img"
-//                       height={100}
-//                       image={"https://i.gifer.com/MNu.gif"}
-//                       alt="product image"
-//                     />
-//                     <Button variant='outlined' color='secondary' style={{marginTop: "1rem"}}>
-//                       Questions?<LiveHelpIcon />
-//                     </Button>
-//                     <br></br>
-// {/* //TODO: ADD FUNCTIONALITY                     */}
-//                     <Rating
-//                       size='small'
-//                       name="rating"
-//                       defaultValue={2.5}
-//                       precision={0.5}
-//                       max={4}
-//                       value={rating}
-//                       onChange={(event, newValue) => {
-//                         setRating(newValue);
-//                       }}
-//                     />
-//                     <Button variant='outlined' size='small' color='inherit'>Leave a Review</Button>
-//                   </CardContent>
-//                   <CardContent>
-//                     <Typography variant='subtitle1'>
-//                     Products
-//                     <hr></hr>
-//                     </Typography>
-//                     {
-//                       order.orderItems.map(item => {
-//                         return (
-//                           <Typography variant='subtitle1' color="textSecondary">
-//                           {item.product.name}: 
-//                           </Typography>
-//                         )
-//                       })
-//                     }
-//                   </CardContent>
-//                   <CardContent>
-//                   <Typography variant='subtitle1'>
-//                     Price
-//                     <hr></hr>
-//                     </Typography>
-//                     {
-//                       order.orderItems.map(item => {
-//                         return (
-//                           <Typography variant='subtitle1' color="textSecondary">
-//                           {item.product.price}: 
-//                           </Typography>
-//                         )
-//                       })
-//                     }
-//                   <Typography variant='subtitle1'>
-//                     <hr></hr>
-//                     ${order.orderItems.reduce((accu, cur) => accu + cur.quantity*cur.product.price, 0).toFixed(2)}
-//                     </Typography>
-//                   </CardContent>
-//                   <CardContent>
-//                   <Typography variant='subtitle1'>
-//                     Quantity
-//                     <hr></hr>
-//                     </Typography>
-//                     {
-//                       order.orderItems.map(item => {
-//                         return (
-//                           <Typography variant='subtitle1' color="textSecondary">
-//                           {item.quantity}
-//                           </Typography>
-//                         )
-//                       })
-//                     }
-//                     <Typography variant='subtitle1'>
-//                     <hr></hr>
-//                     {order.orderItems.reduce((accu, cur) => accu + cur.quantity, 0)}
-//                     </Typography>
-//                   </CardContent>
-//                   <CardContent>
-//                     <Typography variant='subtitle1'>
-// //                     TODO: STATUS
-//                     </Typography>
-//                   </CardContent>
-//                 </Box>
-//               </Card>
-//             </Grid>
-//       </div>
+         <Grid className="cart" container style={{margin:'2rem'}} display='flex' direction='column' xs={7} >
+               <Card>
+               <Typography variant="h6" >Order Date: {order.date}</Typography>
+               <Typography variant='subtitle1'>
+                     Order ID: {order.id}
+               </Typography>
+               <hr></hr>
+                 <Box display='flex' >
+                   <CardContent>
+                     <CardMedia
+                      component="img"
+                      height={100}
+                      image={"https://i.gifer.com/MNu.gif"}
+                      alt="product image"
+                    />
+                    <Button variant='outlined' color='secondary' style={{marginTop: "1rem"}}>
+                      Questions?<LiveHelpIcon />
+                    </Button>
+                    <br></br> */}
+{/* // //TODO: ADD FUNCTIONALITY                */}    
+                     {/* <Rating
+                      size='small'
+                      name="rating"
+                      defaultValue={2.5}
+                      precision={0.5}
+                      max={4}
+                      value={rating}
+                      onChange={(event, newValue) => {
+                        setRating(newValue); 
+                      }}
+                    />
+                    <Button variant='outlined' size='small' color='inherit'>Leave a Review</Button>
+                  </CardContent>
+                  <CardContent>
+                    <Typography variant='subtitle1'>
+                    Products
+                    <hr></hr>
+                    </Typography>
+                    {
+                      order.orderItems.map(item => {
+                        return (
+                          <Typography variant='subtitle1' color="textSecondary">
+                          {item.product.name}: 
+                          </Typography>
+                        )
+                      })
+                    }
+                  </CardContent>
+                  <CardContent>
+                  <Typography variant='subtitle1'>
+                    Price
+                    <hr></hr>
+                    </Typography>
+                    {
+                      order.orderItems.map(item => {
+                        return (
+                          <Typography variant='subtitle1' color="textSecondary">
+                          {item.product.price}: 
+                          </Typography>
+                        )
+                      })
+                    }
+                  <Typography variant='subtitle1'>
+                    <hr></hr>
+                    ${order.orderItems.reduce((accu, cur) => accu + cur.quantity*cur.product.price, 0).toFixed(2)}
+                    </Typography>
+                  </CardContent>
+                  <CardContent>
+                  <Typography variant='subtitle1'>
+                    Quantity
+                    <hr></hr>
+                    </Typography>
+                    {
+                      order.orderItems.map(item => {
+                        return (
+                          <Typography variant='subtitle1' color="textSecondary">
+                          {item.quantity}
+                          </Typography>
+                        )
+                      })
+                    }
+                    <Typography variant='subtitle1'>
+                    <hr></hr>
+                    {order.orderItems.reduce((accu, cur) => accu + cur.quantity, 0)}
+                    </Typography>
+                  </CardContent>
+                  <CardContent>
+                    <Typography variant='subtitle1'> */}
+{/* //                     TODO: STATUS */}
+                    {/* </Typography>
+                  </CardContent>
+                </Box>
+              </Card>
+            </Grid>*/}
+      </div> 
+    </div>
     // )
     )
 }

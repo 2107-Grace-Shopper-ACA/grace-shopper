@@ -84,9 +84,9 @@ const handleSubmit = async() => {
         if (res.ok) return res.json()
         return res.json().then(e => Promise.reject(e))
       })
-      .then(({ url }) => {
+      .then(({ url, orderId }) => {
         // On success redirect the customer to the returned URL
-        window.location = url
+        window.location = url;
       })
       .catch(e => {
         console.error(e.error)
