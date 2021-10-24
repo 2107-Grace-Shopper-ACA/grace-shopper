@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout, loadOrders} from '../store'
+import {logout, loadOrders, loadOrderItems} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn, orderItems, orders, auth}) => {
+const Navbar = ({handleClick, isLoggedIn, orderItems, orders, auth, products}) => {
 
   //I moved this from line 33 and changed it so we don't get errors about not finding id
   const cartOrder = orders.find(order => order.isCart);
@@ -19,12 +19,28 @@ const Navbar = ({handleClick, isLoggedIn, orderItems, orders, auth}) => {
     }
   }
 
+  const totalInventory = products.reduce((accum, product) => {
+    accum += product.inventory;
+    return accum;
+  }, 0);
+//TODO: Why doesn't this update when the pathname changes? it only updates once I add to cart  
+//TODO: why does it only work when i use totalInventory?
+useEffect(() => {
+  findCartLength()
+}, [window.location.pathname, totalInventory])
+  
+//TODO: Doesn't update when admin changes quantity of cart order item
+  // useEffect(() => {
+  //   loadOrderItems()
+  // }, [...itemsMap])
 
 return (
   <div>
     <h1>Pasta Peddler</h1>
     <nav>
-      {isLoggedIn ? (
+      {
+      window.location.pathname.includes('success') ? '' :
+      isLoggedIn  ? (
         <div>
           {/* The navbar will show these links after you log in */}
           <Link to="/products">Products</Link>
@@ -35,11 +51,7 @@ return (
           }}>
             Logout
           </a>
-          {/* <Link to ="/cart">Cart({orderItems.filter(orderItem => orderItem.orderId === (orders.find(order => order.isCart)).id).reduce((accu, cur) => {return accu + cur.quantity}, 0)})</Link> */}
-  {/* //don't know why this doesn't work */}
-          {/* {
-            !window.location.pathname.includes('success') ? <Link to ="/cart">Cart({findCartLength()})</Link> : ''
-          } */}
+  
           <Link to ="/cart">Cart({findCartLength()})</Link>
           
           {
@@ -68,7 +80,8 @@ const mapState = (state) => {
     isLoggedIn: !!state.auth.id,
     orderItems: state.orderItems,
     orders: state.orders,
-    auth: state.auth
+    auth: state.auth, 
+    products: state.products
   }
 }
 

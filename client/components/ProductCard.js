@@ -29,7 +29,9 @@ const ProductCard = ({product, style, auth, orders, orderItems, createOrder, cre
     if (!product) return '...loading'
 
     return (
-        <Card style={{...style, backgroundColor: 'lightgray'}} 
+//TODO: can't get them to be same height
+        <div height='500px'>
+        <Card height='100%' style={{...style, alignItems: 'stretch', backgroundColor: 'lightgray'}} 
             
             >
             <CardActionArea onClick={()=>history.push(`/products/${product.id}`)}>
@@ -64,7 +66,21 @@ const ProductCard = ({product, style, auth, orders, orderItems, createOrder, cre
             </CardActionArea >
             <CardActions>
             <FormControl fullWidth style={{marginBottom: '3rem'}}>
-                <InputLabel >Quantity:</InputLabel>
+                {/* <div className="quantity" >
+                    <input
+                    type="number"
+                    className="quantity"
+                    defaultValue="1"
+                    min="1"
+                    max={maxQuantity}
+                    name={product.id}
+                    value={quantity || 1}
+                    onChange={(ev) => setQuantity(ev.target.value)}
+                    />
+                </div> */}
+                <InputLabel variant='body5' color='textPrimary'>
+                    Quantity:
+                </InputLabel>
                 <Select
                 value={ quantity || ''}
                 label="Quantity"
@@ -130,6 +146,7 @@ const ProductCard = ({product, style, auth, orders, orderItems, createOrder, cre
                 </Button>
             </CardActions>
         </Card>
+        </div>
     )
 }
 const mapState = (state) => {

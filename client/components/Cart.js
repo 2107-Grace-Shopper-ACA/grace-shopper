@@ -7,16 +7,10 @@ import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-import CardActionArea from '@material-ui/core/CardActionArea'
-import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import Card from '@material-ui/core/Card'
 import CardMedia from '@material-ui/core/CardMedia'
-import InputLabel from '@material-ui/core/InputLabel'
-import MenuItem from '@material-ui/core/MenuItem'
-import FormControl from '@material-ui/core/FormControl'
-import Select from '@material-ui/core/Select'
-import AddShoppingCart from '@material-ui/icons/AddShoppingCart'
+
 
   const Cart = ({ orders, orderItems, auth, editOrderItem, deleteOrderItem, loadOrderItems }) => {
     const history = useHistory();
@@ -48,16 +42,18 @@ import AddShoppingCart from '@material-ui/icons/AddShoppingCart'
       useEffect(() => {
         loadOrderItems()
       }, [cartItems.length])
-    
-    let total = cartItems.reduce((accum, item) => {
-      accum += item.quantity * item.product.price;
-      return accum;
-    },0);
-
-    const totalItems = cartItems.reduce((accum, item) => {
-      accum += item.quantity;
-      return accum;
-    }, 0);
+      
+      let total = cartItems.reduce((accum, item) => {
+        accum += item.quantity * item.product.price;
+        return accum;
+      },0);
+      
+      const totalItems = cartItems.reduce((accum, item) => {
+        accum += item.quantity;
+        return accum;
+      }, 0);
+      
+      const tax = .04;
 
 //Prepping items for Stripe PUT request  
   const stripeCartItems = cartItems.map(item => {
@@ -72,60 +68,51 @@ import AddShoppingCart from '@material-ui/icons/AddShoppingCart'
     )
   });
 //
-    
-    const tax = .04;
+const handleSubmit = async() => {
+  fetch("/create-checkout-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      // Send along all the information about the items
+      body: JSON.stringify({
+        items: stripeCartItems,
+        orderId: cartOrder.id
+      }),
+    })
+      .then(res => {
+        if (res.ok) return res.json()
+        return res.json().then(e => Promise.reject(e))
+      })
+      .then(({ url }) => {
+        // On success redirect the customer to the returned URL
+        window.location = url
+      })
+      .catch(e => {
+        console.error(e.error)
+      })
+}
     
     const onChange = async (ev) => {
-      ev.target.quantity === 0 ? 
-        await deleteOrderItem(ev.target.name) :
         await editOrderItem({id: ev.target.name, quantity: ev.target.value});
     }
-    const onClick = async (ev) => {
-      console.log(ev.target)
-      await deleteOrderItem(ev.target.value);
-    }
-
-    const handleSubmit = async() => {
-      fetch("/create-checkout-session", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          // Send along all the information about the items
-          body: JSON.stringify({
-            items: stripeCartItems,
-            orderId: cartOrder.id
-          }),
-        })
-          .then(res => {
-            if (res.ok) return res.json()
-            return res.json().then(e => Promise.reject(e))
-          })
-          .then(({ url }) => {
-            // On success redirect the customer to the returned URL
-            window.location = url
-          })
-          .catch(e => {
-            console.error(e.error)
-          })
-  }
-
+    
     return (
       <>
-      <Grid className="cart" container style={{margin:'2rem'}} display='flex' direction='column' xl={12} xs={12} lg={12} md={12} spacing={2} >
+      <Grid className="cart" container style={{margin:'2rem'}} display='flex' direction='column' xs={6} >
         <header className="container">
-        <Typography variant="h5" >Shopping Cart <span className="count">{totalItems} items in your cart</span></Typography>
+        <Typography variant="h5" >{auth.username}'s Shopping Cart <span className="count">({totalItems} items)</span></Typography>
         </header>
+        <Typography variant="h6" style={{color: '#8f8a8a', marginLeft: '1.5rem'}}>Order # {cartOrder.id}</Typography>
         {
           cartItems.map(item => (
-            <Grid item xs={12} xl={10} lg={8} md={6}>
+            <Grid item xs style={{margin: '1rem'}}>
               <Card>
                 <Box display='flex' >
                   <CardContent>
                     <CardMedia
                       component="img"
-                      maxHeight={200}
-                      maxWidth={200}
+                      height={100}
                       image={item.product.imageUrl || "https://i.gifer.com/MNu.gif"}
                       alt="product image"
                     />
@@ -135,7 +122,7 @@ import AddShoppingCart from '@material-ui/icons/AddShoppingCart'
                     </Typography>
                   </CardContent>
                   <CardContent>
-                    <Typography variant='subtitle2' color="textSecondary">
+                    <Typography variant='subtitle1' color="textSecondary">
                     Price:
                     <br></br>
                     ${item.product.price}
@@ -149,62 +136,49 @@ import AddShoppingCart from '@material-ui/icons/AddShoppingCart'
                     </Typography>
                   </CardContent>
                   <CardContent>
-                    <Typography variant='subtitle2'>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    </Typography>
                   </CardContent>
                   <CardContent>
-                  </CardContent>
-                    <Typography variant='subtitle2'>
+                    <Typography variant='subtitle2' style={{marginLeft: '1.5rem'}}>
+                      Edit
                     </Typography>
-                  <CardContent>
-                        <div className="quantity" display='inline'>
-                          <input
-                            type="number"
-                            className="quantity"
-                            defaultValue="1"
-                            min="1"
-                            max={item.product.inventory < 10 ? product.inventory : 10}
-                            name={item.id}
-                            value={item.quantity}
-                            onChange={onChange}
-                          />
-                        </div>
-                        </CardContent>
-                        <CardContent>
-                      <div>
-                        <button  value={item.id} onClick={onClick}>
-                          X
-                        </button>
-      //TODO: add icon and fix weird sizing
-                     </div>
-                  </CardContent>
+
+                    <div className="quantity" style={{marginBottom: '1rem', marginRight: '1rem'}}>
+                      <input
+                        type="number"
+                        className="quantity"
+                        min="1"
+                        max={item.product.inventory < 10 ? product.inventory : 10}
+                        name={item.id}
+                        value={item.quantity}
+                        onChange={onChange}
+                      />
+                    </div>
+                    <Button value={item.id} onClick={()=> {deleteOrderItem(item.id)}} color='primary' variant='outlined' size='small'>Delete</Button>
+                    </CardContent>
                 </Box>
               </Card>
             </Grid>
           ))
         }
+       <section className="container">
+          <div className="summary">
+            <ul>
+              <li>
+                Subtotal <span>${total.toFixed(2)}</span>
+              </li>
+              <li>
+                Tax <span>${(total * tax).toFixed(2)}</span>
+              </li>
+              <li className="total">
+                Total <span>${total + (total * tax)}</span>
+              </li>
+            </ul>
+          </div>
+          <div className="checkout">
+            <button onClick={handleSubmit} type="button">Check Out</button>
+          </div>
+        </section>
       </Grid>
-      <section className="container">
-       <div className="summary">
-         <ul>
-           <li>
-             Subtotal <span>${total.toFixed(2)}</span>
-           </li>
-           <li>
-             Tax <span>${(total * tax).toFixed(2)}</span>
-           </li>
-           <li className="total">
-             Total <span>${total + (total * tax)}</span>
-           </li>
-         </ul>
-       </div>
-       <div className="checkout">
-         <button onClick={handleSubmit} type="button">Check Out</button>
-       </div>
-     </section>
     </>
 //   <div className="cart">
 //     <header className="container">
