@@ -30,9 +30,17 @@ import CardMedia from '@material-ui/core/CardMedia'
         )
       }
       
+    //THERE SHOULD ALWAYS BE ONE NOW UNLESS GUEST!  
       let cartOrder = orders.find(order => order.isCart && auth.id ===order.userId) || {};
       let cartItems = orderItems.filter(orderItem => orderItem.orderId === cartOrder.id) || [];
       
+    //IF GUEST STILL ADD TO CART  
+      if (!auth.id){
+        const localCart = JSON.parse(localStorage.getItem('localCart'));
+        cartItems = localCart;
+      }
+
+
       if(cartItems.length === 0) {
         return (
           <EmptyCart />
@@ -101,9 +109,9 @@ const handleSubmit = async() => {
       <>
       <Grid className="cart" container style={{margin:'2rem'}} display='flex' direction='column' xs={6} >
         <header className="container">
-        <Typography variant="h5" >{auth.username}'s Shopping Cart <span className="count">({totalItems} items)</span></Typography>
+        <Typography variant="h5" >{auth.username || "Guest"}'s Shopping Cart <span className="count">({totalItems} items)</span></Typography>
         </header>
-        <Typography variant="h6" style={{color: '#8f8a8a', marginLeft: '1.5rem'}}>Order # {cartOrder.id}</Typography>
+        <Typography variant="h6" style={{color: '#8f8a8a', marginLeft: '1.5rem'}}>Order # {cartOrder.id || "Guest"}</Typography>
         {
           cartItems.map(item => (
             <Grid item xs style={{margin: '1rem'}}>

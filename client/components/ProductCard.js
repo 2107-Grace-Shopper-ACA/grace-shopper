@@ -112,21 +112,21 @@ const ProductCard = ({product, style, auth, orders, orderItems, createOrder, cre
                             let localCart;
                         //if there's no localCart create one and add item to it
                             if(!localStorage.getItem('localCart')){
-                                localCart = [{product, quantity: correctQuantity({quantity: 0}, product, quantity)}];
+                                localCart = [{id: product.id, product, quantity: correctQuantity({quantity: 0}, product, quantity)}];
                             } else {
                         //if there is a localCart
                                 localCart = JSON.parse(localStorage.getItem('localCart'));
                         //if there's nothing in the cart
                                 if(localCart.length === 0) {
-                                    localCart.push({product, quantity});
+                                    localCart.push({id: product.id, product, quantity});
                                 } else {
                         //if there are items in the cart, see if one is for the same product
-                                    const itemIndex = localCart.indexOf(item => item.product.id === product.id);
-                                    if (itemIndex >= 0) {
-                                        localCart[itemIndex].quantity = correctQuantity(localCart[itemIndex], product, quantity);
+                                    const thisItem = localCart.find(item => item.id === product.id);
+                                    if (thisItem) {
+                                        thisItem.quantity = correctQuantity(thisItem, product, quantity);
                                     } else {
                         //if not already in cart, add a new item
-                                        localCart.push({product, quantity});
+                                        localCart.push({id: product.id, product, quantity});
                                     }
                                 }
                             }
