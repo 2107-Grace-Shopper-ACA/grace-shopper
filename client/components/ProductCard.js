@@ -32,7 +32,6 @@ const ProductCard = ({product, style, auth, orders, orderItems, createOrder, cre
 //TODO: can't get them to be same height
         <div height='500px'>
         <Card key={product.id} height='100%' style={{...style, alignItems: 'stretch', backgroundColor: 'lightgray'}} 
-            
             >
             <CardActionArea onClick={()=>history.push(`/products/${product.id}`)}>
                 <CardMedia
@@ -99,48 +98,56 @@ const ProductCard = ({product, style, auth, orders, orderItems, createOrder, cre
                 <Button disabled={quantity === 0} color='primary' variant='outlined' style={{marginBottom: '3rem'}}
                     onClick={
                     async (ev) => {
-                        // let cartOrder = orders.find(order => (order.userId === auth.id) && order.isCart)
-                        
-                        //If there is an order that is the cart...
-                        if(cartOrder){
-                            let orderItem = cartItems.find(orderItem => orderItem.productId === product.id );
-                        
-                        //If there is an orderItem in the cart that matches the orderItem we're trying to add...
-                        if(orderItem){
-            //check to see if inventory will allow
-                            if  ((quantity + orderItem.quantity) > product.inventory){
-            //TODO: change alert
-                                alert(`Your ${product.name} order quantity exceeds our inventory. YOU WILL GET ${product.inventory} ${product.name} AND YOU'LL LOVE IT!!!!`)
-                                await editOrderItem({...orderItem, quantity: product.inventory});
-                                } else {
-                                await editOrderItem({ id: orderItem.id, quantity: orderItem.quantity + quantity})
-                                }
-                            //If there ISN'T an orderItem in the cart that matches the orderItem we're trying to add...
-                        } else {
-                            if  (quantity > product.inventory){
-            //TODO: change alert
-                            alert(`Your ${product.name} order quantity exceeds our inventory. YOU WILL GET ${product.inventory} ${product.name} AND YOU'LL LOVE IT!!!!`)
-                            await createOrderItem({orderId: cartOrder.id, productId: product.id, quantity: product.inventory, userId: auth.id});
+                        const correctQuantity = (item, product, quantity) => {
+                            if (quantity + item.quantity > product.inventory) {
+                                alert(`Your ${product.name} order quantity exceeds our inventory. YOU WILL GET ${product.inventory} ${product.name} AND YOU'LL LOVE IT!!!!`);
+                                return product.inventory;
                             } else {
-                            await createOrderItem({ orderId: cartOrder.id, productId: product.id, quantity, userId: auth.id})
+                                return quantity + item.quantity;
                             }
                         }
-
-                        //If there ISN'T an order that is the cart...
-                        } else {
-                        cartOrder = await createOrder({userId: auth.id})
-                        // console.log(`Cart Order made: ${JSON.stringify(cartOrder)}`)
-                        if  (quantity > product.inventory){
-        //TODO: change alert
-                            alert(`Your ${product.name} order quantity exceeds our inventory. YOU WILL GET ${product.inventory} ${product.name} AND YOU'LL LOVE IT!!!!`)
-                            await createOrderItem({orderId: cartOrder.id, productId: product.id, quantity: product.inventory, userId: auth.id});
-                        } else {
-                            await createOrderItem({ orderId: cartOrder.id, productId: product.id, quantity, userId: auth.id})
-                        }
+                        
+                        //if it is a guest
+                        if(!auth.id){
+                            let localCart;
+                        //if there's no localCart create one and add item to it
+                            if(!localStorage.getItem('localCart')){
+                                localCart = [{productId: product.id, quantity: correctQuantity({quantity: 0}, product, quantity)}];
+                            } else {
+                        //if there is a localCart
+                                localCart = JSON.parse(localStorage.getItem('localCart'));
+                        //if there's nothing in the cart
+                                if(localCart.length === 0) {
+                                    localCart.push({productId: product.id, quantity});
+                                } else {
+                        //if there are items in the cart, see if one is for the same product
+                                    const itemIndex = localCart.indexOf(item => item.productId === product.id);
+                                    if (itemIndex >= 0) {
+                                        localCart[itemIndex].quantity = correctQuantity(localCart[itemIndex], product, quantity);
+                                    } else {
+                        //if not already in cart, add a new item
+                                        localCart.push({productId: product.id, quantity});
+                                    }
+                                }
+                            }
+                        //add localCart to localStorage and reset quantity
+                            localStorage.setItem('localCart', JSON.stringify(localCart));
+                            setQuantity('')
                         } 
-                        setQuantity('');
+                        //it is a user and will definitely have a cart order
+                        else {
+                        //if order item is already in cart, edit order item quantity
+                            let orderItem = cartItems.find(orderItem => orderItem.productId === product.id );
+                            if (orderItem) {
+                                await editOrderItem({...orderItem, quantity: correctQuantity(orderItem, product, quantity)});
+                            }
+                        //if not in cart create new order item
+                            else {
+                                await createOrderItem({orderId: cartOrder.id, productId: product.id, quantity: correctQuantity({quantity: 0}, product, quantity)});
+                            }
+                            setQuantity('');
                         }
-                    }
+                    }}
                 >
                     <AddShoppingCart color='success'/>
                 </Button>
