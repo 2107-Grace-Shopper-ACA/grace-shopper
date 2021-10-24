@@ -37,14 +37,15 @@ class AdminOrderItemForm extends Component {
     async onSubmit(ev){
         ev.preventDefault();
         const { quantity} = this.state;
-        const { deleteOrderItem, editOrderItem, orderItem } = this.props;
+        const { deleteOrderItem, editOrderItem, orderItem, handleClose } = this.props;
 
         try{
             if (+quantity === 0){
                 await deleteOrderItem(orderItem.id);
             }else {
-                await editOrderItem({...orderItem, quantity});
+                await editOrderItem({id: orderItem.id, quantity});
             }
+            handleClose()
         } 
         catch (ex){
             console.log(ex);
@@ -64,7 +65,7 @@ class AdminOrderItemForm extends Component {
             <div>
                 <form onSubmit={onSubmit}>
                     <label>
-                        Product Name: {orderItem.product.name}
+                        Product Name: {orderItem.name}
                     </label>
                     <label>
                         Quantity: 
@@ -79,10 +80,10 @@ class AdminOrderItemForm extends Component {
                         </select>
                     </label>
                     <label>
-                        Price: {orderItem.product.price}
+                        Price: {orderItem.price}
                     </label>
                     <label>
-                        Subtotal:{orderItem.product.price * orderItem.quantity}
+                        Subtotal:{orderItem.subtotal}
                     </label>
                     <br/>
                     <button>Edit Item</button>

@@ -302,4 +302,11 @@ a {
       font-size: 16px;
     }
   }
-  
+
+/* ORDERS */
+.link-on-white {
+  color: rgb(0, 1, 75);
+ }
+ .link-on-white:hover {
+  color: #f58551;
+ }

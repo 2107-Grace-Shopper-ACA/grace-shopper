@@ -36,8 +36,8 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const _order = await Order.create(req.body)
-    const order = await Order.findByPk(_order.id, {
+    let order = await Order.create(req.body)
+    order = await Order.findByPk(order.id, {
       include: [
         {
           model: User,
@@ -49,17 +49,17 @@ router.post('/', async (req, res, next) => {
         },
       ],
     })
-    res.json(order)
+    res.send(order)
   } catch (err) {
     next(err)
   }
 })
 router.put('/:orderId', async (req, res, next) => {
-  const { isCart } = req.body;
+  const { isCart, date } = req.body;
   try {
-    const _order = await Order.findByPk(req.params.orderId);
-    await _order.update({..._order, isCart});
-    const order = await Order.findByPk(_order.id, {
+    let order = await Order.findByPk(req.params.orderId);
+    await order.update({...order, isCart, date});
+    order = await Order.findByPk(order.id, {
       include: [
         {
           model: User,
@@ -71,7 +71,7 @@ router.put('/:orderId', async (req, res, next) => {
         },
       ],
     });
-    res.json(order)
+    res.send(order)
   } catch (err) {
     next(err)
   }

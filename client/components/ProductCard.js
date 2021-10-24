@@ -31,7 +31,7 @@ const ProductCard = ({product, style, auth, orders, orderItems, createOrder, cre
     return (
 //TODO: can't get them to be same height
         <div height='500px'>
-        <Card height='100%' style={{...style, alignItems: 'stretch', backgroundColor: 'lightgray'}} 
+        <Card key={product.id} height='100%' style={{...style, alignItems: 'stretch', backgroundColor: 'lightgray'}} 
             
             >
             <CardActionArea onClick={()=>history.push(`/products/${product.id}`)}>

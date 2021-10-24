@@ -170,7 +170,7 @@ const handleSubmit = async() => {
                 Tax <span>${(total * tax).toFixed(2)}</span>
               </li>
               <li className="total">
-                Total <span>${total + (total * tax)}</span>
+                Total <span>${total + (total * tax).toFixed(2)}</span>
               </li>
             </ul>
           </div>

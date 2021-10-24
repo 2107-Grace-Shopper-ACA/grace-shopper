@@ -58,7 +58,7 @@ export const loadAdminOrderItems = () => {
       })).data;
       dispatch(_editAdminOrderItem(adminOrderItem));
       // history.push(`admin/orders/${adminOrderItem.orderId}`)
-      history.goBack()
+      
     }
   }
 }

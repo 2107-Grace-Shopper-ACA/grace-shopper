@@ -1,7 +1,6 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom"
-
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
@@ -11,13 +10,20 @@ import CardMedia from '@material-ui/core/CardMedia'
 import Card from '@material-ui/core/Card'
 import LiveHelpIcon from '@material-ui/icons/LiveHelp';
 import Rating from 'material-ui-rating';
+import { loadOrders } from "../store";
 
 
 const Orders = ({ orders, auth }) => {
-  
-  const [rating, setRating] = useState(2.5)
-  orders = orders.filter(order => !order.isCart);
+  useEffect(()=> {
+    loadOrders()
+  }, [])
+  const [rating, setRating] = useState(2.5);
+  orders = orders.filter(order => {
+    // console.log(Date.UTC(order.date));
+    // console.log(Date.toUTCString(order.date));
+    return !order.isCart});
 
+  
   return (  
     <div id="order-gallery">
       <Grid className="cart" container style={{margin:'2rem'}} display='flex' direction='column' xs={7} >
@@ -27,7 +33,7 @@ const Orders = ({ orders, auth }) => {
         {
           orders.map(order => (
             <>
-            <Grid item xs style={{margin: '1rem'}}>
+            <Grid item style={{margin: '1rem', key: order.id}} xs>
               <Card>
               <Typography variant="h6" >Order Date: {order.date}</Typography>
               <Typography variant='subtitle1'>
@@ -39,11 +45,11 @@ const Orders = ({ orders, auth }) => {
                     <CardMedia
                       component="img"
                       height={100}
-                      image={"https://i.gifer.com/MNu.gif"}
+                      image={"https://thumbs.gfycat.com/WavyQuerulousBordercollie.webp"}
                       alt="product image"
                     />
                     <Button variant='outlined' color='secondary' style={{marginTop: "1rem"}}>
-                      Questions?<LiveHelpIcon />
+                      Feedback?<LiveHelpIcon />
                     </Button>
                     <br></br>
 {/* //TODO: ADD FUNCTIONALITY                     */}
@@ -58,7 +64,6 @@ const Orders = ({ orders, auth }) => {
                         setRating(newValue);
                       }}
                     />
-                    <Button variant='outlined' size='small' color='inherit'>Leave a Review</Button>
                   </CardContent>
                   <CardContent>
                     <Typography variant='subtitle1'>
@@ -68,8 +73,8 @@ const Orders = ({ orders, auth }) => {
                     {
                       order.orderItems.map(item => {
                         return (
-                          <Typography variant='subtitle1' color="textSecondary">
-                          {item.product.name}: 
+                          <Typography key={item.id} variant='subtitle1' color="textSecondary">
+                          <Link className='link-on-white' to={`/products/${item.productId}`}> {item.product.name} </Link>
                           </Typography>
                         )
                       })
@@ -83,7 +88,7 @@ const Orders = ({ orders, auth }) => {
                     {
                       order.orderItems.map(item => {
                         return (
-                          <Typography variant='subtitle1' color="textSecondary">
+                          <Typography key={item.id} variant='subtitle1' color="textSecondary">
                           {item.product.price}: 
                           </Typography>
                         )
@@ -168,5 +173,9 @@ const Orders = ({ orders, auth }) => {
   );
 };
 
-
+const mapDispatch = dispatch => (
+  {
+    loadOrders: () => dispatch(loadOrders())
+  }
+)
 export default connect((state) => state)(Orders);
