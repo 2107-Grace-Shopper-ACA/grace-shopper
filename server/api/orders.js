@@ -27,6 +27,14 @@ router.get('/', async (req, res, next) => {
           },
         ],
       })
+      //if there's no isCart order, create one
+      if (!orders.find(order => order.isCart)) {
+        const cartOrder = await Order.create({
+          userId: user.id,
+          isCart: true
+        });
+        orders.push(cartOrder);
+      }
       res.json(orders)
     } else {
       //TODO Avoid an error message in our console if we can't find a user.
