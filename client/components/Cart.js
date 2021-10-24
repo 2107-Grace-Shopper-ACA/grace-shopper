@@ -24,28 +24,27 @@ import CardMedia from '@material-ui/core/CardMedia'
       )
     }
     
-    if(orders.length === 0 || orderItems.length === 0) {
+    //THERE SHOULD ALWAYS BE ONE NOW UNLESS GUEST!  
+      let cartOrder = orders.find(order => order.isCart && auth.id ===order.userId) || {};
+      let cartItems = orderItems.filter(orderItem => orderItem.orderId === cartOrder.id) || [];
+      
+    //IF GUEST STILL ADD TO CART
+      if (!auth.id){
+        const localCart = JSON.parse(localStorage.getItem('localCart'));
+        cartItems = localCart || [];
+      }
+    
+      if(cartItems.length === 0 && (orders.length === 0 || orderItems.length === 0)) {
       return (
         <EmptyCart />
         )
       }
       
-    //THERE SHOULD ALWAYS BE ONE NOW UNLESS GUEST!  
-      let cartOrder = orders.find(order => order.isCart && auth.id ===order.userId) || {};
-      let cartItems = orderItems.filter(orderItem => orderItem.orderId === cartOrder.id) || [];
-      
-    //IF GUEST STILL ADD TO CART  
-      if (!auth.id){
-        const localCart = JSON.parse(localStorage.getItem('localCart'));
-        cartItems = localCart;
-      }
-
-
-      if(cartItems.length === 0) {
-        return (
-          <EmptyCart />
-          )
-        }
+      // if(cartItems.length === 0) {
+      //   return (
+      //     <EmptyCart />
+      //     )
+      //   }
       
       useEffect(() => {
         loadOrderItems()
