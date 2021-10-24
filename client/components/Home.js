@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import UpdatePersonalInfo from './UpdatePersonalInfo'
 
 /**
  * COMPONENT
@@ -24,7 +23,7 @@ export const Home = props => {
  */
 const mapState = state => {
   return {
-    username: state.auth.username
+    username: state.user.username
   }
 }
 
