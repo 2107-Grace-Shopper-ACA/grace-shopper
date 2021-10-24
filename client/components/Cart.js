@@ -30,8 +30,8 @@ import CardMedia from '@material-ui/core/CardMedia'
         )
       }
       
-      let cartOrder = orders.find(order => order.isCart && auth.id ===order.userId);
-      let cartItems = orderItems.filter(orderItem => orderItem.orderId === cartOrder.id);
+      let cartOrder = orders.find(order => order.isCart && auth.id ===order.userId) || {};
+      let cartItems = orderItems.filter(orderItem => orderItem.orderId === cartOrder.id) || [];
       
       if(cartItems.length === 0) {
         return (

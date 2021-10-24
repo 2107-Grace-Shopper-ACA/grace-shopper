@@ -23,8 +23,8 @@ const ProductCard = ({product, style, auth, orders, orderItems, createOrder, cre
     const [quantity, setQuantity] = useState(0);
     const maxQuantity = product.inventory < 10 ? product.inventory : 10;
 
-    let cartOrder = orders.find(order => order.isCart && order.userId === auth.id);
-    let cartItems = orderItems.filter(item => item.orderId === cartOrder.id);
+    let cartOrder = orders.find(order => order.isCart && order.userId === auth.id) || {};
+    let cartItems = orderItems.filter(item => item.orderId === cartOrder.id) || [];
 
     if (!product) return '...loading'
 
