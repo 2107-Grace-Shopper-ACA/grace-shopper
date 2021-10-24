@@ -112,21 +112,21 @@ const ProductCard = ({product, style, auth, orders, orderItems, createOrder, cre
                             let localCart;
                         //if there's no localCart create one and add item to it
                             if(!localStorage.getItem('localCart')){
-                                localCart = [{productId: product.id, quantity: correctQuantity({quantity: 0}, product, quantity)}];
+                                localCart = [{product, quantity: correctQuantity({quantity: 0}, product, quantity)}];
                             } else {
                         //if there is a localCart
                                 localCart = JSON.parse(localStorage.getItem('localCart'));
                         //if there's nothing in the cart
                                 if(localCart.length === 0) {
-                                    localCart.push({productId: product.id, quantity});
+                                    localCart.push({product, quantity});
                                 } else {
                         //if there are items in the cart, see if one is for the same product
-                                    const itemIndex = localCart.indexOf(item => item.productId === product.id);
+                                    const itemIndex = localCart.indexOf(item => item.product.id === product.id);
                                     if (itemIndex >= 0) {
                                         localCart[itemIndex].quantity = correctQuantity(localCart[itemIndex], product, quantity);
                                     } else {
                         //if not already in cart, add a new item
-                                        localCart.push({productId: product.id, quantity});
+                                        localCart.push({product, quantity});
                                     }
                                 }
                             }
