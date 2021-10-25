@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router';
+import { Link, useHistory } from 'react-router';
 import { createOrderItem, deleteOrderItem, editOrderItem,loadOrderItems } from '../store';
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
@@ -218,85 +218,6 @@ const handleSubmit = async() => {
         </section>
       </Grid>
     </>
-//   <div className="cart">
-//     <header className="container">
-//       <h1>Shopping Cart</h1>
-
-//       <span className="count">{totalItems} items in the bag</span>
-//     </header>
-//     <section className="container">
-//       <ul className="products">
-//         {cartItems.map((item) => {
-//           return (
-//             <li className="row" key={item.id}>
-//               <div className="col left">
-//                 <div className="thumbnail">
-//                   <a href="#">
-//                     <img src={item.product.imageUrl} alt={item.product.name} />
-//                   </a>
-//                 </div>
-//                 <div className="detail">
-//                   <div className="name">
-//                     <a href="#">{item.product.name}</a>
-//                   </div>
-//                   <div className="price">${item.product.price}</div>
-//                   <div className="sub">${item.product.price * item.quantity}</div>
-//                 </div>
-//               </div>
-
-//               <div className="col right">
-//                 <div className="quantity">
-//                   <input
-//                     type="text"
-//                     className="quantity"
-//                     step="1"
-//                     name={item.id}
-//                     value={item.quantity}
-//                     onChange={onChange}
-//                   />
-//                 </div>
-
-//                 <div className="remove">
-//                   <button value={item.id} onClick={onClick}>
-//                     X ADD ICON
-//                   </button>
-//                 </div>
-//               </div>
-//             </li>
-//           );
-//         })}
-//       </ul>
-//     </section>
-//     <section className="container">
-//       {/* <div className="promotion">
-//         <label htmlFor="promo-code">Have A Promo Code?</label>
-//         <input type="text" onChange={onEnterPromoCode} />
-//         <button type="button" onClick={checkPromoCode} />
-//       </div> */}
-
-//       <div className="summary">
-//         <ul>
-//           <li>
-//             Subtotal <span>${total}</span>
-//           </li>
-//           {/* {discount > 0 && (
-//             <li>
-//               Discount <span>{formatCurrency(discount)}</span>
-//             </li>
-//           )} */}
-//           <li>
-//             Tax <span>${total * tax}</span>
-//           </li>
-//           <li className="total">
-//             Total <span>${total + (total * tax)}</span>
-//           </li>
-//         </ul>
-//       </div>
-//       <div className="checkout">
-//         <button type="button">Check Out</button>
-//       </div>
-//     </section>
-// </div>
   );
 }
 
@@ -311,32 +232,4 @@ const mapDispatch = (dispatch, {history}) => {
   )
 }
 export default connect((state) => state, mapDispatch)(Cart)
-  // return (
-  //   <div>
-  //     <Header itemCount={itemCount} />
-
-  //     {products.length > 0 ? (
-  //       <div>
-  //         <ProductList
-  //           products={products}
-  //           onChangeProductQuantity={onChangeProductQuantity}
-  //           onRemoveProduct={onRemoveProduct}
-  //         />
-
-  //         <Summary
-  //           subTotal={subTotal}
-  //           discount={discount}
-  //           tax={TAX}
-  //           onEnterPromoCode={onEnterPromoCode}
-  //           checkPromoCode={checkPromoCode}
-  //         />
-  //       </div>
-  //     ) : (
-  //       <div className="empty-product">
-  //         <h3>There are no products in your cart.</h3>
-  //         <button onClick={() => setProducts(PRODUCTS)}>Shopping now</button>
-  //       </div>
-  //     )}
-  //   </div>
-  // );
-
+  
