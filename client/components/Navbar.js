@@ -7,15 +7,24 @@ const Navbar = ({handleClick, isLoggedIn, orderItems, orders, auth, products}) =
 
   //I moved this from line 33 and changed it so we don't get errors about not finding id
   const cartOrder = orders.find(order => order.isCart);
+  const localCart = JSON.parse(localStorage.getItem('localCart')) || [];
+  
   const findCartLength = () => {
-    if (!cartOrder) { //if there is no cart order return 0
+    if (!cartOrder && !localCart.length) { //if there is no cart order return 0
       return 0;
     } else {
-      return !orderItems ? 0 : orderItems.filter(orderItem => orderItem.orderId === cartOrder.id).
-        reduce((accum, item) => {
+      if (localCart.length){
+        return localCart.reduce((accum, item) => {
           accum += item.quantity;
           return accum;
-        }, 0);
+        }, 0)
+      } else {
+        return !orderItems ? 0 : orderItems.filter(orderItem => orderItem.orderId === cartOrder.id).
+          reduce((accum, item) => {
+            accum += item.quantity;
+            return accum;
+          }, 0);
+      }
     }
   }
 
