@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
-import { deleteOrderItem, editOrderItem,loadOrderItems } from '../store';
+import { createOrderItem, deleteOrderItem, editOrderItem,loadOrderItems } from '../store';
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
@@ -12,7 +12,7 @@ import Card from '@material-ui/core/Card'
 import CardMedia from '@material-ui/core/CardMedia'
 
 
-  const Cart = ({ orders, orderItems, auth, editOrderItem, deleteOrderItem, loadOrderItems }) => {
+  const Cart = ({ orders, orderItems, auth, editOrderItem, deleteOrderItem, createOrderItem, loadOrderItems }) => {
     const history = useHistory();
 
     const EmptyCart = () => {
@@ -27,14 +27,45 @@ import CardMedia from '@material-ui/core/CardMedia'
     //THERE SHOULD ALWAYS BE ONE NOW UNLESS GUEST!  
       let cartOrder = orders.find(order => order.isCart && auth.id ===order.userId) || {};
       let cartItems = orderItems.filter(orderItem => orderItem.orderId === cartOrder.id) || [];
-      
-    //IF GUEST STILL ADD TO CART
+      let localCart = JSON.parse(localStorage.getItem('localCart')) || [];
+
+      //IF GUEST STILL ADD TO CART
       if (!auth.id){
-        const localCart = JSON.parse(localStorage.getItem('localCart'));
         cartItems = localCart || [];
+        // console.log('cartitems', cartItems)
+    //USER LOGGED IN  
+      } else {
+        if (localCart.length) {
+//see if there's items in user cart and if so, compare each item in localcart before adding to user cart
+          // const userCartItems = orderItems.filter(orderItem => orderItem.orderId === cartOrder.id);
+          if (cartItems.length) {
+            localCart.forEach(async(localItem) => {
+              let added = false;
+              while (!added){
+                for (let item of cartItems) {
+                  console.log(localItem, item)
+                  if (item.productId === localItem.id) {
+                    await editOrderItem({...item, quantity: item.quantity + localItem.quantity});
+                    added = true;
+                  }
+                }
+                await createOrderItem({productId: localItem.id, quantity: localItem.quantity, orderId: cartOrder.id, userId: auth.id});
+                added = true;
+              }
+            })
+            // localStorage.removeItem('localCart');
+          } else {
+            localCart.forEach(async(localItem) => {
+              await createOrderItem({productId: localItem.id, quantity: localItem.quantity, orderId: cartOrder.id, userId: auth.id});
+            });
+          }
+        }
+        localStorage.removeItem('localCart');
+        localCart = [];
       }
     
-      if(cartItems.length === 0 && (orders.length === 0 || orderItems.length === 0)) {
+      // if((!cartItems.length && !localCart.length) && (!orders.length || !orderItems.length) ) {
+      if((!cartItems.length && !localCart.length) ) {
       return (
         <EmptyCart />
         )
@@ -46,9 +77,9 @@ import CardMedia from '@material-ui/core/CardMedia'
       //     )
       //   }
       
-      useEffect(() => {
-        loadOrderItems()
-      }, [cartItems.length])
+      // useEffect(() => {
+      //   loadOrderItems();
+      // }, [cartItems.length])
       
       let total = cartItems.reduce((accum, item) => {
         accum += item.quantity * item.product.price;
@@ -272,9 +303,10 @@ const handleSubmit = async() => {
 const mapDispatch = (dispatch, {history}) => {
   return (
     {
-      editOrderItem: (order) => dispatch(editOrderItem(order)),
+      editOrderItem: (item) => dispatch(editOrderItem(item)),
       deleteOrderItem: (id) => dispatch(deleteOrderItem(id)),
-      loadOrderItems: () => dispatch(loadOrderItems())
+      loadOrderItems: () => dispatch(loadOrderItems()),
+      createOrderItem: (item) => dispatch(createOrderItem(item))
     }
   )
 }
