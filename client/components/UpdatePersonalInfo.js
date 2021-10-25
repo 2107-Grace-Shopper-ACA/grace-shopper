@@ -22,7 +22,8 @@ class UpdatePersonalInfo extends Component {
     }
     
     componentDidUpdate (prevProps){
-        if (!prevProps.user.id && this.props.user.id) {
+        if (prevProps !== this.props) {
+            console.log("did update")
             const { username, password, email, phoneNumber, streetAddress, city, state, zipcode } = this.props.user;
             this.setState({ username, password, email, phoneNumber, streetAddress, city, state, zipcode });
         }
@@ -32,20 +33,16 @@ class UpdatePersonalInfo extends Component {
         const change = {};
         change[ev.target.name] = ev.target.value;
         this.setState(change);
-        // console.log('onChange State:' + JSON.stringify(this.state))
-        // console.log('onChange Props:' + JSON.stringify(this.props))
     }
 
     async onSubmit(ev){
         ev.preventDefault();
-        // console.log('onSubmit State:' + JSON.stringify(this.state))
-        // console.log('onSubmit Props:' + JSON.stringify(this.props))
         const { username, password, email, phoneNumber, streetAddress, city, state, zipcode } = this.state;
+        console.log(this.state)
+        console.log(this.props)
         const { history, editLoggedInUser, user } = this.props;
         try{
             await editLoggedInUser({...user, username, password, email, phoneNumber, streetAddress, city, state, zipcode }, history);
-            // console.log('onSubmit2 State:' + JSON.stringify(this.state))
-            // console.log('onSubmit2 Props:' + JSON.stringify(this.props))
         } 
         catch (ex){
             this.setState({error: ex.response.data.error});  
