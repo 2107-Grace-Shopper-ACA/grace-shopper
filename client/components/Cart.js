@@ -27,45 +27,45 @@ import CardMedia from '@material-ui/core/CardMedia'
     //THERE SHOULD ALWAYS BE ONE NOW UNLESS GUEST!  
       let cartOrder = orders.find(order => order.isCart && auth.id ===order.userId) || {};
       let cartItems = orderItems.filter(orderItem => orderItem.orderId === cartOrder.id) || [];
-      let localCart = JSON.parse(localStorage.getItem('localCart')) || [];
+//       let localCart = JSON.parse(localStorage.getItem('localCart')) || [];
 
-      //IF GUEST STILL ADD TO CART
-      if (!auth.id){
-        cartItems = localCart || [];
-        // console.log('cartitems', cartItems)
-    //USER LOGGED IN  
-      } else {
-        if (localCart.length) {
-//see if there's items in user cart and if so, compare each item in localcart before adding to user cart
-          // const userCartItems = orderItems.filter(orderItem => orderItem.orderId === cartOrder.id);
-          if (cartItems.length) {
-            localCart.forEach(async(localItem) => {
-              let added = false;
-              while (!added){
-                for (let item of cartItems) {
-                  console.log(localItem, item)
-                  if (item.productId === localItem.id) {
-                    await editOrderItem({...item, quantity: item.quantity + localItem.quantity});
-                    added = true;
-                  }
-                }
-                await createOrderItem({productId: localItem.id, quantity: localItem.quantity, orderId: cartOrder.id, userId: auth.id});
-                added = true;
-              }
-            })
-            // localStorage.removeItem('localCart');
-          } else {
-            localCart.forEach(async(localItem) => {
-              await createOrderItem({productId: localItem.id, quantity: localItem.quantity, orderId: cartOrder.id, userId: auth.id});
-            });
-          }
-        }
-        localStorage.removeItem('localCart');
-        localCart = [];
-      }
+//       //IF GUEST STILL ADD TO CART
+//       if (!auth.id){
+//         cartItems = localCart || [];
+//         // console.log('cartitems', cartItems)
+//     //USER LOGGED IN  
+//       } else {
+//         if (localCart.length) {
+// //see if there's items in user cart and if so, compare each item in localcart before adding to user cart
+//           // const userCartItems = orderItems.filter(orderItem => orderItem.orderId === cartOrder.id);
+//           if (cartItems.length) {
+//             localCart.forEach(async(localItem) => {
+//               let added = false;
+//               while (!added){
+//                 for (let item of cartItems) {
+//                   console.log(localItem, item)
+//                   if (item.productId === localItem.id) {
+//                     await editOrderItem({...item, quantity: item.quantity + localItem.quantity});
+//                     added = true;
+//                   }
+//                 }
+//                 await createOrderItem({productId: localItem.id, quantity: localItem.quantity, orderId: cartOrder.id, userId: auth.id});
+//                 added = true;
+//               }
+//             })
+//             // localStorage.removeItem('localCart');
+//           } else {
+//             localCart.forEach(async(localItem) => {
+//               await createOrderItem({productId: localItem.id, quantity: localItem.quantity, orderId: cartOrder.id, userId: auth.id});
+//             });
+//           }
+//         }
+//         localStorage.removeItem('localCart');
+//         localCart = [];
+//       }
     
       // if((!cartItems.length && !localCart.length) && (!orders.length || !orderItems.length) ) {
-      if((!cartItems.length && !localCart.length) ) {
+      if((cartItems.length === 0) ) {
       return (
         <EmptyCart />
         )
@@ -208,7 +208,7 @@ const handleSubmit = async() => {
                 Tax <span>${(total * tax).toFixed(2)}</span>
               </li>
               <li className="total">
-                Total <span>${total + (total * tax).toFixed(2)}</span>
+                Total <span>${+total + +(total * tax).toFixed(2)}</span>
               </li>
             </ul>
           </div>
