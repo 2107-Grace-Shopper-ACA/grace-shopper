@@ -29,29 +29,15 @@ import CardMedia from '@material-ui/core/CardMedia'
       let cartItems = orderItems.filter(orderItem => orderItem.orderId === cartOrder.id) || [];
       let localCart = JSON.parse(localStorage.getItem('localCart')) || [];
 
-//       //IF GUEST STILL ADD TO CART
       if (!auth.id){
         cartItems = localCart || [];
-//         // console.log('cartitems', cartItems)
-//     //USER LOGGED IN  
       } 
     
-      // if((!cartItems.length && !localCart.length) && (!orders.length || !orderItems.length) ) {
-      if((cartItems.length === 0) ) {
+      if((cartItems.length === 0 && localCart.length === 0) ) {
       return (
         <EmptyCart />
         )
       }
-      
-      // if(cartItems.length === 0) {
-      //   return (
-      //     <EmptyCart />
-      //     )
-      //   }
-      
-      // useEffect(() => {
-      //   loadOrderItems();
-      // }, [cartItems.length])
       
       let total = cartItems.reduce((accum, item) => {
         accum += item.quantity * item.product.price;
