@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import { editLoggedInUser } from '../store'
+import { editLoggedInUser, update } from '../store'
 
 class UpdatePersonalInfo extends Component {
     constructor(props){
@@ -43,6 +43,7 @@ class UpdatePersonalInfo extends Component {
         const { history, editLoggedInUser, user } = this.props;
         try{
             await editLoggedInUser({...user, username, password, email, phoneNumber, streetAddress, city, state, zipcode }, history);
+            await update(Math.random())
         } 
         catch (ex){
             this.setState({error: ex.response.data.error});  
@@ -107,6 +108,7 @@ const mapState = state => {
 const mapDispatch = (dispatch, {history}) => {
     return {
         editLoggedInUser: (user) => dispatch(editLoggedInUser(user, history)),
+        update: (num) => dispatch(update(num))
     }
 }
 
