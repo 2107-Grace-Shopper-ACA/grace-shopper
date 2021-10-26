@@ -31,8 +31,6 @@ class Routes extends Component {
       this.props.loadOrderItems() //Toggling this comment while debugging
       this.props.loadUser(this.props.auth)
     }
-    // let localCart = JSON.parse(localStorage.getItem('localCart')) || [];
-    // if()
   }
 
   render() {

@@ -20,46 +20,27 @@ console.log('HOMEEE')
   //IF GUEST STILL ADD TO CART
   if (!auth.id){
     cartItems = localCart || [];
-    // console.log('cartitems', cartItems)
 //USER LOGGED IN  
   } else {
-    console.log('local cart', localCart)
-    console.log("SDFDSF")
     if (localCart.length) {
-      console.log('haslength')
 //see if there's items in user cart and if so, compare each item in localcart before adding to user cart
-      // const userCartItems = orderItems.filter(orderItem => orderItem.orderId === cartOrder.id);
       if (cartItems.length) {
-        console.log('cartOrder', cartOrder)
-        console.log('cartitems length', cartItems.length)
         localCart.forEach(async(localItem) => {
-          // let added = false;
-          // while (!added){
             for (let item of cartItems) {
-              console.log(localItem, item)
               if (item.productId === localItem.id) {
-                console.log('editorderitem')
                 await editOrderItem({...item, quantity: item.quantity + localItem.quantity});
-                // added = true;
               } else {
-                console.log('createorderitem')
                 await createOrderItem({productId: localItem.id, quantity: localItem.quantity, orderId: cartOrder.id, userId: auth.id});
               }
             }
-            // added = true;
-          // }
         })
-        // localStorage.removeItem('localCart');
       } else {
         localCart.forEach(async(localItem) => {
           await createOrderItem({productId: localItem.id, quantity: localItem.quantity, orderId: cartOrder.id, userId: auth.id});
         });
       }
     }
-    // loadOrderItems()
     localStorage.removeItem('localCart');
-    console.log('removelocal')
-    localCart = [];
   }
   
   return (

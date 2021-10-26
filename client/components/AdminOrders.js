@@ -29,7 +29,7 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 /**
  * COMPONENT
  */
-const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrderItems, loadAdminOrders}) => {
+const AdminOrders = ({orders, orderItems, match, history, products, update, loadAdminOrders}) => {
 //TODO WHY NEED TO REFRESH AFTER EDITING    
 //TODO not sure if i need this
     // useEffect(() => {
@@ -117,7 +117,7 @@ const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrd
                         {
                         date: item.updatedAt,
                         id: item.id,
-                        name: item.product.name,
+                        productName: item.product.name,
                         quantity: item.quantity,
                         price: item.product.price,
                         subtotal: item.quantity * +item.product.price
@@ -134,14 +134,14 @@ const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrd
     const [open, setOpen] = useState(false);
     const [order, setOrder] = useState({});
     const handleOpen = (ev, order) => {
-        // ev.persist()
+        ev.persist()
         console.log(order)
         setOrder(order);
         setOpen(true);
     }
     const handleClose = async (ev) => {
-        // ev.preventDefault();
-        // await loadAdminOrders();
+        ev.preventDefault();
+        await loadAdminOrders();
         setOpen(false);
     }
     const [openItem, setOpenItem] = useState(false);
@@ -200,7 +200,7 @@ const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrd
                             columns={[
                                 { title: 'Date Added to Cart', field: 'date', type: 'datetime'},
                                 { title: 'Order Item ID', field: 'id'},
-                                { title: 'Product Name', field: 'name'},
+                                { title: 'Product Name', field: 'productName'},
                                 { title: 'Quantity', field: 'quantity' },
                                 { title: 'Price', field: 'price', type: 'currency' },
                                 { title: 'Subtotal', field: 'subtotal', type: 'currency' },
@@ -241,7 +241,8 @@ const mapState = (state, {history, match}) => {
     orderItems: state.adminOrderItems,
     history: history,
     match: match,
-    products: state.products
+    products: state.products,
+    update: state.update
   }
 }
 const mapDispatch = dispatch => {

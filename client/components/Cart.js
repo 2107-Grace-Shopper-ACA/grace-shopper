@@ -30,29 +30,15 @@ import CartAddress from './CartAddress';
       let cartItems = orderItems.filter(orderItem => orderItem.orderId === cartOrder.id) || [];
       let localCart = JSON.parse(localStorage.getItem('localCart')) || [];
 
-//       //IF GUEST STILL ADD TO CART
       if (!auth.id){
         cartItems = localCart || [];
-//         // console.log('cartitems', cartItems)
-//     //USER LOGGED IN  
       } 
     
-      // if((!cartItems.length && !localCart.length) && (!orders.length || !orderItems.length) ) {
-      if((cartItems.length === 0) ) {
+      if((cartItems.length === 0 && localCart.length === 0) ) {
       return (
         <EmptyCart />
         )
       }
-      
-      // if(cartItems.length === 0) {
-      //   return (
-      //     <EmptyCart />
-      //     )
-      //   }
-      
-      // useEffect(() => {
-      //   loadOrderItems();
-      // }, [cartItems.length])
       
       let total = cartItems.reduce((accum, item) => {
         accum += item.quantity * item.product.price;
@@ -105,7 +91,7 @@ const handleSubmit = async() => {
 }
     
     const onChange = async (ev) => {
-        await editOrderItem({id: ev.target.name, quantity: ev.target.value});
+      await editOrderItem({id: ev.target.id, quantity: +ev.target.value});
     }
     
     return (
@@ -159,12 +145,12 @@ const handleSubmit = async() => {
                         className="quantity"
                         min="1"
                         max={item.product.inventory < 10 ? product.inventory : 10}
-                        name={item.id}
+                        id={item.id}
                         value={item.quantity}
                         onChange={onChange}
                       />
                     </div>
-                    <Button value={item.id} onClick={()=> {deleteOrderItem(item.id)}} color='primary' variant='outlined' size='small'>Delete</Button>
+                    <Button onClick={()=> {deleteOrderItem(item.id)}} color='primary' variant='outlined' size='small'>Delete</Button>
                     </CardContent>
                 </Box>
               </Card>

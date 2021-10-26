@@ -65,18 +65,6 @@ const ProductCard = ({product, style, auth, orders, orderItems, update, createOr
             </CardActionArea >
             <CardActions>
             <FormControl fullWidth style={{marginBottom: '3rem'}}>
-                {/* <div className="quantity" >
-                    <input
-                    type="number"
-                    className="quantity"
-                    defaultValue="1"
-                    min="1"
-                    max={maxQuantity}
-                    name={product.id}
-                    value={quantity || 1}
-                    onChange={(ev) => setQuantity(ev.target.value)}
-                    />
-                </div> */}
                 <InputLabel variant='body5' color='textPrimary'>
                     Quantity:
                 </InputLabel>

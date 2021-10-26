@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout, loadOrders, update} from '../store'
+import {logout, loadOrders} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn, orderItems, orders, auth, products, update}) => {
 
