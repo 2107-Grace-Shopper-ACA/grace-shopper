@@ -2,7 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import UpdatePersonalInfo from './UpdatePersonalInfo'
-import {editOrderItem, createOrderItem, loadOrderItems } from '../store'
+import {editOrderItem, createOrderItem, loadOrderItems, update } from '../store'
+
 /**
  * COMPONENT
  */
@@ -79,7 +80,8 @@ const mapState = state => {
     username: state.auth.username,
     orders: state.orders,
     orderItems: state.orderItems,
-    auth: state.auth
+    auth: state.auth,
+    update: state.update
   }
 }
 const mapDispatch = dispatch => {

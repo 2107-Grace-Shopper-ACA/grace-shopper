@@ -10,9 +10,10 @@ import Typography from '@material-ui/core/Typography'
 import CardContent from '@material-ui/core/CardContent'
 import Card from '@material-ui/core/Card'
 import CardMedia from '@material-ui/core/CardMedia'
+import CartAddress from './CartAddress';
 
 
-  const Cart = ({ orders, orderItems, auth, editOrderItem, deleteOrderItem, createOrderItem, loadOrderItems }) => {
+  const Cart = ({ orders, orderItems, auth, editOrderItem, deleteOrderItem, createOrderItem, loadOrderItems, user }) => {
     const history = useHistory();
 
     const EmptyCart = () => {
@@ -184,8 +185,11 @@ const handleSubmit = async() => {
               </li>
             </ul>
           </div>
+          <div>
+            <CartAddress history={history}/>
+          </div>
           <div className="checkout">
-            <button onClick={handleSubmit} type="button">Check Out</button>
+            <button disabled={!user.streetAddress || !user.city || !user.state || !user.zipcode} onClick={handleSubmit} type="button">Check Out</button>
           </div>
         </section>
       </Grid>

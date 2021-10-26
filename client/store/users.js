@@ -69,11 +69,18 @@ export const addUser = (user, history) => {
 
 export const editLoggedInUser = (user, history) => {
   return async (dispatch) => {
-      const {data: edited} = await axios.put(`/api/users/${user.id}`, user)
+    const token = window.localStorage.getItem(TOKEN);
+    if (token){
+      const {data: edited} = (await axios.put(`/api/users/${user.id}`, user, {
+        headers: {
+          authorization: token
+        }
+      }))
       dispatch(_editLoggedInUser(edited));
-      history.push('/home');
+      history.push('/users')
     }
-  };
+  }
+};
  /**
   * REDUCER
   */
