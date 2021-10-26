@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom"
 import { useHistory } from "react-router";
-import {createOrder, createOrderItem, editOrderItem} from '../store'
+import {createOrder, createOrderItem, editOrderItem, update} from '../store'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import CardActionArea from '@material-ui/core/CardActionArea'
@@ -17,7 +17,7 @@ import Select from '@material-ui/core/Select'
 import AddShoppingCart from '@material-ui/icons/AddShoppingCart'
 
 
-const ProductCard = ({product, style, auth, orders, orderItems, createOrder, createOrderItem, editOrderItem}) => {
+const ProductCard = ({product, style, auth, orders, orderItems, update, createOrderItem, editOrderItem}) => {
     const history = useHistory();
 
     const [quantity, setQuantity] = useState(0);
@@ -147,6 +147,7 @@ const ProductCard = ({product, style, auth, orders, orderItems, createOrder, cre
                             }
                             setQuantity('');
                         }
+                        update(Math.random())
                     }}
                 >
                     <AddShoppingCart color='success'/>
@@ -176,6 +177,9 @@ const mapDispatchToProps = (dispatch) => {
       },
       editOrderItem: (orderItem) => {
         dispatch(editOrderItem(orderItem))
+      },
+      update: (num) => {
+          dispatch(update(num))
       }
     }
 }

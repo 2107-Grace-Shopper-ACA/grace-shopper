@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout, loadOrders, loadOrderItems} from '../store'
+import {logout, loadOrders, update} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn, orderItems, orders, auth, products}) => {
+const Navbar = ({handleClick, isLoggedIn, orderItems, orders, auth, products, update}) => {
 
   //I moved this from line 33 and changed it so we don't get errors about not finding id
   const cartOrder = orders.find(order => order.isCart);
@@ -90,7 +90,8 @@ const mapState = (state) => {
     orderItems: state.orderItems,
     orders: state.orders,
     auth: state.auth, 
-    products: state.products
+    products: state.products,
+    update: state.update
   }
 }
 
