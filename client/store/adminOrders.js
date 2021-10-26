@@ -40,7 +40,6 @@ export const editAdminOrder = (order, history) => {
         }
       })).data;
       dispatch(_editAdminOrder(adminOrder));
-      history.goBack()
     }
   }
 }

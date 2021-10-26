@@ -5,7 +5,10 @@ const {
 module.exports = router
 
 router.get('/', async (req, res, next) => {
-  
+  if (req.headers.authorization === 'null') {
+    console.log('YOU SHALL NOT PASS!')
+    return res.json([])
+  }
   try {
     const user = await User.findByToken(req.headers.authorization)
     if (user) {
@@ -24,6 +27,14 @@ router.get('/', async (req, res, next) => {
           },
         ],
       })
+      //if there's no isCart order, create one
+      if (!orders.find(order => order.isCart)) {
+        const cartOrder = await Order.create({
+          userId: user.id,
+          isCart: true
+        });
+        orders.push(cartOrder);
+      }
       res.json(orders)
     } else {
       //TODO Avoid an error message in our console if we can't find a user.
@@ -36,8 +47,8 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const _order = await Order.create(req.body)
-    const order = await Order.findByPk(_order.id, {
+    let order = await Order.create(req.body)
+    order = await Order.findByPk(order.id, {
       include: [
         {
           model: User,
@@ -49,17 +60,17 @@ router.post('/', async (req, res, next) => {
         },
       ],
     })
-    res.json(order)
+    res.send(order)
   } catch (err) {
     next(err)
   }
 })
 router.put('/:orderId', async (req, res, next) => {
-  const { isCart } = req.body;
+  const { isCart, date } = req.body;
   try {
-    const _order = await Order.findByPk(req.params.orderId);
-    await _order.update({..._order, isCart});
-    const order = await Order.findByPk(_order.id, {
+    let order = await Order.findByPk(req.params.orderId);
+    await order.update({...order, isCart, date});
+    order = await Order.findByPk(order.id, {
       include: [
         {
           model: User,
@@ -71,7 +82,7 @@ router.put('/:orderId', async (req, res, next) => {
         },
       ],
     });
-    res.json(order)
+    res.send(order)
   } catch (err) {
     next(err)
   }

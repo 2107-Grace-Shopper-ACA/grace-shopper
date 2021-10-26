@@ -41,12 +41,6 @@ app.post("/create-checkout-session", async (req, res) => {
       cancel_url: `${YOUR_DOMAIN}/cancel`,
     })
 
-// Change Order to not in cart and update order date to be NOW
-//Create new cart order so we dont get errors in the product page
-//TODO: need to deduct from inventory
-//TODO: when you click back while in stripe it resets cart to 0
-//TODO: find the right place to move this stuff
-
     res.json({ url: session.url })
 
   } catch (err) {

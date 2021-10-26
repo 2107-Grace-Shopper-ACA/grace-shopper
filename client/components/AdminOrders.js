@@ -3,9 +3,10 @@ import { useState } from 'react';
 import {connect} from 'react-redux'
 import { Link } from 'react-router-dom';
 import {loadAdminOrders, loadAdminOrderItems} from '../store';
-
-import Dialog from '@material-ui/core/Dialog';
 import AdminOrderForm from './AdminOrderForm';
+import AdminOrderItemForm from './AdminOrderItemForm';
+import Dialog from '@material-ui/core/Dialog';
+
 import MaterialTable from 'material-table';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -70,7 +71,8 @@ const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrd
         displayOrders = orders;
     }
     
-    displayOrders = displayOrders.map(order => {
+    displayOrders = displayOrders.sort((a,b) => a.isCart ? -1 : 1)
+        .map(order => {
         const totalQuantity = order.orderItems.reduce((accum, item) => {
             accum += item.quantity;
             return accum;
@@ -90,7 +92,7 @@ const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrd
     })
     // Material Table Columns
     const columns = [
-    { title: 'Date', field: 'date', type: 'date' },
+    { title: 'Date Ordered', field: 'date', type: 'datetime' },
     { title: 'Order ID', field: 'orderId'},
     { title: 'Open ?', field: 'isCart', type: 'boolean'},
     { title: 'Purchaser', field: 'purchaser'},
@@ -99,9 +101,9 @@ const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrd
 
     ];
 
+
     // Material Table Rows
     const data = displayOrders.map( order => {
-         orderItems = orderItems.filter(item => item.orderId === order.id)
         return (
             {
                 date: order.date, 
@@ -110,23 +112,52 @@ const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrd
                 purchaser: order.user.username,
                 totalItems: order.totalQuantity,
                 total: order.total,
-                orderDetail: orderItems.map(item => {
+                orderDetail: order.orderItems.map(item => {
                     return (
                         {
+                        date: item.updatedAt,
                         id: item.id,
-                        name: <Link style={{color: 'darkBlue'}} to={`/admin/orders/products/${item.product.id}`}>
-                                {item.product.name}
-                            </Link>,
+                        name: item.product.name,
                         quantity: item.quantity,
                         price: item.product.price,
                         subtotal: item.quantity * +item.product.price
                         }
                     )
                 }),
-                id: order.id
+                id: order.id,
+                status: order.status,
+                userId: order.userId
             }
         )
     });
+//dialog box
+    const [open, setOpen] = useState(false);
+    const [order, setOrder] = useState({});
+    const handleOpen = (ev, order) => {
+        // ev.persist()
+        console.log(order)
+        setOrder(order);
+        setOpen(true);
+    }
+    const handleClose = async (ev) => {
+        // ev.preventDefault();
+        // await loadAdminOrders();
+        setOpen(false);
+    }
+    const [openItem, setOpenItem] = useState(false);
+    const [orderItem, setOrderItem] = useState({});
+    const handleOpenItem = (ev, orderItem) => {
+        // ev.persist()
+        console.log(orderItem)
+        setOrderItem(orderItem);
+        setOpenItem(true);
+    }
+    const handleCloseItem = async (ev) => {
+        // ev.preventDefault();
+        // await loadAdminOrderItems();
+        setOpenItem(false);
+    }
+//
 
     if (!displayOrders.length) {
         return '...loading';
@@ -134,6 +165,12 @@ const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrd
 
     return (
         <div>
+            <Dialog onClose={handleClose} open={open}>
+                <AdminOrderForm handleClose={handleClose} order={order}/>
+            </Dialog>
+            <Dialog onClose={handleCloseItem} open={openItem}>
+                <AdminOrderItemForm handleClose={handleCloseItem} orderItem={orderItem}/>
+            </Dialog>
             <MaterialTable
                 title={match.path.includes('products') ? `${product.name} Orders` : "Orders"}
                 icons={tableIcons}
@@ -148,7 +185,7 @@ const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrd
                         icon: Edit,
                         tooltip: 'Edit Order',
                         isFreeAction: false,
-                        onClick: (ev, rowData) => history.push(`/admin/orders/${rowData.id}`)
+                        onClick: (ev,rowData) => handleOpen(ev, rowData)
                     }
                 ]}
                 style={{
@@ -161,6 +198,7 @@ const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrd
                             
                             icons={tableIcons}
                             columns={[
+                                { title: 'Date Added to Cart', field: 'date', type: 'datetime'},
                                 { title: 'Order Item ID', field: 'id'},
                                 { title: 'Product Name', field: 'name'},
                                 { title: 'Quantity', field: 'quantity' },
@@ -179,8 +217,8 @@ const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrd
                                     icon: Edit,
                                     tooltip: 'Edit Order',
                                     isFreeAction: false,
-                                    // onClick: (ev, rowData) => console.log(rowData)
-                                    onClick: (ev, rowData) => history.push(`/admin/orderItems/${rowData.id}`)
+                                    onClick: (ev,rowData) => handleOpenItem(ev, rowData)
+                                    // onClick: (ev, rowData) => history.push(`/admin/orderItems/${rowData.id}`)
                                 }
                             ]}
                             style={{

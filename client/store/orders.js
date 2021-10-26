@@ -34,17 +34,28 @@ const TOKEN = 'token'
      dispatch(_loadOrders(orders));
    };
  };
- //TODO: add try catches? do these need to be protected w token?
  
  export const createOrder = (_order) => {
+  const token = window.localStorage.getItem(TOKEN)
+
   return async (dispatch) => {
-    const { data: order } = await axios.post(`/api/orders/`, _order);
+    const { data: order } = await axios.post(`/api/orders/`, _order, {
+      headers: {
+        authorization: token
+      }
+    });
     dispatch(_createOrder(order));
   };
 };
 export const editOrder = (_order) => {
+  const token = window.localStorage.getItem(TOKEN)
+
   return async (dispatch) => {
-    const { data: order } = await axios.put(`/api/orders/${_order.id}`, _order);
+    const { data: order } = await axios.put(`/api/orders/${_order.id}`, _order, {
+      headers: {
+        authorization: token
+      }
+    });
     dispatch(_editOrder(order));
   };
 };
