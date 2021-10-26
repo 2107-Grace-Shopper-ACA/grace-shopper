@@ -25,7 +25,7 @@ return (
     {
         products.map(product => {
             return (
-                <Grid key={product.id} item component={Card} xs={12} sm={8} md={6} lg={3} xl={2} >
+                <Grid key={product.id} item component={Card} xs={12} sm={8} md={6} lg={3} xl={2} style={{margin: '1rem'}}>
                   <ProductCard product={product} />
                 </Grid>
             );

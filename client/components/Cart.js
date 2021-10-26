@@ -90,7 +90,7 @@ const handleSubmit = async() => {
 }
     
     const onChange = async (ev) => {
-        await editOrderItem({id: ev.target.name, quantity: ev.target.value});
+      await editOrderItem({id: ev.target.id, quantity: +ev.target.value});
     }
     
     return (
@@ -144,12 +144,12 @@ const handleSubmit = async() => {
                         className="quantity"
                         min="1"
                         max={item.product.inventory < 10 ? product.inventory : 10}
-                        name={item.id}
+                        id={item.id}
                         value={item.quantity}
                         onChange={onChange}
                       />
                     </div>
-                    <Button value={item.id} onClick={()=> {deleteOrderItem(item.id)}} color='primary' variant='outlined' size='small'>Delete</Button>
+                    <Button onClick={()=> {deleteOrderItem(item.id)}} color='primary' variant='outlined' size='small'>Delete</Button>
                     </CardContent>
                 </Box>
               </Card>
