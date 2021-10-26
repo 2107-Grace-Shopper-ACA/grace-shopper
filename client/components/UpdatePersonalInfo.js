@@ -22,7 +22,7 @@ class UpdatePersonalInfo extends Component {
     }
     
     componentDidUpdate (prevProps){
-        if (prevProps.auth.id !== this.props.auth.id) {
+        if (prevProps.user.id !== this.props.user.id) {
             console.log("did update")
             const { username, password, email, phoneNumber, streetAddress, city, state, zipcode } = this.props.user;
             this.setState({ username, password, email, phoneNumber, streetAddress, city, state, zipcode });

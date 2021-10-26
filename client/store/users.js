@@ -77,7 +77,6 @@ export const editLoggedInUser = (user, history) => {
         }
       }))
       dispatch(_editLoggedInUser(edited));
-      history.push('/users');
     }
   }
 };
