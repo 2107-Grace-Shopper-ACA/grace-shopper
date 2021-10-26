@@ -57,7 +57,7 @@ const AdminProducts = ({products, history}) => {
         { title: 'Product Name', field: 'name', filtering: false  },
         { title: 'Category', field: 'category', filtering: false },
         { title: 'Description', field: 'description', filtering: false  },
-        { title: 'Price', field: 'price', filtering: false },
+        { title: 'Price', field: 'price', filtering: false, type: 'currency' },
         { title: 'Inventory', field: 'inventory', filtering: false },
         { title: 'Active', field: 'isActive', type: 'boolean' },
         { title: 'On Sale', field: 'onSale', type: 'boolean' },

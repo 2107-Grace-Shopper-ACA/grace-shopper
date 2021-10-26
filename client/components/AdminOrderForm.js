@@ -22,17 +22,10 @@ class AdminOrderForm extends Component {
     }
     
     componentDidMount(){
+        console.log(this.props)
         const { isCart, status } = this.props.order;
-        // console.log(this.props)
         this.setState({isCart, status});
     }
-    // componentDidUpdate(prevProps){
-    //     console.log(prevProps)
-    //     console.log(this.props)
-    //     if(prevProps.orderItems !== this.props.orderItems) {
-    //         loadAdminOrderItems();
-    //     }
-    // }
 
     onChange(ev) {
         const change = {};
@@ -43,9 +36,10 @@ class AdminOrderForm extends Component {
     async onSubmit(ev){
         ev.preventDefault();
         const { isCart, status} = this.state;
-        const { editOrder, order, history } = this.props;
+        const { editOrder, history, order, handleClose} = this.props;
         try{
-            await editOrder({...order, isCart, status}, history);
+            await editOrder({id: order.id, userId: order.userId, isCart, status}, history);
+            await handleClose();
         } 
         catch (ex){
             console.log(ex);
@@ -56,9 +50,8 @@ class AdminOrderForm extends Component {
     render () {
         const { isCart, status} = this.state;
         const { onChange, onSubmit } = this;
-        const { order, orderItems } = this.props;
-        console.log(order)
-        console.log(orderItems)
+        const { order } = this.props;
+        
         if (!order) return "...loading"
         
         return (
@@ -71,7 +64,7 @@ class AdminOrderForm extends Component {
                         Date: {order.date}
                     </label>
                     <label>
-                        Purchaser: {order.user.username}
+                        Purchaser: {order.purchaser}
                     </label>
                     <label>
                         Status:
@@ -84,23 +77,6 @@ class AdminOrderForm extends Component {
                     <br/>
                     <button>Edit Order</button>
                 </form>
-                {/* <h3>Order Items</h3>
-                <ul>
-                    {
-                        orderItems.map(item => {
-                            return (
-                                <li key={item.id}>
-                                    {
-                                        <Link to={`/admin/orderItems/${item.id}`}>
-                                            {item.product.name}
-                                        </Link>
-                                    }
-                                    'TODO: ADD MORE'
-                                </li>
-                            )
-                        })
-                    }
-                </ul> */}
             </div>
         )
     }
@@ -118,4 +94,4 @@ const mapDispatch = (dispatch) => {
     }
 }
 
-export default connect(null, mapDispatch)(AdminOrderForm)
+export default connect((state) => (state), mapDispatch)(AdminOrderForm)

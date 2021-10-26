@@ -31,6 +31,8 @@ class Routes extends Component {
       this.props.loadOrderItems() //Toggling this comment while debugging
       this.props.loadUser(this.props.auth)
     }
+    // let localCart = JSON.parse(localStorage.getItem('localCart')) || [];
+    // if()
   }
 
   render() {
@@ -40,6 +42,7 @@ class Routes extends Component {
       <div>
         {isLoggedIn ? (
           <Switch>
+            <Route path="/checkout/success" exact component={Success} />
             <Route path="/home" component={Home} />
             <Route path="/cart" component={Cart} />
             <Route path="/products/:productId" component={SingleProduct} />
@@ -50,7 +53,6 @@ class Routes extends Component {
             <Route path="/orders" exact component={Orders} />
             <Route path="/updatePersonalInfo" component={UpdatePersonalInfo} />
             <Route path="/orders/:orderId" exact component={SingleOrder} />
-            <Route path="/checkout/success" exact component={Success} />
             <Route path="/checkout/cancel" component={Cart} />
             <Redirect to="/home" />
           </Switch>

@@ -31,8 +31,8 @@ import { loadAdminOrders, loadAdminOrderItems, loadUsers } from '../store';
       <Route path='/admin/products/:id' exact component={AdminSingleProduct} />
       <Route path='/admin/orders' exact component={AdminOrders} />
       <Route path='/admin/orders/products/:id' exact component={AdminOrders} />
-      <Route path='/admin/orders/:id' exact component={AdminSingleOrder} />
-      <Route path='/admin/orderItems/:id' exact component={AdminSingleOrderItem} />
+      {/* <Route path='/admin/orders/:id' exact component={AdminSingleOrder} />
+      <Route path='/admin/orderItems/:id' exact component={AdminSingleOrderItem} /> */}
     </div>
 
   )

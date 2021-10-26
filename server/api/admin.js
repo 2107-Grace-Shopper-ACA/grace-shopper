@@ -71,6 +71,14 @@ Object.entries(db.models).forEach( entry => {
             }
           ]
         }));
+      } else if(_path === 'products'){
+        res.send(await model.findByPk(req.params.id, {
+          include: [
+            {
+              model: Category
+            }
+          ]
+        }));
       } else {
         res.send(await model.findByPk(req.params.id));
       }
@@ -123,8 +131,8 @@ Object.entries(db.models).forEach( entry => {
         await item.update({...item, username, isAdmin});
         res.send(item);
       } else if (_path === 'orders'){
-        const { isCart, status } = req.body;
-        await item.update({...item, isCart, status});
+        const { isCart, status, userId } = req.body;
+        await item.update({...item, isCart, status, userId});
         const _item = await model.findByPk(item.id, {
           include: [
             {
