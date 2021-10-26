@@ -132,7 +132,7 @@ const ProductCard = ({product, style, auth, orders, orderItems, update, createOr
                             }
                         //add localCart to localStorage and reset quantity
                             localStorage.setItem('localCart', JSON.stringify(localCart));
-                            setQuantity('')
+                            setQuantity(0)
                         } 
                         //it is a user and will definitely have a cart order
                         else {
@@ -145,7 +145,7 @@ const ProductCard = ({product, style, auth, orders, orderItems, update, createOr
                             else {
                                 await createOrderItem({orderId: cartOrder.id, productId: product.id, quantity: correctQuantity({quantity: 0}, product, quantity)});
                             }
-                            setQuantity('');
+                            setQuantity(0);
                         }
                         update(Math.random())
                     }}
