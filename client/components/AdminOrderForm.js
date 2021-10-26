@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import { Link } from 'react-router-dom';
-import { editAdminOrder, loadAdminOrders, loadAdminOrderItems } from '../store'
+import { editAdminOrder, loadAdminOrders, loadAdminOrderItems, update } from '../store'
 import AdminOrderItemForm from './AdminOrderItemForm';
 /**
  * CLASS COMPONENT
@@ -36,10 +36,11 @@ class AdminOrderForm extends Component {
     async onSubmit(ev){
         ev.preventDefault();
         const { isCart, status} = this.state;
-        const { editOrder, history, order, handleClose} = this.props;
+        const { editOrder, history, order, handleClose, update} = this.props;
         try{
             await editOrder({id: order.id, userId: order.userId, isCart, status}, history);
             await handleClose();
+            update(Math.random());
         } 
         catch (ex){
             console.log(ex);
@@ -90,7 +91,8 @@ const mapDispatch = (dispatch) => {
     return {
         editOrder: (order, history) => dispatch(editAdminOrder(order, history)),
         loadAdminOrders: () => dispatch(loadAdminOrders()),
-        loadAdminOrderItems: () => dispatch(loadAdminOrderItems())
+        loadAdminOrderItems: () => dispatch(loadAdminOrderItems()),
+        update: (num) => dispatch(update(num))
     }
 }
 
