@@ -11,6 +11,7 @@ import CardContent from '@material-ui/core/CardContent'
 import Card from '@material-ui/core/Card'
 import CardMedia from '@material-ui/core/CardMedia'
 import CartAddress from './CartAddress';
+import update from '../store/update';
 
 
   const Cart = ({ orders, orderItems, auth, editOrderItem, deleteOrderItem, createOrderItem, loadOrderItems, user }) => {
@@ -91,8 +92,18 @@ const handleSubmit = async() => {
 }
     
     const onChange = async (ev) => {
-      await editOrderItem({id: ev.target.id, quantity: +ev.target.value});
+      if (auth.id){
+        await editOrderItem({id: ev.target.id, quantity: +ev.target.value});
+      } else {
+        let localItem = localCart.find(item => item.id === ev.target.id);
+        localItem.quantity = +ev.target.value;
+        localStorage.setItem('localCart', JSON.stringify(localCart));
+      }
     }
+
+    // useEffect(() => {
+
+    // }, [localCart])
     
     return (
       <>
