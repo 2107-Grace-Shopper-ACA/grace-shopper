@@ -20,6 +20,9 @@ class Products extends Component{
       category: '',
       sort: ''
     }
+    this.filterProducts = this.filterProducts.bind(this);
+    this.sortProducts = this.sortProducts.bind(this);
+
   }
 
   filterProducts = (event) => {
