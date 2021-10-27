@@ -20,7 +20,7 @@ class CartAddress extends Component {
     componentDidUpdate (prevProps){
         if (!prevProps.user.id && this.props.user.id) {
             const { streetAddress, city, state, zipcode } = this.props.user;
-            this.setState({ username, password, email, phoneNumber, streetAddress, city, state, zipcode });
+            this.setState({ streetAddress, city, state, zipcode });
         }
     }
     

@@ -16,7 +16,6 @@ export const Home = props => {
   if (!cartOrder) console.log('nocartorder')
   let cartItems = orderItems.filter(orderItem => orderItem.orderId === cartOrder.id);
   let localCart = JSON.parse(localStorage.getItem('localCart')) || [];
-console.log('HOMEEE')
   //IF GUEST STILL ADD TO CART
   if (!auth.id){
     cartItems = localCart || [];
