@@ -8,6 +8,7 @@ const TOKEN = 'token'
  const ADD_USER = 'ADD_USER'
  const EDIT_USER = 'EDIT_USER'
  const EDIT_LOGGEDIN_USER = 'EDIT_LOGGEDIN_USER'
+ const EDIT_CART_USER = 'EDIT_CART_USER'
  /**
   * ACTION CREATORS
   */
@@ -15,6 +16,7 @@ const TOKEN = 'token'
  const _addUser = (user) => ({ type: ADD_USER, user });
  const _editUser = (user) => ({ type: EDIT_USER, user });
  const _editLoggedInUser = (user) => ({type: EDIT_LOGGEDIN_USER, user})
+ const _editCartUser = (user) => ({type: EDIT_CART_USER, user})
 
  /**
   * THUNK CREATORS
@@ -81,6 +83,20 @@ export const editLoggedInUser = (user, history) => {
     }
   }
 };
+
+export const editCartUser = (user, history) => {
+  return async (dispatch) => {
+    const token = window.localStorage.getItem(TOKEN);
+    if (token){
+      const {data: edited} = (await axios.put(`/api/users/${user.id}`, user, {
+        headers: {
+          authorization: token
+        }
+      }))
+      dispatch(_editCartUser(edited));
+    }
+  }
+};
  /**
   * REDUCER
   */
@@ -95,7 +111,8 @@ export const editLoggedInUser = (user, history) => {
               return [...state, action.user]
          case EDIT_LOGGEDIN_USER:
               return state.map(user => user.id === +action.user.id ? action.user : user)
-              
+         case EDIT_CART_USER:
+              return state.map(user => user.id === +action.user.id ? action.user : user)
          default:
              return state
      }

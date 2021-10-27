@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import { editLoggedInUser } from '../store'
+import { editCartUser } from '../store'
 
 class CartAddress extends Component {
     constructor(props){
@@ -33,13 +33,13 @@ class CartAddress extends Component {
     async onSubmit(ev){
         ev.preventDefault();
         const { streetAddress, city, state, zipcode } = this.state;
-        const { history, editLoggedInUser, user } = this.props;
-        // try{
-            await editLoggedInUser({...user, streetAddress, city, state, zipcode }, history);
-        // } 
-        // catch (ex){
-        //     this.setState({error: ex.response.data.error});  
-        // }
+        const { history, editCartUser, user } = this.props;
+        try{
+            await editCartUser({...user, streetAddress, city, state, zipcode }, history);
+        } 
+        catch (ex){
+            this.setState({error: ex.response.data.error});  
+        }
     }
     render () {
         const { streetAddress, city, state, zipcode } = this.state;
@@ -84,7 +84,7 @@ const mapState = state => {
 }
 const mapDispatch = (dispatch, {history}) => {
     return {
-        editLoggedInUser: (user) => dispatch(editLoggedInUser(user, history)),
+        editCartUser: (user) => dispatch(editCartUser(user, history)),
     }
 }
 
