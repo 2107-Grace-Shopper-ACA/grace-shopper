@@ -25,7 +25,7 @@ class Products extends Component{
 
   }
 
-  filterProducts = (event) => {
+  filterProducts (event) {
     console.log(event.target.value)
     if(event.target.value === '') {
       this.setState({
@@ -42,7 +42,7 @@ class Products extends Component{
     }
   }
 
-  sortProducts = (event) => {
+  sortProducts (event) {
     const sort = event.target.value
     console.log(event.target.value)
     this.setState({
