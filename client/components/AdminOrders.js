@@ -29,7 +29,7 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 /**
  * COMPONENT
  */
-const AdminOrders = ({orders, orderItems, match, history, products, update, loadAdminOrders}) => {
+const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrders}) => {
 //TODO WHY NEED TO REFRESH AFTER EDITING    
 //TODO not sure if i need this
     // useEffect(() => {
@@ -242,7 +242,6 @@ const mapState = (state, {history, match}) => {
     history: history,
     match: match,
     products: state.products,
-    update: state.update
   }
 }
 const mapDispatch = dispatch => {
