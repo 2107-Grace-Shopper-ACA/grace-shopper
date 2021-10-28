@@ -91,7 +91,6 @@ class Products extends Component{
   }
 }
 
-
 const mapDispatchToProps = (dispatch) => {
   return {
     createOrder: (user) => {
@@ -103,8 +102,8 @@ const mapDispatchToProps = (dispatch) => {
     },
     editOrderItem: (orderItem) => {
       dispatch(editOrderItem(orderItem))
-    }
+    },
   }
 }
 
-export default connect((state) => state, mapDispatchToProps)(Products);
+export default connect((state) => state, mapDispatchToProps)(Products)
