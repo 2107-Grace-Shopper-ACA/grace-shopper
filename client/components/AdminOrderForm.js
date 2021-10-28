@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import { Link } from 'react-router-dom';
-import { editAdminOrder, loadAdminOrders, loadAdminOrderItems, update } from '../store'
+import Box from '@material-ui/core/Box'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
+import Checkbox from '@material-ui/core/Checkbox'
+import { editAdminOrder, loadAdminOrders, loadAdminOrderItems } from '../store'
 import AdminOrderItemForm from './AdminOrderItemForm';
 /**
  * CLASS COMPONENT
@@ -36,11 +40,10 @@ class AdminOrderForm extends Component {
     async onSubmit(ev){
         ev.preventDefault();
         const { isCart, status} = this.state;
-        const { editOrder, history, order, handleClose, update} = this.props;
+        const { editOrder, history, order, handleClose} = this.props;
         try{
             await editOrder({id: order.id, userId: order.userId, isCart, status}, history);
-            await handleClose();
-            update(Math.random());
+            handleClose();
         } 
         catch (ex){
             console.log(ex);
@@ -57,7 +60,31 @@ class AdminOrderForm extends Component {
         
         return (
             <div>
-                <form onSubmit={onSubmit}>
+                <Box
+            component="form"
+            sx={{
+                '& .MuiTextField-root': { m: 1, width: '25ch' },
+                backgroundColor: 'white'
+            }}
+            noValidate
+            autoComplete="off"
+            >
+                <div style={{display: 'flex', flexDirection: 'column'}}>
+                    <TextField value={order.id || ''} label='Order ID'>
+                    </TextField>
+                    <TextField value={order.date || ''} label='Order Date'>
+                    </TextField>
+                    <TextField value={order.purchaser || ''} label='Purchaser'>
+                    </TextField>
+                    <TextField name='status' value={status || ''} label='Status' onChange={onChange} >
+                    </TextField>
+//TODO: why isn't checkbox working
+                    <Checkbox label='Cart Order' checked={isCart || ''} onChange={onChange}>
+                    </Checkbox>
+                    <Button onClick={onSubmit}>Edit Order</Button>
+                </div>
+            </Box>
+                {/* <form onSubmit={onSubmit}>
                     <label>
                         OrderID: {order.id}
                     </label>
@@ -77,7 +104,7 @@ class AdminOrderForm extends Component {
                         <input type='checkbox' name='isCart' checked={isCart || ''} onChange={onChange} />
                     <br/>
                     <button>Edit Order</button>
-                </form>
+                </form> */}
             </div>
         )
     }
@@ -92,7 +119,6 @@ const mapDispatch = (dispatch) => {
         editOrder: (order, history) => dispatch(editAdminOrder(order, history)),
         loadAdminOrders: () => dispatch(loadAdminOrders()),
         loadAdminOrderItems: () => dispatch(loadAdminOrderItems()),
-        update: (num) => dispatch(update(num))
     }
 }
 
