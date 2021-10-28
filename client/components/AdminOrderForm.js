@@ -39,7 +39,7 @@ class AdminOrderForm extends Component {
         const { editOrder, history, order, handleClose} = this.props;
         try{
             await editOrder({id: order.id, userId: order.userId, isCart, status}, history);
-            await handleClose();
+            handleClose();
         } 
         catch (ex){
             console.log(ex);
