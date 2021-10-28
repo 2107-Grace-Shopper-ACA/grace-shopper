@@ -26,7 +26,6 @@ import CategoriesTest from './CategoriesTest'
 
 const Products = ({
   products,
-  style,
   orders,
   auth,
   orderItems,
@@ -69,7 +68,6 @@ const Products = ({
               lg={3}
               xl={2}
               style={{ 
-                ...style,
                 backgroundColor: 'black',
                 margin: '1rem' }}
             >

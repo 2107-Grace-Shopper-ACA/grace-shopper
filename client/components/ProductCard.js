@@ -15,11 +15,11 @@ import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import AddShoppingCart from '@material-ui/icons/AddShoppingCart'
-import { withStyles } from '@material-ui/core/styles'
+// import { withStyles, createTheme } from '@material-ui/core/styles'
+import { createTheme, ThemeProvider, shadows } from '@material-ui/core'
 
 const ProductCard = ({
   product,
-  style,
   auth,
   orders,
   orderItems,
@@ -37,11 +37,34 @@ const ProductCard = ({
   let cartItems =
     orderItems.filter((item) => item.orderId === cartOrder.id) || []
 
-  const GreenTextTypography = withStyles({
-    root: {
-      color: 'linear-gradient(45deg, #00fc62, #00ffee)',
+  //   const GreenTextTypography = withStyles({
+  //     root: {
+  //       color: 'linear-gradient(45deg, #00fc62, #00ffee)',
+  //     },
+  //   })(Typography)
+  //
+  const theme = createTheme({
+    palette: {
+        primary: {
+            main: '#00fc62'
+        },
+        secondary:{
+            light:'#ff2c61',
+            main: '#ff45cd'
+        }
     },
-  })(Typography)
+    select: {
+        '&:before': {
+            color: "black"
+        },
+        '&:after': {
+            color: "black"
+        }
+    },
+    icon: {
+        fill: "black"
+    }
+  })
 
   if (!product) return '...loading'
 
@@ -51,12 +74,12 @@ const ProductCard = ({
       <Card
         key={product.id}
         height="100%"
+        theme={theme}
         style={{
-          ...style,
           alignItems: 'stretch',
-          backgroundColor: 'black',
-          borderColor: 'white',
-          color: 'white',
+          backgroundColor: '#363334',
+          border: 50,
+          borderColor: 'primary',
         }}
       >
         <CardActionArea onClick={() => history.push(`/products/${product.id}`)}>
@@ -66,19 +89,19 @@ const ProductCard = ({
             image={product.imageUrl || 'https://i.gifer.com/MNu.gif'}
             alt="product image"
           />
-          <CardContent>
-            <Typography variant="h5" component="div">
+          <CardContent align="center" style={{color:"white"}}>
+            <Typography variant="h5" component="div"  >
               {product.name}
             </Typography>
             <hr></hr>
             {/* //TODO: wrap text so same height                   */}
-            <Typography variant="body2" component="div" color="textSecondary">
+            <Typography variant="body2" component="div">
               {product.description}
             </Typography>
             <hr></hr>
-            <GreenTextTypography variant="body1">
-              ${product.price}
-            </GreenTextTypography>
+            <ThemeProvider theme={theme} >
+              <Typography variant="body1" color="primary">${product.price}</Typography>
+            </ThemeProvider>
             {product.inventory < 10 ? (
               <Typography variant="body2" color="secondary">
                 Only {product.inventory} left in stock!
@@ -90,8 +113,8 @@ const ProductCard = ({
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <FormControl fullWidth style={{ marginBottom: '3rem' }}>
-            <InputLabel variant="body5" color="primary">
+          <FormControl fullWidth style={{ marginBottom: '3rem', color: "white" }}>
+            <InputLabel variant="outlined" style={{color: "white"}}>
               Quantity:
             </InputLabel>
             <Select
@@ -99,17 +122,22 @@ const ProductCard = ({
               label="Quantity"
               name={product.id}
               onChange={(ev) => setQuantity(ev.target.value)}
+              style={{color: "white"}}
             >
               {Array.from(Array(maxQuantity).keys()).map((idx) => {
-                return <MenuItem key={idx} value={idx + 1}>{idx + 1}</MenuItem>
+                return (
+                  <MenuItem key={idx} value={idx + 1}>
+                    {idx + 1}
+                  </MenuItem>
+                )
               })}
             </Select>
           </FormControl>
           <Button
             disabled={quantity === 0}
-            color="primary"
             variant="outlined"
-            style={{ marginBottom: '3rem' }}
+            color="secondary"
+            style={{ marginBottom: '3rem', backgroundColor: "white"}}
             onClick={async (ev) => {
               const correctQuantity = (item, product, quantity) => {
                 if (quantity + item.quantity > product.inventory) {
@@ -194,7 +222,7 @@ const ProductCard = ({
               update(Math.random())
             }}
           >
-            <AddShoppingCart color="success" />
+            <AddShoppingCart color="primary" />
           </Button>
         </CardActions>
       </Card>
