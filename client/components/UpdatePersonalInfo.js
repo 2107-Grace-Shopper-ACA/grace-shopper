@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
+import Box from '@material-ui/core/Box'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
 import { editLoggedInUser, update } from '../store'
 
 class UpdatePersonalInfo extends Component {
@@ -55,43 +58,35 @@ class UpdatePersonalInfo extends Component {
 
         if (!this.props.user) return '...loading'
         return (
-            <div>
-                <form onSubmit={onSubmit}>
-                    <label>
-                        Username:
-                    </label>
-                        <input name='username' value={username || ''} onChange={onChange} />
-                    <label>
-                        Password:
-                    </label>
-                        <input name='password' value={password || ''} onChange={onChange} /> 
-                    <label>
-                        Email:
-                    </label>
-                        <input name='email' value={email || ''} onChange={onChange} /> 
-                    <label>
-                        Phone Number:
-                    </label>
-                        <input name='phoneNumber' value={phoneNumber || ''} onChange={onChange} /> 
-                    <label>
-                        Street Address:
-                    </label>
-                        <input name='streetAddress' value={streetAddress || ''} onChange={onChange} /> 
-                    <label>
-                        City:
-                    </label>
-                        <input name='city' value={city || ''} onChange={onChange} /> 
-                    <label>
-                        State:
-                    </label>
-                        <input name='state' value={state || ''} onChange={onChange} /> 
-                    <label>
-                        Zipcode:
-                    </label>
-                        <input name='zipcode' value={zipcode || ''} onChange={onChange} /> 
-                    <button type='submit' disabled={!username || !password}>Edit User</button>
-                </form>
-            </div>
+            <Box
+            component="form"
+            sx={{
+                '& .MuiTextField-root': { m: 1, width: '25ch' },
+                backgroundColor: 'white'
+            }}
+            noValidate
+            autoComplete="off"
+            >
+                <div style={{display: 'flex', flexDirection: 'column'}}>
+                    <TextField name='username' value={username || ''} label='Username' onChange={onChange} >
+                    </TextField>
+                    <TextField name='password' value={password || ''} label='Password' onChange={onChange} >
+                    </TextField>
+                    <TextField name='email' value={email || ''} label='Email' onChange={onChange} >
+                    </TextField>
+                    <TextField name='phoneNumber' value={phoneNumber || ''} label='Phone Number' onChange={onChange} >
+                    </TextField>
+                    <TextField name='streetAddress' value={streetAddress || ''} label='Street Address' onChange={onChange} >
+                    </TextField>
+                    <TextField name='city' value={city || ''} label='City' onChange={onChange} >
+                    </TextField>
+                    <TextField name='state' value={state || ''} label='State' onChange={onChange} >
+                    </TextField>
+                    <TextField name='zipcode' value={zipcode || ''} label='Zipcode' onChange={onChange} >
+                    </TextField>
+                    <Button disabled={!username || !password} onClick={onSubmit}>Edit User</Button>
+                </div>
+            </Box>
         )
     }
 }
