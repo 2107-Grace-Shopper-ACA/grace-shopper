@@ -46,10 +46,10 @@ class UpdatePersonalInfo extends Component {
     async onSubmit(ev){
         ev.preventDefault();
         const { username, password, email, phoneNumber, streetAddress, city, state, zipcode } = this.state;
-        const { history, editLoggedInUser, user, loadUser } = this.props;
+        const { history, editLoggedInUser, user, loadUser, auth } = this.props;
         try{
             await editLoggedInUser({...user, username, password, email, phoneNumber, streetAddress, city, state, zipcode }, history);
-            await loadUser(this.props.auth)
+            await loadUser(auth)
         } 
         catch (ex){
             this.setState({error: ex.response.data.error});  
@@ -83,7 +83,7 @@ class UpdatePersonalInfo extends Component {
                     <StyledTextField name='city' value={city || ''} label='City' onChange={onChange} />
                     <StyledTextField name='state' value={state || ''} label='State' onChange={onChange} />
                     <StyledTextField name='zipcode' value={zipcode || ''} label='Zipcode' onChange={onChange} />
-                    <Button style={{backgroundColor: 'white'}} disabled={!username || !password} onClick={onSubmit}>Edit User</Button>
+                    <Button style={{backgroundColor: 'white'}} disabled={!username || !password} onClick={onSubmit}>Edit User Info</Button>
                 </div>
             </Box>
             </>

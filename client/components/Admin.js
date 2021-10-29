@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import { Link, Route, withRouter } from 'react-router-dom';
 import AdminNavbar from './AdminNavbar';
 import AdminUsers from './AdminUsers';
-import AdminSingleUser from './AdminSingleUser';
 import AdminProducts from './AdminProducts';
 import AdminSingleProduct from './AdminSingleProduct';
 import AdminOrders from './AdminOrders';
@@ -25,7 +24,6 @@ import { loadAdminOrders, loadAdminOrderItems, loadUsers } from '../store';
     <div>
       <Route path='/admin' component={AdminNavbar} />
       <Route path='/admin/users' exact component={AdminUsers} />
-      <Route path='/admin/users/:id' exact component={AdminSingleUser} />
       <Route path='/admin/products' exact component={AdminProducts} />
       <Route path='/admin/products/:id' exact component={AdminSingleProduct} />
       <Route path='/admin/orders' exact component={AdminOrders} />

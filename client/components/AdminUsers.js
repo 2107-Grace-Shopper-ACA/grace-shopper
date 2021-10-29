@@ -54,6 +54,9 @@ const AdminUsers = ({users, history, loadUsers}) => {
       const columns = [
         { title: 'User Name', field: 'username' },
         { title: 'Password', field: 'password' },
+        { title: 'Email', field: 'email' },
+        { title: 'Phone Number', field: 'phone' },
+        { title: 'Address', field: 'address' },
         { title: 'Admin', field: 'isAdmin', type: 'boolean' },
       ];
     
@@ -61,22 +64,29 @@ const AdminUsers = ({users, history, loadUsers}) => {
       const data = users.sort((a,b) => a.username < b.username).map((user) =>  { return (
           {
               username: user.username, 
-              password: user.password, 
+              password: user.password.slice(0,10) + '...', 
+              email: user.email.length > 10 ? user.email.slice(0,10) + '...' : user.email, 
+              phone: user.phoneNumber, 
+              address: user.streetAddress.length > 10 ? user.streetAddress.slice(0,10) + '...' : user.streetAddress, 
               isAdmin: user.isAdmin ,
               id: user.id
           }
       )
       });
        
-
+    const [action, setAction] = useState('');
+    const [user, setUser] = useState('');
     //dialog box
     const [open, setOpen] = useState(false);
-    const handleOpen = (ev) => {
+    const handleOpen = (ev, user) => {
         // ev.persist()
+        user ? setAction('edit') : '' ;
+        user ? setUser(user) : '' ;
         setOpen(true);
     }
     const handleClose = () => {
         setOpen(false);
+        setAction('')
     }
 //
     useEffect(() => {
@@ -90,7 +100,7 @@ const AdminUsers = ({users, history, loadUsers}) => {
     return (
         <>
         <Dialog onClose={handleClose} open={open}>
-            <AdminUserForm handleClose={handleClose} history={history}/>
+            <AdminUserForm handleClose={handleClose} history={history} user={user} action={action}/>
         </Dialog>
         <MaterialTable
           title="Users"
@@ -108,7 +118,8 @@ const AdminUsers = ({users, history, loadUsers}) => {
                   icon: Edit,
                   tooltip: 'Edit User',
                   isFreeAction: false,
-                  onClick: (ev, rowData) => history.push(`/admin/users/${rowData.id}`)
+                  onClick: (ev,rowData)=>handleOpen(ev, rowData),
+                //   onClick: (ev, rowData) => history.push(`/admin/users/${rowData.id}`)
               }
           ]}
           options={{

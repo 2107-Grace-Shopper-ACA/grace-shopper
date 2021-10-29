@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import { addUser, editUser, logout } from '../store'
-
+import { addUser, editUser, logout, loadUser } from '../store'
+import { StyledTextField } from './StyledMUIComponents';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 /**
  * CLASS COMPONENT
  */
@@ -13,6 +17,12 @@ class AdminUserForm extends Component {
         this.state = {
             username: '',
             password: '',
+            email: '',
+            phoneNumber: '',
+            streetAddress: '',
+            city: '',
+            state: '',
+            zipcode: '',
             isAdmin: false,
             error: ''
         }
@@ -22,8 +32,8 @@ class AdminUserForm extends Component {
     
     componentDidMount(){
         if (this.props.action === 'edit'){
-            const { username, password, isAdmin } = this.props.user;
-            this.setState({ username, password, isAdmin });
+            const { username, password, isAdmin, email, phoneNumber, streetAddress, city, state, zipcode } = this.props.user;
+            this.setState({ username, password, isAdmin, email, phoneNumber, streetAddress, city, state, zipcode });
         }
     }
     
@@ -35,15 +45,16 @@ class AdminUserForm extends Component {
 
     async onSubmit(ev){
         ev.preventDefault();
-        const { username, isAdmin, password } = this.state;
-        const { history, handleClose, action, editUser, addUser, user } = this.props;
+        const { username, isAdmin, password, email, phoneNumber, streetAddress, city, state, zipcode } = this.state;
+        const { history, handleClose, action, editUser, addUser, user, auth, loadUser } = this.props;
         try{
             if(action === 'edit'){
-                await editUser({...user, username, isAdmin}, history);
+                await editUser({...user, username, isAdmin, email, phoneNumber, streetAddress, city, state, zipcode}, history);
             } else {
-                await addUser({username, password, isAdmin}, history);
-                handleClose();
+                await addUser({username, password, isAdmin, email, phoneNumber, streetAddress, city, state, zipcode}, history);
             }
+            user.id === auth.id ? loadUser(auth) : '';
+            handleClose();
         } 
         catch (ex){
             console.log(ex);
@@ -51,38 +62,69 @@ class AdminUserForm extends Component {
         }
     }
     render () {
-        const { username, isAdmin, password } = this.state;
+        const { username, isAdmin, password, email, phoneNumber, streetAddress, city, state, zipcode } = this.state;
         const { onChange, onSubmit } = this;
         const { action, auth, user } = this.props;
 
         if (action === 'edit' && !user) return '...loading'
         return (
-            <div>
-                <form onSubmit={onSubmit}>
+            
+                <Box
+                component="form"
+                sx={{
+                    '& .MuiTextField-root': { m: 1, width: '25ch' },
+                    backgroundColor: 'black'
+                }}
+                noValidate
+                autoComplete="off"
+            >
+                <div style={{display: 'flex', flexDirection: 'column', border: '1px solid white', borderRadius: '4px'}}>
+                    <StyledTextField name='username' value={username || ''} label='Username' onChange={onChange}/>
+                    <FormControlLabel
+                        control={
+                            <Checkbox 
+                                name='isAdmin' 
+                                checked={isAdmin || ''} 
+                                onChange={onChange}
+                            />
+                        }
+                        style={{marginLeft: '1rem', color: 'white'}}
+                        label='Is Admin'
+                        disabled={user && auth.id === user.id}
+                    />
+                    <StyledTextField name='password' value={password || ''} label='Password' onChange={onChange} />
+                    <StyledTextField name='email' value={email || ''} label='Email' onChange={onChange} />
+                    <StyledTextField name='phoneNumber' value={phoneNumber || ''} label='Phone Number' onChange={onChange} />
+                    <StyledTextField name='streetAddress' value={streetAddress || ''} label='Street Address' onChange={onChange} />
+                    <StyledTextField name='city' value={city || ''} label='City' onChange={onChange} />
+                    <StyledTextField name='state' value={state || ''} label='State' onChange={onChange} />
+                    <StyledTextField name='zipcode' value={zipcode || ''} label='Zipcode' onChange={onChange} />
+                    <Button style={{backgroundColor: 'white', margin: '1rem'}} onClick={onSubmit}>
+                        {action === 'edit' ? 'Edit User' : 'Add User'}
+                    </Button>
+                </div>
+            </Box>
+        )
+                {/* <form onSubmit={onSubmit}>
                     <label>
                         Username:
                     </label>
                         <input name='username' value={username || ''} onChange={onChange} />
                         
-                        {
-                            action !== 'edit' ? 
-                        <>
+                        
                             <label>
                                 Password:
                             </label>
                             <input name='password' value={password || ''} onChange={onChange} /> 
-                        </>    
-                            : ''
-                        }
+                        
                     <label>
                         Is Admin:
                     </label>
                         <input disabled={user && auth.id === user.id} name='isAdmin' type="checkbox" checked={isAdmin} onChange={onChange} />
                     <br/>
                     <button>{action === 'edit' ? 'Edit User' : 'Add User'}</button>
-                </form>
-            </div>
-        )
+                </form> */}
+            
     }
 }
 
@@ -99,6 +141,7 @@ const mapDispatch = (dispatch) => {
         editUser: (user, history) => dispatch(editUser(user, history)),
         addUser: (user, history) => dispatch(addUser(user, history)),
         logout: () => dispatch(logout()),
+        loadUser: (auth) => dispatch(loadUser(auth))
     }
 }
 

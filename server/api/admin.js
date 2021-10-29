@@ -138,8 +138,8 @@ Object.entries(db.models).forEach((entry) => {
           include: Category,
         })
       } else if (_path === 'users') {
-        const { username, password, isAdmin } = req.body
-        item = await model.create({ username, password, isAdmin })
+        const { username, password, isAdmin, email, phoneNumber, streetAddress, city, state, zipcode  } = req.body
+        item = await model.create({ username, password, isAdmin, email, phoneNumber, streetAddress, city, state, zipcode  })
       }
       res.send(item)
     } catch (ex) {
@@ -177,8 +177,8 @@ Object.entries(db.models).forEach((entry) => {
         })
         res.send(_item)
       } else if (_path === 'users') {
-        const { username, isAdmin } = req.body
-        await item.update({ ...item, username, isAdmin })
+        const { username, isAdmin, password, email, phoneNumber, streetAddress, city, state, zipcode } = req.body
+        await item.update({ ...item, username, isAdmin, password, email, phoneNumber, streetAddress, city, state, zipcode })
         res.send(item)
       } else if (_path === 'orders') {
         const { isCart, status, userId } = req.body
