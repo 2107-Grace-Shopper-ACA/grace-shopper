@@ -46,9 +46,8 @@ class UpdatePersonalInfo extends Component {
             await editLoggedInUser({...user, username, password, email, phoneNumber, streetAddress, city, state, zipcode }, history);
             await update(Math.random())
         } 
-        catch (err){
-            console.log(err.message)
-            this.setState({error: ex.response.data.error});  
+        catch (ex){
+            this.setState({error: ex.response.data.error}); 
         }
     }
     render () {
@@ -67,11 +66,11 @@ class UpdatePersonalInfo extends Component {
             autoComplete="off"
             >
                 <div style={{display: 'flex', flexDirection: 'column'}}>
-                    <TextField name='username' value={username || ''} label='Username' onChange={onChange} >
+                    <TextField name='username' value={username || ''} label='Username' onChange={onChange} error helperText='validation error'>
                     </TextField>
                     <TextField name='password' value={password || ''} label='Password' onChange={onChange} >
                     </TextField>
-                    <TextField name='email' value={email || ''} label='Email' onChange={onChange} >
+                    <TextField name='email' value={email || ''} label='Email' type='email' onChange={onChange} >
                     </TextField>
                     <TextField name='phoneNumber' value={phoneNumber || ''} label='Phone Number' onChange={onChange} >
                     </TextField>
