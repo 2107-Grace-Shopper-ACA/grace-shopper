@@ -12,6 +12,9 @@ class Products extends Component {
       products: this.props.products,
       category: '',
       sort: '',
+      lastSortEvent: {value:{
+        target: ''
+      }},
     }
     this.filterProducts = this.filterProducts.bind(this)
     this.sortProducts = this.sortProducts.bind(this)
@@ -39,15 +42,16 @@ class Products extends Component {
     }
   }
 
-  filterProducts(event) {
+  filterProducts = async(event) => {
+    console.log(`filterProducts is called with this event target`, event.target.value)
     if (event.target.value === '') {
-      this.setState({
+      await this.setState({
         ...this.state,
         category: event.target.value,
         products: this.props.products,
       })
     } else {
-      this.setState({
+      await this.setState({
         ...this.state,
         category: event.target.value,
         products: this.props.products.filter(
@@ -55,13 +59,17 @@ class Products extends Component {
         ),
       })
     }
-    //sortProducts(lastEvent???) -Alex
+    console.log(`lastSortEvent target value `, this.state.lastSortEvent.value)
+    this.state.lastSortEvent === '' ?  null : this.sortProducts(this.state.lastSortEvent)
   }
 
-  sortProducts(event) {
+  sortProducts = async(event) => {
+    console.log(`sortProducts is called`)
+    event.persist()
     const sort = event.target.value
-    this.setState({
+    await this.setState({
       ...this.state,
+      lastSortEvent: event,
       sort: sort,
       products: this.state.products
         .slice()
@@ -77,8 +85,10 @@ class Products extends Component {
             : a.name > b.name
             ? 1
             : -1
-        ),
-    })
+        )
+    },
+    )
+    console.log(`lastSortEvent is now `, this.state.lastSortEvent)
   }
 
   render() {
