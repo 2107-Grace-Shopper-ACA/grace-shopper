@@ -54,8 +54,7 @@ class AdminProductForm extends Component {
             if(action === 'edit'){
                 await editProduct({...product, name, inventory, price, imageUrl, description, isActive, onSale,  categoryId}, history);
             } else {
-                await addProduct({name, inventory: inventory ? inventory : 100, price: price ? price : 8.00, imageUrl, description, isActive, onSale,  categoryId}, history);
-//TODO figure out synthetic event re handling close                
+                await addProduct({name, inventory: inventory ? inventory : 100, price: price ? price : 8.00, imageUrl, description, isActive, onSale,  categoryId}, history);            
             }
             handleClose();
         } 
@@ -102,8 +101,8 @@ class AdminProductForm extends Component {
                     </Select>
                     <StyledTextField name='price' value={price || ''} label='Price' onChange={onChange} />
                     <StyledTextField name='inventory' value={inventory || ''} label='Inventory' onChange={onChange} />
-                    <StyledTextField name='description' value={description || ''} label='Description' onChange={onChange} />
-                    <StyledTextField name='imageUrl' value={imageUrl || ''} label='Image URL' onChange={onChange} />
+                    <StyledTextField multiline maxRows={10} name='description' value={description || ''} label='Description' onChange={onChange} />
+                    <StyledTextField multiline maxRows={10} name='imageUrl' value={imageUrl || ''} label='Image URL' onChange={onChange} />
                     <FormControlLabel
                         control={
                             <Checkbox 

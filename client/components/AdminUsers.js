@@ -51,7 +51,10 @@ const AdminUsers = ({users, history, loadUsers}) => {
         { title: 'Password', field: 'password' },
         { title: 'Email', field: 'email' },
         { title: 'Phone Number', field: 'phone' },
-        { title: 'Address', field: 'address' },
+        { title: 'Address', field: 'streetAddress' },
+        { title: 'City', field: 'city' },
+        { title: 'State', field: 'state' },
+        { title: 'Zipcode', field: 'zipcode' },
         { title: 'Admin', field: 'isAdmin', type: 'boolean' },
       ];
     
@@ -59,10 +62,13 @@ const AdminUsers = ({users, history, loadUsers}) => {
       const data = users.sort((a,b) => a.username < b.username).map((user) =>  { return (
           {
               username: user.username, 
-              password: user.password.slice(0,10) + '...', 
-              email: user.email.length > 10 ? user.email.slice(0,10) + '...' : user.email, 
+              password: user.password, 
+              email: user.email, 
               phone: user.phoneNumber, 
-              address: user.streetAddress.length > 10 ? user.streetAddress.slice(0,10) + '...' : user.streetAddress, 
+              streetAddress: user.streetAddress, 
+              city: user.city,
+              state: user.state,
+              zipcode: user.zipcode,
               isAdmin: user.isAdmin ,
               id: user.id
           }
