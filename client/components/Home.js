@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import UpdatePersonalInfo from './UpdatePersonalInfo'
-import {editOrderItem, createOrderItem, loadOrderItems, update } from '../store'
+import {editOrderItem, createOrderItem, loadOrderItems, update, loadUser } from '../store'
 
 /**
  * COMPONENT
@@ -46,7 +46,7 @@ export const Home = props => {
     <div>
       <h3>Welcome, {username}</h3>
       <Link to="/orders"><h4>Your Orders</h4></Link>
-      <Link to="/updatePersonalInfo"><h4>Update Personal Info</h4></Link>
+      <Link to="/updatePersonalInfo" onClick={() => loadUser()}><h4>Update Personal Info</h4></Link>
     </div>
 
   )
@@ -68,7 +68,7 @@ const mapDispatch = dispatch => {
   return {
     createOrderItem: (item) => dispatch(createOrderItem(item)),
     editOrderItem: (item) => dispatch(editOrderItem(item)),
-    
+    loadUser: () => dispatch(loadUser())
   }
 }
 export default connect(mapState, mapDispatch)(Home)

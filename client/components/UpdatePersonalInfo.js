@@ -4,7 +4,7 @@ import Box from '@material-ui/core/Box'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import { StyledTextField } from './StyledMUIComponents'
-import { editLoggedInUser, update } from '../store'
+import { editLoggedInUser, loadUser } from '../store'
 
 class UpdatePersonalInfo extends Component {
     constructor(props){
@@ -15,7 +15,7 @@ class UpdatePersonalInfo extends Component {
             password: user.id ? user.password : '',
             email: user.id ? user.email : '',
             phoneNumber: user.id ? user.phoneNumber : '',
-            streetAddress: user.id ? user.streetAddress : '',
+            streetAddress: '',
             city: user.id ? user.city : '',
             state: user.id ? user.state : '',
             zipcode: user.id ? user.zipcode : '',
@@ -24,10 +24,13 @@ class UpdatePersonalInfo extends Component {
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
-    
+    componentDidMount (){
+        const { username, password, email, phoneNumber, streetAddress, city, state, zipcode } = this.props.user;
+        this.setState({ username, password, email, phoneNumber, streetAddress, city, state, zipcode });
+    }
+
     componentDidUpdate (prevProps){
         if (prevProps.user.id !== this.props.user.id) {
-            console.log("did update")
             const { username, password, email, phoneNumber, streetAddress, city, state, zipcode } = this.props.user;
             this.setState({ username, password, email, phoneNumber, streetAddress, city, state, zipcode });
         }
@@ -42,12 +45,10 @@ class UpdatePersonalInfo extends Component {
     async onSubmit(ev){
         ev.preventDefault();
         const { username, password, email, phoneNumber, streetAddress, city, state, zipcode } = this.state;
-        console.log(this.state)
-        console.log(this.props)
-        const { history, editLoggedInUser, user } = this.props;
+        const { history, editLoggedInUser, user, loadUser } = this.props;
         try{
             await editLoggedInUser({...user, username, password, email, phoneNumber, streetAddress, city, state, zipcode }, history);
-            await update(Math.random())
+            await loadUser(this.props.auth)
         } 
         catch (ex){
             this.setState({error: ex.response.data.error});  
@@ -92,13 +93,14 @@ class UpdatePersonalInfo extends Component {
 const mapState = state => {
     return {
         auth: state.auth,
-        user: state.user
+        user: state.user,
     }
 }
 const mapDispatch = (dispatch, {history}) => {
     return {
         editLoggedInUser: (user) => dispatch(editLoggedInUser(user, history)),
-        update: (num) => dispatch(update(num))
+        update: () => dispatch(update(Math.random())),
+        loadUser: (auth) => dispatch(loadUser(auth))
     }
 }
 
