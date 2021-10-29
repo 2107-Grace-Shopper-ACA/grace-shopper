@@ -97,20 +97,20 @@ const handleSubmit = async() => {
       <Box
         display='flex'
       >
-      <Grid className="cart" container style={{margin:'2rem'}} display='flex' direction='column' xs={6} >
+      <Grid className="cart" container style={{margin:'2rem'}} display='flex' direction='column' >
         <header className="container">
         <Typography variant="h5" >{auth.username || "Guest"}'s Shopping Cart <span className="count">({totalItems} items)</span></Typography>
         </header>
         <Typography variant="h6" style={{color: '#8f8a8a', marginLeft: '1.5rem'}}>Order # {cartOrder.id || "Guest"}</Typography>
         {
           cartItems.map(item => (
-            <Grid item xs style={{margin: '1rem'}}>
-              <Card>
-                <Box display='flex' >
+            <Grid item xs={15} style={{margin: '1rem'}}>
+              <Card color="black">
+                <Box display='flex'>
                   <CardContent>
                     <CardMedia
                       component="img"
-                      height={100}
+                      style={{height: 100, width: 150}}
                       image={item.product.imageUrl || "https://i.gifer.com/MNu.gif"}
                       alt="product image"
                     />
@@ -121,16 +121,16 @@ const handleSubmit = async() => {
                   </CardContent>
                   <CardContent>
                     <Typography variant='subtitle1' color="textSecondary">
-                    Price:
+                    <p>Price:</p>
                     <br></br>
-                    ${item.product.price}
+                    <p>${item.product.price}</p>
                     </Typography>
                     <Typography>
                     <br></br>
                     <br></br>
-                    Subtotal
+                    <p>Subtotal</p>
                     <hr></hr>
-                    ${(item.quantity * +item.product.price).toFixed(2)}
+                    <p>${(item.quantity * +item.product.price).toFixed(2)}</p>
                     </Typography>
                   </CardContent>
                   <CardContent>
