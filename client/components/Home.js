@@ -12,7 +12,6 @@ export const Home = props => {
   if (orders.length === 0) return '...loading'
   
   let cartOrder = orders.find(order => order.isCart);
-  if (!cartOrder) console.log('nocartorder')
   let cartItems = orderItems.filter(orderItem => orderItem.orderId === cartOrder.id);
   let localCart = JSON.parse(localStorage.getItem('localCart')) || [];
   //IF GUEST STILL ADD TO CART

@@ -225,7 +225,6 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrders}) => 
                                     tooltip: 'Edit Order',
                                     isFreeAction: false,
                                     onClick: (ev,rowData) => handleOpenItem(ev, rowData)
-                                    // onClick: (ev, rowData) => console.log(rowData.id)
                                 }
                             ]}
                             style={{

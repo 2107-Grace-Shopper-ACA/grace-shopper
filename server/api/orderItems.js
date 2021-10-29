@@ -44,7 +44,6 @@ router.get('/', async (req, res, next) => {
 })
 router.post('/', async (req, res, next) => {
     try {
-      console.log(`orderItem req.body: ${JSON.stringify(req.body)}`)
       const _orderItem = await OrderItem.create(req.body);
       const orderItem = await OrderItem.findByPk(_orderItem.id, {
           include: [{
@@ -58,7 +57,6 @@ router.post('/', async (req, res, next) => {
   });
   router.put('/:orderItemId', async (req, res, next) => {
     const { quantity } = req.body;
-    console.log(quantity)
     try {
       const _orderItem = await OrderItem.findByPk(req.params.orderItemId);
       await _orderItem.update({..._orderItem, quantity});

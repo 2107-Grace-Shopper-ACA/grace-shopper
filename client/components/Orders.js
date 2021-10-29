@@ -18,10 +18,7 @@ const Orders = ({ orders, auth }) => {
     loadOrders()
   }, [])
   const [rating, setRating] = useState(2.5);
-  orders = orders.filter(order => {
-    // console.log(Date.UTC(order.date));
-    // console.log(Date.toUTCString(order.date));
-    return !order.isCart});
+  orders = orders.filter(order => !order.isCart);
 
   
   return ( 

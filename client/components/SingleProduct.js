@@ -23,7 +23,6 @@ const mapDispatchToProps = (dispatch) => {
         dispatch(createOrder(user))
       },
       createOrderItem: (product) => {
-        console.log(`product object: ${JSON.stringify(product)}`)
         dispatch(createOrderItem(product))
       },
       editOrderItem: (orderItem) => {

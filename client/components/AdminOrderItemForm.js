@@ -22,15 +22,10 @@ class AdminOrderItemForm extends Component {
     }
     
     componentDidMount(){
-        console.log(this.props)
         const { quantity } = this.props.orderItem;
         this.setState({quantity})
     }
-    // componentDidUpdate(prevProps){
-    //     console.log(this.props)
-    //     console.log(prevProps)
-    // }
-
+    
     onChange(ev) {
         const change = {};
         change[ev.target.name] = ev.target.value;

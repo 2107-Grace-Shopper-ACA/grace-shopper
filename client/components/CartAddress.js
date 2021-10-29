@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 
-import { editCartUser, loadOrderItems } from '../store'
+import { editCartUser, loadUser } from '../store'
 import { StyledTextField } from './StyledMUIComponents'
 class CartAddress extends Component {
     constructor(props){
@@ -39,10 +39,10 @@ class CartAddress extends Component {
     async onSubmit(ev){
         ev.preventDefault();
         const { streetAddress, city, state, zipcode } = this.state;
-        const { history, editCartUser, user, loadOrderItems } = this.props;
+        const { history, editCartUser, user, loadUser, auth } = this.props;
         try{
             await editCartUser({...user, streetAddress, city, state, zipcode }, history);
-            await loadOrderItems();
+            await loadUser(auth);
         } 
         catch (ex){
             this.setState({error: ex.response.data.error});  
@@ -91,7 +91,7 @@ const mapState = state => {
 const mapDispatch = (dispatch, {history}) => {
     return {
         editCartUser: (user) => dispatch(editCartUser(user, history)),
-        loadOrderItems: () => dispatch(loadOrderItems())
+        loadUser: (auth) => dispatch(loadUser(auth))
     }
 }
 

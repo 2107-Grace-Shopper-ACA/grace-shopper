@@ -44,15 +44,6 @@ const Success = ({auth, order, editOrder, createOrder, orderItems, editProduct, 
             }
         })
         ]);
-        // await Promise.all(products.map((product, idx) => {
-        //     if (newInventory[idx] > 0){
-        //         editProduct({...product, inventory: newInventory[idx]});
-        //     } else {
-        //         editProduct({...product, inventory: newInventory[idx], isActive: false});
-        //     }
-        // }))
-        console.log(order.date);
-        console.log(JSON.stringify(order))
         history.push('/products');
       }
 

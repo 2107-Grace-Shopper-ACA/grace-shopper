@@ -26,7 +26,6 @@ class Products extends Component{
   }
 
   filterProducts (event) {
-    console.log(event.target.value)
     if(event.target.value === '') {
       this.setState({
         ...this.state,
@@ -44,7 +43,6 @@ class Products extends Component{
 
   sortProducts (event) {
     const sort = event.target.value
-    console.log(event.target.value)
     this.setState({
       ...this.state,
       sort: sort,
@@ -97,7 +95,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(createOrder(user))
     },
     createOrderItem: (product) => {
-      console.log(`product object: ${JSON.stringify(product)}`)
       dispatch(createOrderItem(product))
     },
     editOrderItem: (orderItem) => {

@@ -58,7 +58,6 @@ return (
                 //If there ISN'T an order that is the cart...
               } else {
                 cartOrder = await createOrder({userId: auth.id})
-                console.log(`Cart Order made: ${JSON.stringify(cartOrder)}`)
                 if  (quantity > product.inventory){
 //TODO: change alert
                   alert(`Your ${product.name} order quantity exceeds our inventory. YOU WILL GET ${product.inventory} ${product.name} AND YOU'LL LOVE IT!!!!`)
@@ -81,7 +80,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(createOrder(user))
     },
     createOrderItem: (product) => {
-      console.log(`product object: ${JSON.stringify(product)}`)
       dispatch(createOrderItem(product))
     },
     editOrderItem: (orderItem) => {

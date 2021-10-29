@@ -19,9 +19,6 @@ async function seed() {
     const alex = await User.create({ username: "Alex", password: "123" })
     const stanley = await User.create({ username: "Stanley", password: "123" })
 
-
-  console.log(`THIS IS ANDYYYY: ${JSON.stringify(andy)}`);
-
   const users = [andy, corinne, alex, stanley]
 
   //Creating Categories
@@ -94,7 +91,7 @@ async function seed() {
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${products.length} products`);
   console.log(`seeded ${orders.length} orders`);
-  //console.log(`seeded ${orderItems.length} order items`);
+  console.log(`seeded ${orderItems.length} order items`);
   console.log(`seeded successfully`);
   return {
     users: {
