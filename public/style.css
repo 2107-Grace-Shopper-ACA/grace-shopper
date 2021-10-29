@@ -338,14 +338,14 @@ header .count {
   margin-left: 1rem;
   margin-right: 1rem;
   display: flex;
+  flex-direction: row;
   align-items: center;
 }
 
-
-/* --- Input Fields --- */
-/* .MuiInputBase-input {
-  color: whitesmoke
+#filter-sort{
+  display: flex;
+  flex-direction: row;
 }
-.MuiInputBase-root .MuiInput-root .MuiInput-underline .MuiInputBase-formControl .MuiInput-formControl {
-  color: whitesmoke
-} */
+
+
+

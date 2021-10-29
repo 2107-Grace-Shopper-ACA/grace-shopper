@@ -160,26 +160,34 @@ const ProductCard = ({
               width: '4rem',
             }}
           >
-            <Select
+            <select
               value={quantity || ''}
               name={product.id}
               onChange={(ev) => setQuantity(ev.target.value)}
-              style={{ color: 'white' }}
+              style={{
+                background: 'none',
+                color: 'white',
+                border: 'none',
+                outline: 'none',
+                height: '2rem',
+              }}
             >
+            {/* <option value=''>-</option> */}
               {Array.from(Array(maxQuantity).keys()).map((idx) => {
                 return (
-                  <MenuItem key={idx} value={idx + 1}>
+                  <option key={idx} value={idx + 1}>
                     {idx + 1}
-                  </MenuItem>
+                  </option>
                 )
               })}
-            </Select>
+            </select>
           </FormControl>
           <Button
             theme={theme}
             disabled={quantity === 0}
             variant="outlined"
             style={{
+              borderRadius: 10,
               marginBottom: '1rem',
               background: 'linear-gradient(45deg, #b329f2, #2e35ff)',
               color: 'white',
