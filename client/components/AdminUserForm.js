@@ -68,15 +68,14 @@ class AdminUserForm extends Component {
 
         if (action === 'edit' && !user) return '...loading'
         return (
-            
-                <Box
-                component="form"
-                sx={{
-                    '& .MuiTextField-root': { m: 1, width: '25ch' },
-                    backgroundColor: 'black'
-                }}
-                noValidate
-                autoComplete="off"
+            <Box
+            component="form"
+            sx={{
+                '& .MuiTextField-root': { m: 1, width: '25ch' },
+                backgroundColor: 'black'
+            }}
+            noValidate
+            autoComplete="off"
             >
                 <div style={{display: 'flex', flexDirection: 'column', border: '1px solid white', borderRadius: '4px'}}>
                     <StyledTextField name='username' value={username || ''} label='Username' onChange={onChange}/>
@@ -105,26 +104,6 @@ class AdminUserForm extends Component {
                 </div>
             </Box>
         )
-                {/* <form onSubmit={onSubmit}>
-                    <label>
-                        Username:
-                    </label>
-                        <input name='username' value={username || ''} onChange={onChange} />
-                        
-                        
-                            <label>
-                                Password:
-                            </label>
-                            <input name='password' value={password || ''} onChange={onChange} /> 
-                        
-                    <label>
-                        Is Admin:
-                    </label>
-                        <input disabled={user && auth.id === user.id} name='isAdmin' type="checkbox" checked={isAdmin} onChange={onChange} />
-                    <br/>
-                    <button>{action === 'edit' ? 'Edit User' : 'Add User'}</button>
-                </form> */}
-            
     }
 }
 

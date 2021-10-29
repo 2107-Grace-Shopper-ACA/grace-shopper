@@ -4,10 +4,7 @@ import { Link, Route, withRouter } from 'react-router-dom';
 import AdminNavbar from './AdminNavbar';
 import AdminUsers from './AdminUsers';
 import AdminProducts from './AdminProducts';
-import AdminSingleProduct from './AdminSingleProduct';
 import AdminOrders from './AdminOrders';
-import AdminSingleOrder from './AdminSingleOrder';
-import AdminSingleOrderItem from './AdminSingleOrderItem';
 import { loadAdminOrders, loadAdminOrderItems, loadUsers } from '../store';
 /**
  * COMPONENT
@@ -25,13 +22,9 @@ import { loadAdminOrders, loadAdminOrderItems, loadUsers } from '../store';
       <Route path='/admin' component={AdminNavbar} />
       <Route path='/admin/users' exact component={AdminUsers} />
       <Route path='/admin/products' exact component={AdminProducts} />
-      <Route path='/admin/products/:id' exact component={AdminSingleProduct} />
       <Route path='/admin/orders' exact component={AdminOrders} />
       <Route path='/admin/orders/products/:id' exact component={AdminOrders} />
-      {/* <Route path='/admin/orders/:id' exact component={AdminSingleOrder} />
-      <Route path='/admin/orderItems/:id' exact component={AdminSingleOrderItem} /> */}
     </div>
-
   )
 }
 

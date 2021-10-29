@@ -119,7 +119,6 @@ const AdminUsers = ({users, history, loadUsers}) => {
                   tooltip: 'Edit User',
                   isFreeAction: false,
                   onClick: (ev,rowData)=>handleOpen(ev, rowData),
-                //   onClick: (ev, rowData) => history.push(`/admin/users/${rowData.id}`)
               }
           ]}
           options={{

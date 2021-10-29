@@ -79,15 +79,19 @@ const AdminProducts = ({products, history}) => {
       )
       });
 
+    const [action, setAction] = useState('');
+    const [product, setProduct] = useState('');
 //dialog box
     const [open, setOpen] = useState(false);
-    const handleOpen = (ev) => {
-        // ev.persist()
+    const handleOpen = (ev, product) => {
+        product ? setAction('edit') : '';
+        product ? setProduct(product) : '';
         setOpen(true);
     }
     const handleClose = (ev) => {
         // ev.preventDefault();
         setOpen(false);
+        setAction('')
     }
 //
     if (!products){
@@ -96,7 +100,7 @@ const AdminProducts = ({products, history}) => {
     return (
         <div>
             <Dialog onClose={handleClose} open={open}>
-                <AdminProductForm handleClose={handleClose} history={history}/>
+                <AdminProductForm handleClose={handleClose} history={history} product={product} action={action} />
             </Dialog>
             <MaterialTable
           title="Products"
@@ -114,7 +118,7 @@ const AdminProducts = ({products, history}) => {
                   icon: Edit,
                   tooltip: 'Edit Product',
                   isFreeAction: false,
-                  onClick: (ev, rowData) => history.push(`/admin/products/${rowData.id}`)
+                  onClick: (ev,rowData)=>handleOpen(ev, rowData),
               }
           ]}
           options={{
