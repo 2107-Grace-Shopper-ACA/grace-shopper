@@ -13,7 +13,7 @@ import { loadAdminOrders, loadAdminOrderItems, loadUsers } from '../store';
 /**
  * COMPONENT
  */
- export const Admin = ({username, loadUsers, loadAdminOrders, loadAdminOrderItems}) => {
+ export const Admin = ({ loadUsers, loadAdminOrders, loadAdminOrderItems}) => {
 
   useEffect(() => {
     loadUsers();
@@ -23,7 +23,6 @@ import { loadAdminOrders, loadAdminOrderItems, loadUsers } from '../store';
 
   return (
     <div>
-      <h3>Welcome, {username}</h3>
       <Route path='/admin' component={AdminNavbar} />
       <Route path='/admin/users' exact component={AdminUsers} />
       <Route path='/admin/users/:id' exact component={AdminSingleUser} />

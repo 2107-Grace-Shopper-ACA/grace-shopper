@@ -77,7 +77,7 @@ class Products extends Component{
     />
     <Grid container style={{margin:'3rem'}} spacing={4}  direction='row' alignItems='stretch' >
       {
-          products.filter(product => product.isActive).map(product => {
+          products.map(product => {
               return (
                   <Grid key={product.id} item component={Card} xs={12} sm={8} md={6} lg={3} xl={2} style={{margin: '1rem'}}>
                     <ProductCard product={product} />

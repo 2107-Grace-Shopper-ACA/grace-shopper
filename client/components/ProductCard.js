@@ -91,20 +91,25 @@ const ProductCard = ({
           />
           <CardContent align="center" style={{color:"white"}}>
             <Typography variant="h5" component="div"  >
-              {product.name}
+              {product.name} 
             </Typography>
             <hr></hr>
             <ThemeProvider theme={theme} >
               <Typography variant="body1" color="primary">${product.price}</Typography>
             </ThemeProvider>
-            {product.inventory < 10 ? (
+            <hr></hr>
+            {product.inventory < 10 && product.inventory > 0 ? (
               <Typography variant="body2" color="secondary">
                 Only {product.inventory} left in stock!
               </Typography>
+            ) : !product.isActive || product.inventory <= 0 ? (
+                <Typography variant="body2" color="secondary">
+                  Out of stock!
+                </Typography>
             ) : (
-              <br></br>
-            )}
-            <hr></hr>
+              <br style={{margin: '.5rem'}}></br>
+              )
+            }
           </CardContent>
         </CardActionArea>
         <CardActions>

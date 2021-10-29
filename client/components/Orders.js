@@ -24,8 +24,9 @@ const Orders = ({ orders, auth }) => {
     return !order.isCart});
 
   
-  return (  
+  return ( 
     <div id="order-gallery">
+      <Link to={"/home"}><h4>Back</h4></Link> 
       <Grid className="cart" container style={{margin:'2rem'}} display='flex' direction='column' xs={7} >
         <header className="container">
         <Typography variant="h5" >{auth.username}'s Previous Orders <span className="count">({orders.length})</span></Typography>
@@ -168,7 +169,7 @@ const Orders = ({ orders, auth }) => {
           </Card> */}
         {/* );
       })} */}
-    <Link to={"/home"}><h4>Back</h4></Link>
+    
     </div>
   );
 };
