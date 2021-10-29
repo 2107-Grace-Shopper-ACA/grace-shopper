@@ -323,10 +323,9 @@ header .count {
   width: 1800px;
 }
 
-.filter > div {
-  flex: 1;
+.filter div {
+  display: flex;
   align-items: center;
-  justify-content: center;
 }
 
 

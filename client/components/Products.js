@@ -103,7 +103,7 @@ class Products extends Component {
                 md={6}
                 lg={3}
                 xl={2}
-                style={{ margin: '1rem' }}
+                style={{ margin: '2rem', back: "blue", padding: '0', border: '0', backgroundColor: 'black' }}
               >
                 <ProductCard product={product} />
               </Grid>
