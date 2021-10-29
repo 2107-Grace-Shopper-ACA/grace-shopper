@@ -29,7 +29,6 @@ class Products extends Component {
   }
 
   filterProducts(event) {
-    console.log(event)
     if (event.target.value === '') {
       this.setState({
         ...this.state,
