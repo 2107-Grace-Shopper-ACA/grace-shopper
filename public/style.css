@@ -22,6 +22,15 @@ form div {
   display: inline-block;
 }
 
+.MuiOutlinedInput-root{
+  color: none;
+  border-radius: 100;
+}
+
+.MuiInputBase-root{
+  color: none;
+}
+
 /* commenting out to see how it affects the card images */
 /* img {
  width: 250px;
@@ -52,22 +61,22 @@ a {
 
 /* CART */
 
-#cart > a {
+/* #cart > a {
   text-decoration: none;
   color: #333333;
-}
+} */
 
-#cart > a:hover {
+/* #cart > a:hover {
   color: #f58551;
-}
+} */
 
-button {
+/* button {
   background-color: #16cc9b;
   border: 2px solid #16cc9b;
   color: #ffffff;
   transition: all 0.25s linear;
   cursor: pointer;
-}
+} */
 /*   
   button::after {
     position: relative;
@@ -81,9 +90,9 @@ button {
   border-color: #f58551;
 } */
 
-button:hover::after {
+/* button:hover::after {
   right: -5px;
-}
+} */
 
 button:focus {
   outline: none;
@@ -122,14 +131,15 @@ header .count {
   color: #8f8a8a;
 }
 
---- PRODUCT LIST --- .products {
+--- PRODUCT LIST --- 
+/* .products {
   border-top: 1px solid #ddd;
 }
 
 .products > li {
   padding: 1rem 0;
   border-bottom: 1px solid #ddd;
-}
+} */
 
 .row {
   position: relative;
@@ -162,33 +172,30 @@ header .count {
   font-size: 1.2rem;
 }
 
-.detail .description {
+/* .detail .description {
   color: #7d7d7d;
   font-size: 1rem;
-}
+} */
 
 .detail .price {
   font-size: 1.5rem;
 }
 
-.quantity > input {
+/* .quantity > input {
   display: block;
   width: 45px;
   height: 45px;
   position: relative;
   left: 10px;
   background: #fff;
-  border: 2px solid #222423b9;
   border-radius: 6%;
-  color: #7f7f7f;
   text-align: center;
   font: 600 1.5rem Helvetica, Arial, sans-serif;
-}
+} */
 
-.quantity > input:hover,
+/* .quantity > input:hover,
 .quantity > input:focus {
-  border-color: #f58551;
-}
+} */
 
 /* .close {
   fill: #7d7d7d;
@@ -197,9 +204,9 @@ header .count {
   cursor: pointer;
 } */
 
-.close:hover {
+/* .close:hover {
   fill: #f58551;
-}
+} */
 
 /* --- SUMMARY --- */
 .summary,
@@ -307,12 +314,12 @@ header .count {
 }
 
 /* ORDERS */
-.link-on-white {
+/* .link-on-white {
   color: rgb(0, 1, 75);
 }
 .link-on-white:hover {
   color: #f58551;
-}
+} */
 
 .filter {
   display: flex;

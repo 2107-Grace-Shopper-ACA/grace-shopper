@@ -52,10 +52,10 @@ return (
       {
       window.location.pathname.includes('success') ? '' :
       isLoggedIn  ? (
-        <>
+        <div id="navbar">
           {/* The navbar will show these links after you log in */}
-          <AppBar position='sticky'>
-            <Toolbar>
+          <AppBar position='sticky' style={{borderRadius: 10, background: 'black', boxShadow: '0 0px 7px 7px #ffffff', alignContent: 'center', }}>
+            <Toolbar style={{justifyContent: 'space-around'}}>
               <Button
                 color='secondary'
                 onClick={() => history.push('/home')}
@@ -85,7 +85,7 @@ return (
               }
             </Toolbar>
           </AppBar>  
-        </>
+        </div>
       ) : (
         <>
           {/* The navbar will show these links before you log in */}

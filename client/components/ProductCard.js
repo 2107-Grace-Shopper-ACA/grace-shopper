@@ -74,16 +74,7 @@ const ProductCard = ({
           background: '#000000',
         }}
       >
-        <CardActionArea
-          //onClick={() => history.push(`/products/${product.id}`)}
-          style={{
-            hover: {
-              '&:hover fieldset': {
-                border: '100px solid red',
-              },
-            },
-          }}
-        >
+        <CardActionArea>
           <Link to={`/products/${product.id}`}>
             <CardMedia
               component="img"
@@ -97,11 +88,6 @@ const ProductCard = ({
           align="center"
           style={{
             color: 'white',
-            hover: {
-              '&:hover': {
-                background: 'white',
-              },
-            },
           }}
         >
           <Link to={`/products/${product.id}`}>
@@ -132,12 +118,15 @@ const ProductCard = ({
           </Typography>
           <hr></hr>
           {product.inventory < 10 && product.inventory > 0 ? (
-            <Typography variant="body2" style={{
-              color: 'white',
-              background: 'linear-gradient(45deg, #f44af7, #f74a95)',
-              borderRadius: 10,
-              boxShadow: '0 0px 3px 3px #b0377b',
-            }}>
+            <Typography
+              variant="body2"
+              style={{
+                color: 'white',
+                background: 'linear-gradient(45deg, #f44af7, #f74a95)',
+                borderRadius: 10,
+                boxShadow: '0 0px 3px 3px #b0377b',
+              }}
+            >
               Only {product.inventory} left in stock!
             </Typography>
           ) : !product.isActive || product.inventory <= 0 ? (
@@ -145,9 +134,9 @@ const ProductCard = ({
               variant="body2"
               style={{
                 color: 'white',
-                background: 'linear-gradient(45deg, #16f53b, #faef52)',
+                background: 'linear-gradient(45deg, #f44af7, #f74a95)',
                 borderRadius: 10,
-                boxShadow: '0 0px 3px 3px #10b32b',
+                boxShadow: '0 0px 3px 3px #b0377b',
               }}
             >
               Out of stock!
@@ -165,20 +154,18 @@ const ProductCard = ({
             style={{
               marginBottom: '1rem',
               color: 'white',
+              background: 'linear-gradient(45deg, #26b7ff, #28fcdd)',
               borderRadius: 10,
-              boxShadow: '0 0px 3px 3px #ffffff',
+              boxShadow: '0 0px 3px 3px #20c9c9',
               width: '4rem',
             }}
           >
-            {/* <InputLabel  style={{ color: 'white' }}>
-              //Quantity:
-            </InputLabel> */}
             <Select
               value={quantity || 'Quantity'}
               //label="Quantity"
               name={product.id}
               onChange={(ev) => setQuantity(ev.target.value)}
-              style={{ color: 'white', alignContent: 'right' }}
+              style={{ color: 'white' }}
             >
               {Array.from(Array(maxQuantity).keys()).map((idx) => {
                 return (
