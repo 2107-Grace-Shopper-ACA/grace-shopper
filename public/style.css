@@ -31,7 +31,11 @@ form div {
   color: none;
 }
 
-#navbar{
+#navbar-guest{
+  margin: 1rem
+}
+
+#navbar-logged{
   margin: 1rem
 }
 
