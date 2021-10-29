@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import {connect} from 'react-redux'
-
-
 import { loadUsers } from '../store'
 import AdminUserForm from './AdminUserForm';
-
 import Dialog from '@material-ui/core/Dialog';
-
-
 import MaterialTable from 'material-table';
 import { forwardRef } from 'react';
 import AddBox from '@material-ui/icons/AddBox';

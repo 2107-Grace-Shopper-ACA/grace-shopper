@@ -13,10 +13,11 @@ import Rating from 'material-ui-rating';
 import { loadOrders } from "../store";
 
 
-const Orders = ({ orders, auth }) => {
+const Orders = ({ orders, auth, loadOrders }) => {
   useEffect(()=> {
     loadOrders()
   }, [])
+
   const [rating, setRating] = useState(2.5);
   orders = orders.filter(order => !order.isCart);
 
@@ -128,45 +129,6 @@ const Orders = ({ orders, auth }) => {
           ))
         }
         </Grid>
-      {/* {orders.filter(order => !order.isCart).map((order) => {
-        return (
-          <Card sx={{ display: 'flex', key: `${order.id}` }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column'}}>
-              <Typography component="div" variant="h5">
-                  Order Placed {order.date}
-              </Typography>
-              <Typography variant="subtitle1" color="text.secondary" component="div">
-                Quantity: {order.orderItems.reduce((accu, cur) => accu + cur.quantity, 0)}
-              </Typography>
-              <Typography variant="subtitle1" color="text.secondary" component="div">
-                Total: ${order.orderItems.reduce((accu, cur) => accu + cur.quantity*cur.product.price, 0)}
-              </Typography>
-            </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <CardContent>
-                <Typography component="div" variant="h5">
-                  Order Placed {order.date}
-                </Typography>
-                <Typography variant="subtitle1" color="text.secondary" component="div">
-                  Quantity: {order.orderItems.reduce((accu, cur) => accu + cur.quantity, 0)}
-                </Typography>
-                <Typography variant="subtitle1" color="text.secondary" component="div">
-                  Total: ${order.orderItems.reduce((accu, cur) => accu + cur.quantity*cur.product.price, 0)}
-                </Typography>
-              </CardContent>
-            </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <CardMedia
-                component="img"
-                sx={{ width: 20 }}
-                image="https://i.gifer.com/MNu.gif"
-                alt="gif of tasty pasta"
-              />
-            </Box>
-          </Card> */}
-        {/* );
-      })} */}
-    
     </div>
   );
 };
@@ -176,4 +138,4 @@ const mapDispatch = dispatch => (
     loadOrders: () => dispatch(loadOrders())
   }
 )
-export default connect((state) => state)(Orders);
+export default connect((state) => state, mapDispatch)(Orders);

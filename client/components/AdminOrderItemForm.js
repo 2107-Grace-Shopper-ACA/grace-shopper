@@ -95,13 +95,7 @@ class AdminOrderItemForm extends Component {
 /**
  * CONTAINER
  */
-// const mapState = (state, {match, history}) => {
-//     return {
-//         order: state.orders.find(order => order.id === match.params.id),
-//         orderItems: state.orderItems.filter(item => item.orderId === match.params.id),
-//         history: history
-//     }
-// }
+
 const mapDispatch = (dispatch, {history}) => {
     return {
         editOrderItem: (orderItem) => dispatch(editAdminOrderItem(orderItem, history)),

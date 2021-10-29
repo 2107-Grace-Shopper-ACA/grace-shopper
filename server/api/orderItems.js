@@ -13,11 +13,6 @@ router.get('/', async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization)
     //Gets an array of all the orders for our user
-    const orders = await Order.findAll({
-      where: {
-        userId: user.id,
-      },
-    })
 
     if (user) {
       const orderItems = await OrderItem.findAll({
@@ -46,9 +41,14 @@ router.post('/', async (req, res, next) => {
     try {
       const _orderItem = await OrderItem.create(req.body);
       const orderItem = await OrderItem.findByPk(_orderItem.id, {
-          include: [{
+          include: [
+            {
             model: Product,
-          }]
+            },
+            {
+              model: User
+            }
+          ]
       });
       res.json(orderItem)
     } catch (err) {
@@ -56,14 +56,19 @@ router.post('/', async (req, res, next) => {
     }
   });
   router.put('/:orderItemId', async (req, res, next) => {
-    const { quantity } = req.body;
+    const { quantity, userId } = req.body;
     try {
       const _orderItem = await OrderItem.findByPk(req.params.orderItemId);
-      await _orderItem.update({..._orderItem, quantity});
+      await _orderItem.update({..._orderItem, quantity, userId});
       const orderItem = await OrderItem.findByPk(_orderItem.id, {
-          include: [{
+          include: [
+            {
             model: Product,
-          }]
+            },
+            {
+              model: User
+            }
+          ]
       });
       res.json(orderItem)
     } catch (err) {

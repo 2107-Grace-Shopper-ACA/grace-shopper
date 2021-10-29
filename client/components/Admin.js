@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
-import { Link, Route, withRouter } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import AdminNavbar from './AdminNavbar';
 import AdminUsers from './AdminUsers';
 import AdminProducts from './AdminProducts';

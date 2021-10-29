@@ -1,8 +1,7 @@
-import React, {useState} from 'react'
-import { useEffect } from 'react';
+import React from 'react'
 import { connect } from 'react-redux';
-import { Link, useHistory } from 'react-router';
-import { createOrderItem, deleteOrderItem, editOrderItem,loadOrderItems } from '../store';
+import { useHistory } from 'react-router';
+import { deleteOrderItem, editOrderItem } from '../store';
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
@@ -13,7 +12,7 @@ import CardMedia from '@material-ui/core/CardMedia'
 import CartAddress from './CartAddress';
 
 
-  const Cart = ({ orders, orderItems, auth, editOrderItem, deleteOrderItem, createOrderItem, loadOrderItems, user }) => {
+  const Cart = ({ orders, orderItems, auth, editOrderItem, deleteOrderItem, user }) => {
     const history = useHistory();
     
     const EmptyCart = () => {
@@ -191,9 +190,7 @@ const mapDispatch = (dispatch, {history}) => {
   return (
     {
       editOrderItem: (item) => dispatch(editOrderItem(item)),
-      deleteOrderItem: (id) => dispatch(deleteOrderItem(id)),
-      loadOrderItems: () => dispatch(loadOrderItems()),
-      createOrderItem: (item) => dispatch(createOrderItem(item))
+      deleteOrderItem: (id) => dispatch(deleteOrderItem(id))
     }
   )
 }

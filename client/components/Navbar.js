@@ -2,12 +2,8 @@ import React, {useEffect} from 'react'
 import { useHistory } from 'react-router'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import Box from '@material-ui/core/Box'
-import TextField from '@material-ui/core/TextField'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import IconButton from "@material-ui/core/IconButton";
 import HomeIcon from '@material-ui/icons/Home';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
@@ -49,10 +45,6 @@ useEffect(() => {
   findCartLength()
 }, [window.location.pathname, totalInventory])
   
-//TODO: Doesn't update when admin changes quantity of cart order item
-  // useEffect(() => {
-  //   loadOrderItems()
-  // }, [...itemsMap])
 
 return (
   <div>
