@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
+import Box from '@material-ui/core/Box'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
 import { editAdminOrderItem, deleteAdminOrderItem } from '../store'
 /**
  * CLASS COMPONENT
@@ -63,6 +66,35 @@ class AdminOrderItemForm extends Component {
         
         return (
             <div>
+                {/* <Box
+                    component="form"
+                    sx={{
+                        '& .MuiTextField-root': { m: 1, width: '25ch' },
+                        backgroundColor: 'white'
+                    }}
+                    noValidate
+                    autoComplete="off"
+                >
+                <div style={{display: 'flex', flexDirection: 'column'}}>
+                    <TextField value={orderItem.name} label='Product Name' />
+                    <TextField value={order.date || ''} label='Quantity' />
+                    <TextField value={order.purchaser || ''} label='Purchaser' />
+                    <TextField name='status' value={status || ''} label='Status' onChange={onChange} />
+                    <FormControlLabel
+                        control={
+                            <Checkbox 
+                                name='isCart' 
+                                checked={isCart || ''} 
+                                onChange={onChange}
+                            />
+                        }
+                        label='Cart Order'
+                    />
+                    <Button onClick={onSubmit}>
+                        Edit Order
+                    </Button>
+                </div>
+            </Box> */}
                 <form onSubmit={onSubmit}>
                     <label>
                         Product Name: {orderItem.name}

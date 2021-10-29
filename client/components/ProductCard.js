@@ -94,11 +94,6 @@ const ProductCard = ({
               {product.name}
             </Typography>
             <hr></hr>
-            {/* //TODO: wrap text so same height                   */}
-            <Typography variant="body2" component="div">
-              {product.description}
-            </Typography>
-            <hr></hr>
             <ThemeProvider theme={theme} >
               <Typography variant="body1" color="primary">${product.price}</Typography>
             </ThemeProvider>
