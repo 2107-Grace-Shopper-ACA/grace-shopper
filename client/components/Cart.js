@@ -25,7 +25,6 @@ import CartAddress from './CartAddress';
       )
     }
     
-    //THERE SHOULD ALWAYS BE ONE NOW UNLESS GUEST!  
       let cartOrder = orders.find(order => order.isCart && auth.id ===order.userId) || {};
       let cartItems = orderItems.filter(orderItem => orderItem.orderId === cartOrder.id) || [];
       let localCart = JSON.parse(localStorage.getItem('localCart')) || [];

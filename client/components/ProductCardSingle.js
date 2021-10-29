@@ -18,7 +18,7 @@ import AddShoppingCart from '@material-ui/icons/AddShoppingCart'
 // import { withStyles, createTheme } from '@material-ui/core/styles'
 import { createTheme, ThemeProvider, shadows } from '@material-ui/core'
 
-const ProductCard = ({
+const ProductCardSingle = ({
   product,
   auth,
   orders,
@@ -92,6 +92,10 @@ const ProductCard = ({
           <CardContent align="center" style={{color:"white"}}>
             <Typography variant="h5" component="div"  >
               {product.name}
+            </Typography>
+            <hr></hr>
+            <Typography variant="body2" component="div">
+              {product.description}
             </Typography>
             <hr></hr>
             <ThemeProvider theme={theme} >
@@ -248,4 +252,4 @@ const mapDispatchToProps = (dispatch) => {
     },
   }
 }
-export default connect(mapState, mapDispatchToProps)(ProductCard)
+export default connect(mapState, mapDispatchToProps)(ProductCardSingle)

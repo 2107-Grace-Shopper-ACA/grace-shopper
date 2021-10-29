@@ -5,7 +5,7 @@ import {createOrder, createOrderItem, editOrderItem} from '../store'
 import {Button, Box, Grid,Typography, CardActionArea, CardActions, CardContent, Card, CardMedia, InputLabel, MenuItem, FormControl, TextField, Select} from '@material-ui/core'
 import AddShoppingCart from '@material-ui/icons/AddShoppingCart'
 import IconButton from '@material-ui/core/IconButton';
-import ProductCard from "./ProductCard";
+import ProductCardSingle from "./ProductCardSingle";
 
 const SingleProduct = ({products, match, orders, auth, orderItems, createOrder, createOrderItem, editOrderItem}) => {
     const product = products.find(product => product.id === match.params.productId)
@@ -13,7 +13,7 @@ const SingleProduct = ({products, match, orders, auth, orderItems, createOrder, 
     if (!product) return '...loading'
 
     return (
-        <ProductCard product={product} style={{maxWidth: 500, margin: '2rem'}}/>
+        <ProductCardSingle product={product} style={{maxWidth: 500, margin: '2rem'}}/>
     )
 };
 
