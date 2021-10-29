@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router'
+import { Link } from 'react-router-dom'
 import { createOrder, createOrderItem, editOrderItem, update } from '../store'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
@@ -15,7 +15,6 @@ import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import AddShoppingCart from '@material-ui/icons/AddShoppingCart'
-// import { withStyles, createTheme } from '@material-ui/core/styles'
 import { createTheme, ThemeProvider, shadows } from '@material-ui/core'
 
 const ProductCard = ({
@@ -37,107 +36,168 @@ const ProductCard = ({
   let cartItems =
     orderItems.filter((item) => item.orderId === cartOrder.id) || []
 
-  //   const GreenTextTypography = withStyles({
-  //     root: {
-  //       color: 'linear-gradient(45deg, #00fc62, #00ffee)',
-  //     },
-  //   })(Typography)
-  //
   const theme = createTheme({
     palette: {
-        primary: {
-            main: '#00fc62'
-        },
-        secondary:{
-            light:'#ff2c61',
-            main: '#ff45cd'
-        }
+      primary: {
+        main: '#00fc62',
+      },
+      secondary: {
+        light: '#ff2c61',
+        main: '#ff45cd',
+      },
     },
     select: {
-        '&:before': {
-            color: "black"
-        },
-        '&:after': {
-            color: "black"
-        }
+      '&:before': {
+        color: 'black',
+      },
+      '&:after': {
+        color: 'black',
+      },
     },
     icon: {
-        fill: "black"
-    }
+      fill: 'black',
+      color: 'white',
+    },
   })
 
   if (!product) return '...loading'
 
   return (
     //TODO: can't get them to be same height
-    <div height="500px">
+    <div>
       <Card
         key={product.id}
-        height="100%"
+        height="50%"
         theme={theme}
         style={{
           alignItems: 'stretch',
-          backgroundColor: '#363334',
-          border: 50,
-          borderColor: 'primary',
+          background: '#000000',
         }}
       >
-        <CardActionArea onClick={() => history.push(`/products/${product.id}`)}>
-          <CardMedia
-            component="img"
-            height="200"
-            image={product.imageUrl || 'https://i.gifer.com/MNu.gif'}
-            alt="product image"
-          />
-          <CardContent align="center" style={{color:"white"}}>
-            <Typography variant="h5" component="div"  >
+        <CardActionArea>
+          <Link to={`/products/${product.id}`}>
+            <CardMedia
+              component="img"
+              height="200"
+              image={product.imageUrl || 'https://i.gifer.com/MNu.gif'}
+              alt="product image"
+            />
+          </Link>
+        </CardActionArea>
+        <CardContent
+          align="center"
+          style={{
+            color: 'white',
+          }}
+        >
+          <Link to={`/products/${product.id}`}>
+            <Typography
+              variant="h5"
+              component="div"
+              style={{
+                color: 'white',
+                background: 'linear-gradient(45deg, #ff820d, #f21f2a)',
+                borderRadius: 10,
+                boxShadow: '0 0px 3px 3px #c7570c',
+              }}
+            >
               {product.name}
             </Typography>
-            <hr></hr>
-            <ThemeProvider theme={theme} >
-              <Typography variant="body1" color="primary">${product.price}</Typography>
-            </ThemeProvider>
-            {product.inventory < 10 ? (
-              <Typography variant="body2" color="secondary">
-                Only {product.inventory} left in stock!
-              </Typography>
-            ) : (
-              <br></br>
-            )}
-            <hr></hr>
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <FormControl fullWidth style={{ marginBottom: '3rem', color: "white" }}>
-            <InputLabel variant="outlined" style={{color: "white"}}>
-              Quantity:
-            </InputLabel>
-            <Select
-              value={quantity || ''}
-              label="Quantity"
-              name={product.id}
-              onChange={(ev) => setQuantity(ev.target.value)}
-              style={{color: "white"}}
+          </Link>
+          <hr></hr>
+          <Typography
+            variant="body1"
+            style={{
+              color: 'white',
+              background: 'linear-gradient(45deg, #16f53b, #faef52)',
+              borderRadius: 10,
+              boxShadow: '0 0px 3px 3px #10b32b',
+            }}
+          >
+            ${product.price}
+          </Typography>
+          <hr></hr>
+          {product.inventory < 10 && product.inventory > 0 ? (
+            <Typography
+              variant="body2"
+              style={{
+                color: 'white',
+                background: 'linear-gradient(45deg, #f44af7, #f74a95)',
+                borderRadius: 10,
+                boxShadow: '0 0px 3px 3px #b0377b',
+              }}
             >
+              Only {product.inventory} left in stock!
+            </Typography>
+          ) : !product.isActive || product.inventory <= 0 ? (
+            <Typography
+              variant="body2"
+              style={{
+                color: 'white',
+                background: 'linear-gradient(45deg, #f44af7, #f74a95)',
+                borderRadius: 10,
+                boxShadow: '0 0px 3px 3px #b0377b',
+              }}
+            >
+              Out of stock!
+            </Typography>
+          ) : (
+            <br style={{ margin: '1rem' }}></br>
+          )}
+        </CardContent>
+        <CardActions
+          style={{ align: 'center', justifyContent: 'space-around' }}
+        >
+          <FormControl
+            fullWidth
+            variant="outlined"
+            style={{
+              marginBottom: '1rem',
+              color: 'white',
+              background: 'linear-gradient(45deg, #26b7ff, #28fcdd)',
+              borderRadius: 10,
+              boxShadow: '0 0px 3px 3px #20c9c9',
+              width: '4rem',
+            }}
+          >
+            <select
+              value={quantity || ''}
+              name={product.id}
+              onChange={(ev) => setQuantity(+ev.target.value)}
+              style={{
+                background: 'none',
+                color: 'white',
+                border: 'none',
+                outline: 'none',
+                height: '2rem',
+              }}
+            >
+            <option value=''>-</option>
               {Array.from(Array(maxQuantity).keys()).map((idx) => {
                 return (
-                  <MenuItem key={idx} value={idx + 1}>
+                  <option key={idx} value={idx + 1}>
                     {idx + 1}
-                  </MenuItem>
+                  </option>
                 )
               })}
-            </Select>
+            </select>
           </FormControl>
           <Button
+            theme={theme}
             disabled={quantity === 0}
             variant="outlined"
-            color="secondary"
-            style={{ marginBottom: '3rem', backgroundColor: "white"}}
+            style={{
+              borderRadius: 10,
+              marginBottom: '1rem',
+              background: 'linear-gradient(45deg, #b329f2, #2e35ff)',
+              color: 'white',
+              boxShadow: '0 0px 3px 3px #1e23b0',
+            }}
             onClick={async (ev) => {
               const correctQuantity = (item, product, quantity) => {
                 if (quantity + item.quantity > product.inventory) {
                   alert(
-                    `Your ${product.name} order quantity exceeds our inventory. YOU WILL GET ${product.inventory} ${product.name} AND YOU'LL LOVE IT!!!!`
+                    `Your ${product.name} order quantity exceeds our inventory. We have placed the remaining quantity in your cart.`
                   )
                   return product.inventory
                 } else {
@@ -205,6 +265,7 @@ const ProductCard = ({
                   await createOrderItem({
                     orderId: cartOrder.id,
                     productId: product.id,
+                    userId: auth.id,
                     quantity: correctQuantity(
                       { quantity: 0 },
                       product,
@@ -217,7 +278,7 @@ const ProductCard = ({
               update(Math.random())
             }}
           >
-            <AddShoppingCart color="primary" />
+            <AddShoppingCart />
           </Button>
         </CardActions>
       </Card>
@@ -237,7 +298,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(createOrder(user))
     },
     createOrderItem: (product) => {
-      console.log(`product object: ${JSON.stringify(product)}`)
       dispatch(createOrderItem(product))
     },
     editOrderItem: (orderItem) => {

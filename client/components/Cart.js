@@ -1,8 +1,7 @@
-import React, {useState} from 'react'
-import { useEffect } from 'react';
+import React from 'react'
 import { connect } from 'react-redux';
-import { Link, useHistory } from 'react-router';
-import { createOrderItem, deleteOrderItem, editOrderItem,loadOrderItems } from '../store';
+import { useHistory } from 'react-router';
+import { deleteOrderItem, editOrderItem } from '../store';
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
@@ -13,9 +12,9 @@ import CardMedia from '@material-ui/core/CardMedia'
 import CartAddress from './CartAddress';
 
 
-  const Cart = ({ orders, orderItems, auth, editOrderItem, deleteOrderItem, createOrderItem, loadOrderItems, user }) => {
+  const Cart = ({ orders, orderItems, auth, editOrderItem, deleteOrderItem, user }) => {
     const history = useHistory();
-
+    
     const EmptyCart = () => {
       return (
         <div className="empty-product">
@@ -97,20 +96,20 @@ const handleSubmit = async() => {
       <Box
         display='flex'
       >
-      <Grid className="cart" container style={{margin:'2rem'}} display='flex' direction='column' xs={6} >
+      <Grid className="cart" container style={{margin:'2rem'}} display='flex' direction='column' >
         <header className="container">
         <Typography variant="h5" >{auth.username || "Guest"}'s Shopping Cart <span className="count">({totalItems} items)</span></Typography>
         </header>
         <Typography variant="h6" style={{color: '#8f8a8a', marginLeft: '1.5rem'}}>Order # {cartOrder.id || "Guest"}</Typography>
         {
           cartItems.map(item => (
-            <Grid item xs style={{margin: '1rem'}}>
-              <Card>
-                <Box display='flex' >
+            <Grid item xs={15} style={{margin: '1rem'}}>
+              <Card color="black">
+                <Box display='flex'>
                   <CardContent>
                     <CardMedia
                       component="img"
-                      height={100}
+                      style={{height: 100, width: 150}}
                       image={item.product.imageUrl || "https://i.gifer.com/MNu.gif"}
                       alt="product image"
                     />
@@ -121,16 +120,16 @@ const handleSubmit = async() => {
                   </CardContent>
                   <CardContent>
                     <Typography variant='subtitle1' color="textSecondary">
-                    Price:
+                    <p>Price:</p>
                     <br></br>
-                    ${item.product.price}
+                    <p>${item.product.price}</p>
                     </Typography>
                     <Typography>
                     <br></br>
                     <br></br>
-                    Subtotal
+                    <p>Subtotal</p>
                     <hr></hr>
-                    ${(item.quantity * +item.product.price).toFixed(2)}
+                    <p>${(item.quantity * +item.product.price).toFixed(2)}</p>
                     </Typography>
                   </CardContent>
                   <CardContent>
@@ -145,7 +144,7 @@ const handleSubmit = async() => {
                         type="number"
                         className="quantity"
                         min="1"
-                        max={item.product.inventory < 10 ? product.inventory : 10}
+                        max={item.product.inventory < 10 ? item.product.inventory : 10} //this was just product.inventory : 10, I think adding item. has fixed the critical bug I encontered -Alex 10/29/21
                         id={item.id}
                         value={item.quantity}
                         onChange={onChange}
@@ -159,7 +158,7 @@ const handleSubmit = async() => {
           ))
         }
       </Grid>
-        <Box className="container" style={{marginTop: '8em', marginRight: '2rem'}}>
+        <Box className="container" style={{marginTop: '1rem', marginRight: '2rem'}}>
           <Typography variant='h6'>
             Subtotal <span>${total.toFixed(2)}</span>
           </Typography>
@@ -169,8 +168,15 @@ const handleSubmit = async() => {
           <Typography color='secondary' variant='h6'>
             TOTAL <span>${+total + +(total * tax).toFixed(2)}</span>
           </Typography>
-          <div>
-            <CartAddress history={history}/>
+          <div style={{marginTop: '6rem'}}>
+            {
+              auth.id ?
+              <CartAddress history={history}/>
+              : 
+              <Typography>
+                You must be logged in to checkout.
+              </Typography>
+            }
           </div>
           <div className="checkout">
             <button disabled={!user.streetAddress || !user.city || !user.state || !user.zipcode} onClick={handleSubmit} type="button">Check Out</button>
@@ -184,9 +190,7 @@ const mapDispatch = (dispatch, {history}) => {
   return (
     {
       editOrderItem: (item) => dispatch(editOrderItem(item)),
-      deleteOrderItem: (id) => dispatch(deleteOrderItem(id)),
-      loadOrderItems: () => dispatch(loadOrderItems()),
-      createOrderItem: (item) => dispatch(createOrderItem(item))
+      deleteOrderItem: (id) => dispatch(deleteOrderItem(id))
     }
   )
 }

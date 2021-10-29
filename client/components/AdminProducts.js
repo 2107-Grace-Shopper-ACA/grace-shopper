@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import {connect} from 'react-redux'
 import AdminProductForm from './AdminProductForm';
 import Dialog from '@material-ui/core/Dialog';
@@ -19,7 +19,6 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
-import { loadUsers } from '../store'
 /**
  * COMPONENT
  */
@@ -48,15 +47,11 @@ const AdminProducts = ({products, history}) => {
       };
 
       const columns = [
-          {
-              title: "Image",
-              field: 'imageUrl',
-              render: (rowData) => <img srce={rowData.imageUrl} style={{width: 40, borderRadius: "50%"}} />,
-          },
         { title: 'ID', field: 'id', filtering: false },
         { title: 'Product Name', field: 'name', filtering: false  },
         { title: 'Category', field: 'category', filtering: false },
         { title: 'Description', field: 'description', filtering: false  },
+        { title: 'Image URL', field: 'imageUrl', filtering: false },
         { title: 'Price', field: 'price', filtering: false, type: 'currency' },
         { title: 'Inventory', field: 'inventory', filtering: false },
         { title: 'Active', field: 'isActive', type: 'boolean' },
@@ -66,28 +61,33 @@ const AdminProducts = ({products, history}) => {
       // Material Table Columns Rows
       const data = products.map((product) =>  { return (
           {
-              imageurl: product.imageUrl,
               id: product.id,
               name: product.name,
               category: product.category.name,
               description: product.description,
+              imageUrl: product.imageUrl,
               price: +product.price,
-              inventory: product.inventory,
+              inventory: +product.inventory,
               isActive: product.isActive,
               onSale: product.onSale,
+              categoryId: product.categoryId
           }
       )
       });
 
+    const [action, setAction] = useState('');
+    const [product, setProduct] = useState('');
 //dialog box
     const [open, setOpen] = useState(false);
-    const handleOpen = (ev) => {
-        // ev.persist()
+    const handleOpen = (ev, product) => {
+        product ? setAction('edit') : '';
+        product ? setProduct(product) : '';
         setOpen(true);
     }
     const handleClose = (ev) => {
         // ev.preventDefault();
         setOpen(false);
+        setAction('')
     }
 //
     if (!products){
@@ -96,7 +96,7 @@ const AdminProducts = ({products, history}) => {
     return (
         <div>
             <Dialog onClose={handleClose} open={open}>
-                <AdminProductForm handleClose={handleClose} history={history}/>
+                <AdminProductForm handleClose={handleClose} history={history} product={product} action={action} />
             </Dialog>
             <MaterialTable
           title="Products"
@@ -114,7 +114,7 @@ const AdminProducts = ({products, history}) => {
                   icon: Edit,
                   tooltip: 'Edit Product',
                   isFreeAction: false,
-                  onClick: (ev, rowData) => history.push(`/admin/products/${rowData.id}`)
+                  onClick: (ev,rowData)=>handleOpen(ev, rowData),
               }
           ]}
           options={{

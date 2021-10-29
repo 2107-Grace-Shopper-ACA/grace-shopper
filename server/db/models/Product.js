@@ -18,20 +18,16 @@ const Product = db.define('product', {
         }
     },
     description: TEXT,
-    imageUrl: STRING, //@Corinne Does this need to have similar syntax to the description property? //oops they can be either way if you're only stating the datatype -i'll change description
+    imageUrl: STRING,
     inventory: {
         type: INTEGER,
         allowNull: false,
-        validate: {
-            notEmpty: true
-        }
+        defaultValue: 100
     },
     price: {
         type: DECIMAL(12,2),
         allowNull: false,
-        validate: {
-            notEmpty: false
-        }
+        defaultValue: 8.00
     },
     isActive: {
         type: BOOLEAN,

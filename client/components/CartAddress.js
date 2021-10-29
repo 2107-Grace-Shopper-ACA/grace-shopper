@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import Box from '@material-ui/core/Box'
-import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
-import { editCartUser } from '../store'
 
+import { editCartUser, loadUser } from '../store'
+import { StyledTextField } from './StyledMUIComponents'
 class CartAddress extends Component {
     constructor(props){
         super(props);
@@ -27,6 +27,9 @@ class CartAddress extends Component {
         if (!prevProps.user.id && this.props.user.id) {
             const { streetAddress, city, state, zipcode } = this.props.user;
             this.setState({ streetAddress, city, state, zipcode });
+        }
+        if (prevProps.auth.id && !this.props.auth.id) {
+            this.setState({streetAddres: '', city: '', state: '', zipcode: ''})
         }
     }
     
@@ -64,14 +67,17 @@ class CartAddress extends Component {
         ev.preventDefault();
         const isValid = this.formValidation()
         const { streetAddress, city, state, zipcode } = this.state;
-        const { history, editCartUser, user } = this.props;
+
+        const { history, editCartUser, user, loadUser, auth } = this.props;
         if (isValid) {
-            try{
-                await editCartUser({...user, streetAddress, city, state, zipcode }, history);
-            } 
-            catch (ex){
-                this.setState({error: ex.response.data.error});  
-            }
+
+        try{
+            await editCartUser({...user, streetAddress, city, state, zipcode }, history);
+            await loadUser(auth);
+        } 
+        catch (ex){
+            this.setState({error: ex.response.data.error});  
+        }
         }
     }
     render () {
@@ -84,21 +90,23 @@ class CartAddress extends Component {
                 component="form"
                 sx={{
                     '& .MuiTextField-root': { m: 1, width: '25ch' },
-                    backgroundColor: 'white'
+                    backgroundColor: 'black',
+                    border: '1px solid white',
+                    borderRadius: '4px'
                 }}
                 noValidate
                 autoComplete="off"
             >
                 <div style={{display: 'flex', flexDirection: 'column'}}>
-                    <TextField name='streetAddress' value={streetAddress || ''} label='Street Address' onChange={onChange} />
-                    <small style={{color: 'red'}}>{errors.streetAddressLength}</small>
-                    <TextField name='city' value={city || ''} label='City' onChange={onChange} />
-                    <small style={{color: 'red'}}>{errors.cityLength}</small>
-                    <TextField name='state' value={state || ''} label='State' onChange={onChange} />
-                    <small style={{color: 'red'}}>{errors.stateLength}</small>
-                    <TextField name='zipcode' value={zipcode || ''} label='Zipcode' onChange={onChange} />
+                    <StyledTextField name='streetAddress' value={streetAddress || ''} label='Street Address' onChange={onChange} />
+                                          <small style={{color: 'red'}}>{errors.streetAddressLength}</small>
+                    <StyledTextField name='city' value={city || ''} label='City' onChange={onChange} />
+                                          <small style={{color: 'red'}}>{errors.cityLength}</small>
+                    <StyledTextField name='state' value={state || ''} label='State' onChange={onChange} />
+                     <small style={{color: 'red'}}>{errors.stateLength}</small>
+                    <StyledTextField name='zipcode' value={zipcode || ''} label='Zipcode' onChange={onChange} />
                     <small style={{color: 'red'}}>{errors.zipcodeLength}</small>
-                    <Button onClick={onSubmit} disabled={!streetAddress || !city || !state || !zipcode}>
+                    <Button style={{backgroundColor: 'white'}} onClick={onSubmit} disabled={!streetAddress || !city || !state || !zipcode}>
                         Confirm Address
                     </Button>
                 </div>
@@ -119,6 +127,7 @@ const mapState = state => {
 const mapDispatch = (dispatch, {history}) => {
     return {
         editCartUser: (user) => dispatch(editCartUser(user, history)),
+        loadUser: (auth) => dispatch(loadUser(auth))
     }
 }
 

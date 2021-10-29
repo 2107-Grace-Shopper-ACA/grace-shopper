@@ -1,5 +1,13 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
+import { StyledTextField } from './StyledMUIComponents';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { addProduct, editProduct } from '../store'
 /**
  * CLASS COMPONENT
@@ -46,10 +54,9 @@ class AdminProductForm extends Component {
             if(action === 'edit'){
                 await editProduct({...product, name, inventory, price, imageUrl, description, isActive, onSale,  categoryId}, history);
             } else {
-                await addProduct({name, inventory, price, imageUrl, description, isActive, onSale,  categoryId}, history);
-//TODO figure out synthetic event re handling close                
-                handleClose();
+                await addProduct({name, inventory: inventory ? inventory : 100, price: price ? price : 8.00, imageUrl, description, isActive, onSale,  categoryId}, history);            
             }
+            handleClose();
         } 
         catch (ex){
             console.log(ex);
@@ -62,53 +69,69 @@ class AdminProductForm extends Component {
         const { action, categories } = this.props;
 
         return (
-            <div>
-                <form onSubmit={onSubmit}>
-                    <label>
-                        Name:
-                    </label>
-                        <input name='name' value={name || ''} onChange={onChange} />
-                    <label>
-                        Category:
-                        <select value={categoryId} name='categoryId' onChange={onChange}>
-                            <option></option>
-                            {
-                                categories.map(category => {
-                                    return (
-                                        <option key={category.id} value={category.id}>{category.name}</option>
-                                    );
-                                })
-                            }
-                        </select>
-                    </label>
-                    <label>
-                        Price:
-                    </label>
-                        <input name='price' value={price || ''} onChange={onChange} />
-                    <label>
-                        Inventory:
-                    </label>
-                        <input name='inventory' value={inventory || ''} onChange={onChange} />
-                    <label>
-                        Description:
-                    </label>
-                        <textarea rows='10' cols='50' name='description' value={description || ''} onChange={onChange} />
-                    <label>
-                        Image URL:
-                    </label>
-                        <textarea rows='10' cols='50' name='imageUrl' value={imageUrl || ''} onChange={onChange} />
-                    <label>
-                        Active
-                    </label>
-                        <input type='checkbox' name='isActive' checked={isActive || ''} onChange={onChange} />
-                    <label>
-                        On Sale
-                    </label>
-                        <input type='checkbox' name='onSale' checked={onSale || ''} onChange={onChange} />
-                    <br/>
-                    <button>{action === 'edit' ? "Edit Product" : "Add Product"}</button>
-                </form>
-            </div>
+          
+            <Box
+            component="form"
+            sx={{
+                '& .MuiTextField-root': { m: 1, width: '25ch' },
+                backgroundColor: 'black'
+            }}
+            noValidate
+            autoComplete="off"
+            >
+                <div style={{display: 'flex', flexDirection: 'column', border: '1px solid white', borderRadius: '4px'}}>
+                    <StyledTextField name='name' value={name || ''} label='Name' onChange={onChange}/>
+                    <InputLabel variant="outlined" style={{color: "#ff2c61"}}>
+                    Category
+                    </InputLabel>
+                    <Select
+                    value={categoryId || ''}
+                    label="Category"
+                    name='categoryId'
+                    onChange={onChange}
+                    style={{color: "white"}}
+                    >
+                    {categories.map((category) => {
+                        return (
+                        <MenuItem key={category.id} value={category.id}>
+                            {category.name}
+                        </MenuItem>
+                        )
+                    })}
+                    </Select>
+                    <StyledTextField name='price' value={price || ''} label='Price' onChange={onChange} />
+                    <StyledTextField name='inventory' value={inventory || ''} label='Inventory' onChange={onChange} />
+                    <StyledTextField multiline maxRows={10} name='description' value={description || ''} label='Description' onChange={onChange} />
+                    <StyledTextField multiline maxRows={10} name='imageUrl' value={imageUrl || ''} label='Image URL' onChange={onChange} />
+                    <FormControlLabel
+                        control={
+                            <Checkbox 
+                                name='isActive' 
+                                checked={isActive || ''} 
+                                onChange={onChange}
+                            />
+                        }
+                        style={{marginLeft: '1rem', color: 'white'}}
+                        label='Is Active'
+                    />
+                    <FormControlLabel
+                        control={
+                            <Checkbox 
+                                name='onSale' 
+                                checked={onSale || ''} 
+                                onChange={onChange}
+                            />
+                        }
+                        style={{marginLeft: '1rem', color: 'white'}}
+                        label='On Sale'
+                    />
+                    <Button disabled={!categoryId || !name} style={{backgroundColor: 'white', margin: '1rem'}} onClick={onSubmit}>
+                        {action === 'edit' ? 'Edit Product' : 'Add Product'}
+                    </Button>
+                </div>
+            </Box>
+                
+            
         )
     }
 }

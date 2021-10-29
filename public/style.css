@@ -22,6 +22,23 @@ form div {
   display: inline-block;
 }
 
+.MuiOutlinedInput-root{
+  color: none;
+  border-radius: 100;
+}
+
+.MuiInputBase-root{
+  color: none;
+}
+
+#navbar-guest{
+  margin: 1rem
+}
+
+#navbar-logged{
+  margin: 1rem
+}
+
 /* commenting out to see how it affects the card images */
 /* img {
  width: 250px;
@@ -52,22 +69,22 @@ a {
 
 /* CART */
 
-#cart > a {
+/* #cart > a {
   text-decoration: none;
   color: #333333;
-}
+} */
 
-#cart > a:hover {
+/* #cart > a:hover {
   color: #f58551;
-}
+} */
 
-button {
+/* button {
   background-color: #16cc9b;
   border: 2px solid #16cc9b;
   color: #ffffff;
   transition: all 0.25s linear;
   cursor: pointer;
-}
+} */
 /*   
   button::after {
     position: relative;
@@ -76,14 +93,14 @@ button {
     transition: all 0.15s linear;
   } */
 
-button:hover {
+/* button:hover {
   background-color: #f58551;
   border-color: #f58551;
-}
+} */
 
-button:hover::after {
+/* button:hover::after {
   right: -5px;
-}
+} */
 
 button:focus {
   outline: none;
@@ -122,14 +139,15 @@ header .count {
   color: #8f8a8a;
 }
 
---- PRODUCT LIST --- .products {
+--- PRODUCT LIST --- 
+/* .products {
   border-top: 1px solid #ddd;
 }
 
 .products > li {
   padding: 1rem 0;
   border-bottom: 1px solid #ddd;
-}
+} */
 
 .row {
   position: relative;
@@ -162,44 +180,41 @@ header .count {
   font-size: 1.2rem;
 }
 
-.detail .description {
+/* .detail .description {
   color: #7d7d7d;
   font-size: 1rem;
-}
+} */
 
 .detail .price {
   font-size: 1.5rem;
 }
 
-.quantity > input {
+/* .quantity > input {
   display: block;
   width: 45px;
   height: 45px;
   position: relative;
   left: 10px;
   background: #fff;
-  border: 2px solid #222423b9;
   border-radius: 6%;
-  color: #7f7f7f;
   text-align: center;
   font: 600 1.5rem Helvetica, Arial, sans-serif;
-}
+} */
 
-.quantity > input:hover,
+/* .quantity > input:hover,
 .quantity > input:focus {
-  border-color: #f58551;
-}
+} */
 
-.close {
+/* .close {
   fill: #7d7d7d;
   transition: color 150ms linear, background-color 150ms linear,
     fill 150ms linear, 150ms opacity linear;
   cursor: pointer;
-}
+} */
 
-.close:hover {
+/* .close:hover {
   fill: #f58551;
-}
+} */
 
 /* --- SUMMARY --- */
 .summary,
@@ -307,22 +322,34 @@ header .count {
 }
 
 /* ORDERS */
-.link-on-white {
+/* .link-on-white {
   color: rgb(0, 1, 75);
 }
 .link-on-white:hover {
   color: #f58551;
-}
+} */
 
 .filter {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
   padding: 1rem;
   margin: 1rem;
   width: 1800px;
-  border-bottom: 0.1rem gray solid;
 }
 
 .filter div {
-  flex: 1;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
+
+#filter-sort{
+  display: flex;
+  flex-direction: row;
+}
+
+
+
