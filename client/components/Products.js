@@ -23,7 +23,9 @@ class Products extends Component {
         ...this.state,
         category: 'All',
         sort: 'A-Z',
-        products: this.props.products.sort((a, b) => (a.name > b.name ? 1 : -1)),
+        products: this.props.products.sort((a, b) =>
+          a.name > b.name ? 1 : -1
+        ),
       })
     }
   }
