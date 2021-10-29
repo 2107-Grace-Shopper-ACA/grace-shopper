@@ -29,15 +29,16 @@ class Products extends Component{
     console.log(event.target.value)
     if(event.target.value === '') {
       this.setState({
-        ...this.state,
         category: event.target.value,
-        products: this.props.products
+        products: this.props.products,
+        sort: ''
       })
     } else {
       this.setState({
         ...this.state,
         category: event.target.value,
-        products: this.props.products.filter(product => product.category.name === event.target.value)
+        products: this.props.products.filter(product => product.category.name === event.target.value),
+        sort: ''
       })
     }
   }
@@ -53,7 +54,9 @@ class Products extends Component{
         (a.price*1 > b.price*1 ? 1:-1) :
         sort === 'highest' ?
         (a.price*1 < b.price*1 ? 1:-1) :
-        a.name > b.name? 1:-1
+        sort === 'A-Z' ?
+        a.name > b.name ? 1:-1 :
+        a.name > b.name ? 1:-1
         ))
     })
   }

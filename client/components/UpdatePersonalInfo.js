@@ -41,14 +41,13 @@ class UpdatePersonalInfo extends Component {
     async onSubmit(ev){
         ev.preventDefault();
         const { username, password, email, phoneNumber, streetAddress, city, state, zipcode } = this.state;
-        console.log(this.state)
-        console.log(this.props)
         const { history, editLoggedInUser, user } = this.props;
         try{
             await editLoggedInUser({...user, username, password, email, phoneNumber, streetAddress, city, state, zipcode }, history);
             await update(Math.random())
         } 
-        catch (ex){
+        catch (err){
+            console.log(err.message)
             this.setState({error: ex.response.data.error});  
         }
     }

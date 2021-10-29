@@ -10,7 +10,8 @@ export default class Filter extends Component {
                 <div className='filter-sort'>
                     Sort by{' '}
                     <select value={this.props.sort} onChange={this.props.sortProducts}>
-                        <option>A-Z</option>
+                        <option value=''></option>
+                        <option value='A-Z'>A-Z</option>
                         <option value='lowest'>Price Low to High</option>
                         <option value='highest'>Price High to Low</option>
                     </select>
