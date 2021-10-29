@@ -316,15 +316,17 @@ header .count {
 
 .filter {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   padding: 1rem;
   margin: 1rem;
   width: 1800px;
-  border-bottom: 0.1rem gray solid;
 }
 
-.filter div {
+.filter > div {
   flex: 1;
+  align-items: center;
+  justify-content: center;
 }
 
 
