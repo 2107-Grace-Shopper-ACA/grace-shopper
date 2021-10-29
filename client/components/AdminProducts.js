@@ -47,15 +47,11 @@ const AdminProducts = ({products, history}) => {
       };
 
       const columns = [
-          {
-              title: "Image",
-              field: 'imageUrl',
-              render: (rowData) => <img srce={rowData.imageUrl} style={{width: 40, borderRadius: "50%"}} />,
-          },
         { title: 'ID', field: 'id', filtering: false },
         { title: 'Product Name', field: 'name', filtering: false  },
         { title: 'Category', field: 'category', filtering: false },
         { title: 'Description', field: 'description', filtering: false  },
+        { title: 'Image URL', field: 'imageUrl', filtering: false },
         { title: 'Price', field: 'price', filtering: false, type: 'currency' },
         { title: 'Inventory', field: 'inventory', filtering: false },
         { title: 'Active', field: 'isActive', type: 'boolean' },
@@ -65,15 +61,16 @@ const AdminProducts = ({products, history}) => {
       // Material Table Columns Rows
       const data = products.map((product) =>  { return (
           {
-              imageurl: product.imageUrl,
               id: product.id,
               name: product.name,
               category: product.category.name,
               description: product.description,
+              imageUrl: product.imageUrl,
               price: +product.price,
-              inventory: product.inventory,
+              inventory: +product.inventory,
               isActive: product.isActive,
               onSale: product.onSale,
+              categoryId: product.categoryId
           }
       )
       });

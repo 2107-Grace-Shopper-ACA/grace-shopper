@@ -32,6 +32,7 @@ class AdminUserForm extends Component {
     
     componentDidMount(){
         if (this.props.action === 'edit'){
+            console.log(this.props.user)
             const { username, password, isAdmin, email, phoneNumber, streetAddress, city, state, zipcode } = this.props.user;
             this.setState({ username, password, isAdmin, email, phoneNumber, streetAddress, city, state, zipcode });
         }
@@ -91,10 +92,10 @@ class AdminUserForm extends Component {
                         label='Is Admin'
                         disabled={user && auth.id === user.id}
                     />
-                    <StyledTextField name='password' value={password || ''} label='Password' onChange={onChange} />
-                    <StyledTextField name='email' value={email || ''} label='Email' onChange={onChange} />
+                    <StyledTextField multiline maxRows={3} name='password' value={password || ''} label='Password' onChange={onChange} />
+                    <StyledTextField multiline maxRows={3} name='email' value={email || ''} label='Email' onChange={onChange} />
                     <StyledTextField name='phoneNumber' value={phoneNumber || ''} label='Phone Number' onChange={onChange} />
-                    <StyledTextField name='streetAddress' value={streetAddress || ''} label='Street Address' onChange={onChange} />
+                    <StyledTextField multiline maxRows={3} name='streetAddress' value={streetAddress || ''} label='Street Address' onChange={onChange} />
                     <StyledTextField name='city' value={city || ''} label='City' onChange={onChange} />
                     <StyledTextField name='state' value={state || ''} label='State' onChange={onChange} />
                     <StyledTextField name='zipcode' value={zipcode || ''} label='Zipcode' onChange={onChange} />
