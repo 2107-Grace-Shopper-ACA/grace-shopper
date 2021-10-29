@@ -144,7 +144,7 @@ const handleSubmit = async() => {
                         type="number"
                         className="quantity"
                         min="1"
-                        max={item.product.inventory < 10 ? product.inventory : 10}
+                        max={item.product.inventory < 10 ? item.product.inventory : 10} //this was just product.inventory : 10, I think adding item. has fixed the critical bug I encontered -Alex 10/29/21
                         id={item.id}
                         value={item.quantity}
                         onChange={onChange}

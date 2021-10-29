@@ -17,6 +17,15 @@ class Products extends Component {
     this.sortProducts = this.sortProducts.bind(this)
   }
 
+  componentDidMount(){
+    this.setState({
+      ...this.state,
+      products: this.props.products.sort((a, b) =>
+        a.name > b.name ? 1 : -1
+      ),
+    })
+  }
+
   componentDidUpdate(prevProps) {
     if (!prevProps.products.length && this.props.products.length) {
       this.setState({
@@ -46,6 +55,7 @@ class Products extends Component {
         ),
       })
     }
+    //sortProducts(lastEvent???) -Alex
   }
 
   sortProducts(event) {
@@ -103,7 +113,7 @@ class Products extends Component {
                 md={6}
                 lg={3}
                 xl={2}
-                style={{ margin: '1rem' }}
+                style={{ margin: '2rem', back: "blue", padding: '0', border: '0', backgroundColor: 'black', boxShadow: '0 0px 7px 7px #ffffff' }}
               >
                 <ProductCard product={product} />
               </Grid>
