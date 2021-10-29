@@ -40,9 +40,9 @@ class AdminOrderForm extends Component {
     async onSubmit(ev){
         ev.preventDefault();
         const { isCart, status} = this.state;
-        const { editOrder, history, order, handleClose} = this.props;
+        const { editOrder, order, handleClose } = this.props;
         try{
-            await editOrder({id: order.id, userId: order.userId, isCart, status}, history);
+            await editOrder({id: order.id, userId: order.userId, isCart, status});
             handleClose();
         } 
         catch (ex){
@@ -99,7 +99,7 @@ class AdminOrderForm extends Component {
 
 const mapDispatch = (dispatch) => {
     return {
-        editOrder: (order, history) => dispatch(editAdminOrder(order, history)),
+        editOrder: (order) => dispatch(editAdminOrder(order)),
         loadAdminOrders: () => dispatch(loadAdminOrders()),
         loadAdminOrderItems: () => dispatch(loadAdminOrderItems()),
     }

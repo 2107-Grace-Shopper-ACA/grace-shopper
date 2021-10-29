@@ -187,6 +187,7 @@ Object.entries(db.models).forEach((entry) => {
           include: [
             {
               model: OrderItem,
+              include: Product
             },
             {
               model: User,
