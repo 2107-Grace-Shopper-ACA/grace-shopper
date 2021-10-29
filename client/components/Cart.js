@@ -15,7 +15,7 @@ import CartAddress from './CartAddress';
 
   const Cart = ({ orders, orderItems, auth, editOrderItem, deleteOrderItem, createOrderItem, loadOrderItems, user }) => {
     const history = useHistory();
-
+    
     const EmptyCart = () => {
       return (
         <div className="empty-product">
@@ -170,7 +170,14 @@ const handleSubmit = async() => {
             TOTAL <span>${+total + +(total * tax).toFixed(2)}</span>
           </Typography>
           <div style={{marginTop: '6rem'}}>
-            <CartAddress history={history}/>
+            {
+              auth.id ?
+              <CartAddress history={history}/>
+              : 
+              <Typography>
+                You must be logged in to checkout.
+              </Typography>
+            }
           </div>
           <div className="checkout">
             <button disabled={!user.streetAddress || !user.city || !user.state || !user.zipcode} onClick={handleSubmit} type="button">Check Out</button>
