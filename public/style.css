@@ -31,6 +31,10 @@ form div {
   color: none;
 }
 
+#navbar{
+  margin: 1rem
+}
+
 /* commenting out to see how it affects the card images */
 /* img {
  width: 250px;

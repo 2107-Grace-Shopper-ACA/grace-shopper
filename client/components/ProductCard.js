@@ -161,8 +161,7 @@ const ProductCard = ({
             }}
           >
             <Select
-              value={quantity || 'Quantity'}
-              //label="Quantity"
+              value={quantity || ''}
               name={product.id}
               onChange={(ev) => setQuantity(ev.target.value)}
               style={{ color: 'white' }}
