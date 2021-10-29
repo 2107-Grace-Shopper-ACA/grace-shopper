@@ -51,53 +51,39 @@ useEffect(() => {
 return (
   <div>
     <h1>Pasta Peddler</h1>
+    
+    <nav>
       {
       window.location.pathname.includes('success') ? '' :
       isLoggedIn  ? (
         <div>
-          <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
-              <Toolbar>
-                {/* <IconButton
-                  size="large"
-                  edge="start"
-                  color="inherit"
-                  aria-label="menu"
-                  sx={{ mr: 2 }}
-                >
-                  <MenuIcon />
-                </IconButton> */}
-                
-                <Link to="/products">Products</Link>
-                
-                <Button color="inherit">Login</Button>
-              </Toolbar>
-            </AppBar>
-          </Box>
+          {/* The navbar will show these links after you log in */}
+          <Link to="/products">Products</Link>
+          <Link to="/home">Home</Link>
+          <a href="#" onClick={()=>{
+            handleClick()
+            loadOrders()
+          }}>
+            Logout
+          </a>
+  
+          <Link to ="/cart">Cart({findCartLength()})</Link>
+          
+          {
+            !!auth.isAdmin && <Link to="/admin">Admin</Link>
+          }
         </div>
       ) : (
         <div>
-          <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
-              <Toolbar>
-                {/* <IconButton
-                  size="large"
-                  edge="start"
-                  color="inherit"
-                  aria-label="menu"
-                  sx={{ mr: 2 }}
-                >
-                  <MenuIcon />
-                </IconButton> */}
-                
-                <Link to="/products">Products</Link>
-                
-                <Button color="inherit">Login</Button>
-              </Toolbar>
-            </AppBar>
-          </Box>
+          {/* The navbar will show these links before you log in */}
+          <Link to="/products">Products</Link>
+          <Link to="/login">Login</Link>
+          <Link to="/signup">Sign Up</Link>
+          <Link to ="/cart">Cart({findCartLength()})</Link>
+          {/* <Link to ="/cart">Cart({orderItems.filter(orderItem => orderItem.orderId === (orders.find(order => order.isCart)).id).reduce((accu, cur) => {return accu + cur.quantity}, 0)})</Link> */}
         </div>
       )}
+    </nav>
     <hr />
   </div>
 )}
