@@ -30,7 +30,7 @@ export const loadAdminOrders = () => {
     }
   }
 }
-export const editAdminOrder = (order, history) => {
+export const editAdminOrder = (order) => {
   return async (dispatch) => {
     const token = window.localStorage.getItem(TOKEN);
     if (token){

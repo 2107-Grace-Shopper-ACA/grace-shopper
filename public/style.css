@@ -326,3 +326,12 @@ header .count {
 .filter div {
   flex: 1;
 }
+
+
+/* --- Input Fields --- */
+/* .MuiInputBase-input {
+  color: whitesmoke
+}
+.MuiInputBase-root .MuiInput-root .MuiInput-underline .MuiInputBase-formControl .MuiInput-formControl {
+  color: whitesmoke
+} */

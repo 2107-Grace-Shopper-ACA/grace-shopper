@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router'
 import { createOrder, createOrderItem, editOrderItem, update } from '../store'
 import Button from '@material-ui/core/Button'
@@ -15,7 +14,6 @@ import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import AddShoppingCart from '@material-ui/icons/AddShoppingCart'
-// import { withStyles, createTheme } from '@material-ui/core/styles'
 import { createTheme, ThemeProvider, shadows } from '@material-ui/core'
 
 const ProductCardSingle = ({
@@ -209,6 +207,7 @@ const ProductCardSingle = ({
                   await createOrderItem({
                     orderId: cartOrder.id,
                     productId: product.id,
+                    userId: auth.id,
                     quantity: correctQuantity(
                       { quantity: 0 },
                       product,
@@ -241,7 +240,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(createOrder(user))
     },
     createOrderItem: (product) => {
-      console.log(`product object: ${JSON.stringify(product)}`)
       dispatch(createOrderItem(product))
     },
     editOrderItem: (orderItem) => {

@@ -22,16 +22,12 @@ const Product = db.define('product', {
     inventory: {
         type: INTEGER,
         allowNull: false,
-        validate: {
-            notEmpty: true
-        }
+        defaultValue: 100
     },
     price: {
         type: DECIMAL(12,2),
         allowNull: false,
-        validate: {
-            notEmpty: false
-        }
+        defaultValue: 8.00
     },
     isActive: {
         type: BOOLEAN,

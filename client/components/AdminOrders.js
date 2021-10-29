@@ -14,7 +14,6 @@ import Check from '@material-ui/icons/Check';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
 import Clear from '@material-ui/icons/Clear';
-import DeleteOutline from '@material-ui/icons/DeleteOutline';
 import Edit from '@material-ui/icons/Edit';
 import FilterList from '@material-ui/icons/FilterList';
 import FirstPage from '@material-ui/icons/FirstPage';
@@ -24,24 +23,26 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 
-//TODO  will have to component did update in main app to account for admin store stuff
-
 /**
  * COMPONENT
  */
-const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrders}) => {
-//TODO WHY NEED TO REFRESH AFTER EDITING    
-//TODO not sure if i need this
-    // useEffect(() => {
-    //     loadAdminOrderItems();
-    //     loadAdminOrders();
-    // }, []);
+const AdminOrders = ({orders, orderItems, match, products, loadAdminOrders}) => {
+    const totalQuantities = orderItems.reduce((accum, item) => {
+        accum += item.quantity;
+        return accum;
+    }, 0)
+
+    useEffect(() => {
+        async function loadData (){
+            await loadAdminOrders();
+            await loadAdminOrderItems();
+        };
+        loadData();
+    }, [totalQuantities]);
     
     const tableIcons = {
         Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
         Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
-        // Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-        // Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
         DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
         Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
         Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
@@ -71,7 +72,7 @@ const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrd
         displayOrders = orders;
     }
     
-    displayOrders = displayOrders.sort((a,b) => a.isCart ? -1 : 1)
+    displayOrders = displayOrders.sort((a,b) => a.user.username < b.user.username ? -1 : 1)
         .map(order => {
         const totalQuantity = order.orderItems.reduce((accum, item) => {
             accum += item.quantity;
@@ -134,28 +135,24 @@ const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrd
     const [open, setOpen] = useState(false);
     const [order, setOrder] = useState({});
     const handleOpen = (ev, order) => {
-        ev.persist()
-        console.log(order)
+        // ev.persist()
         setOrder(order);
         setOpen(true);
     }
     const handleClose = async (ev) => {
-        ev.preventDefault();
-        await loadAdminOrders();
         setOpen(false);
+        setOrder('')
     }
     const [openItem, setOpenItem] = useState(false);
     const [orderItem, setOrderItem] = useState({});
     const handleOpenItem = (ev, orderItem) => {
         // ev.persist()
-        console.log(orderItem)
         setOrderItem(orderItem);
         setOpenItem(true);
     }
     const handleCloseItem = async (ev) => {
-        // ev.preventDefault();
-        // await loadAdminOrderItems();
         setOpenItem(false);
+        setOrderItem('')
     }
 //
 
@@ -218,7 +215,6 @@ const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrd
                                     tooltip: 'Edit Order',
                                     isFreeAction: false,
                                     onClick: (ev,rowData) => handleOpenItem(ev, rowData)
-                                    // onClick: (ev, rowData) => history.push(`/admin/orderItems/${rowData.id}`)
                                 }
                             ]}
                             style={{
@@ -235,11 +231,10 @@ const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrd
 /**
  * CONTAINER
  */
-const mapState = (state, {history, match}) => {
+const mapState = (state, {match}) => {
   return {
     orders: state.adminOrders,
     orderItems: state.adminOrderItems,
-    history: history,
     match: match,
     products: state.products,
   }

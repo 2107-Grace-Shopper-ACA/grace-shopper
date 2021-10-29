@@ -1,8 +1,7 @@
-import React, {useState} from 'react'
-import { useEffect } from 'react';
+import React from 'react'
 import { connect } from 'react-redux';
-import { Link, useHistory } from 'react-router';
-import { createOrderItem, deleteOrderItem, editOrderItem,loadOrderItems } from '../store';
+import { useHistory } from 'react-router';
+import { deleteOrderItem, editOrderItem } from '../store';
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
@@ -13,9 +12,9 @@ import CardMedia from '@material-ui/core/CardMedia'
 import CartAddress from './CartAddress';
 
 
-  const Cart = ({ orders, orderItems, auth, editOrderItem, deleteOrderItem, createOrderItem, loadOrderItems, user }) => {
+  const Cart = ({ orders, orderItems, auth, editOrderItem, deleteOrderItem, user }) => {
     const history = useHistory();
-
+    
     const EmptyCart = () => {
       return (
         <div className="empty-product">
@@ -159,7 +158,7 @@ const handleSubmit = async() => {
           ))
         }
       </Grid>
-        <Box className="container" style={{marginTop: '8em', marginRight: '2rem'}}>
+        <Box className="container" style={{marginTop: '1rem', marginRight: '2rem'}}>
           <Typography variant='h6'>
             Subtotal <span>${total.toFixed(2)}</span>
           </Typography>
@@ -169,8 +168,15 @@ const handleSubmit = async() => {
           <Typography color='secondary' variant='h6'>
             TOTAL <span>${+total + +(total * tax).toFixed(2)}</span>
           </Typography>
-          <div>
-            <CartAddress history={history}/>
+          <div style={{marginTop: '6rem'}}>
+            {
+              auth.id ?
+              <CartAddress history={history}/>
+              : 
+              <Typography>
+                You must be logged in to checkout.
+              </Typography>
+            }
           </div>
           <div className="checkout">
             <button disabled={!user.streetAddress || !user.city || !user.state || !user.zipcode} onClick={handleSubmit} type="button">Check Out</button>
@@ -184,9 +190,7 @@ const mapDispatch = (dispatch, {history}) => {
   return (
     {
       editOrderItem: (item) => dispatch(editOrderItem(item)),
-      deleteOrderItem: (id) => dispatch(deleteOrderItem(id)),
-      loadOrderItems: () => dispatch(loadOrderItems()),
-      createOrderItem: (item) => dispatch(createOrderItem(item))
+      deleteOrderItem: (id) => dispatch(deleteOrderItem(id))
     }
   )
 }

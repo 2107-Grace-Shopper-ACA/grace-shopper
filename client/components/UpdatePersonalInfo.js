@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
+import { Link } from 'react-router-dom'
 import Box from '@material-ui/core/Box'
-import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
-import { editLoggedInUser, update } from '../store'
+import { StyledTextField } from './StyledMUIComponents'
+import { editLoggedInUser, loadUser } from '../store'
 
 class UpdatePersonalInfo extends Component {
     constructor(props){
@@ -14,7 +15,7 @@ class UpdatePersonalInfo extends Component {
             password: user.id ? user.password : '',
             email: user.id ? user.email : '',
             phoneNumber: user.id ? user.phoneNumber : '',
-            streetAddress: user.id ? user.streetAddress : '',
+            streetAddress: '',
             city: user.id ? user.city : '',
             state: user.id ? user.state : '',
             zipcode: user.id ? user.zipcode : '',
@@ -23,10 +24,13 @@ class UpdatePersonalInfo extends Component {
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
-    
+    componentDidMount (){
+        const { username, password, email, phoneNumber, streetAddress, city, state, zipcode } = this.props.user;
+        this.setState({ username, password, email, phoneNumber, streetAddress, city, state, zipcode });
+    }
+
     componentDidUpdate (prevProps){
         if (prevProps.user.id !== this.props.user.id) {
-            console.log("did update")
             const { username, password, email, phoneNumber, streetAddress, city, state, zipcode } = this.props.user;
             this.setState({ username, password, email, phoneNumber, streetAddress, city, state, zipcode });
         }
@@ -41,12 +45,10 @@ class UpdatePersonalInfo extends Component {
     async onSubmit(ev){
         ev.preventDefault();
         const { username, password, email, phoneNumber, streetAddress, city, state, zipcode } = this.state;
-        console.log(this.state)
-        console.log(this.props)
-        const { history, editLoggedInUser, user } = this.props;
+        const { history, editLoggedInUser, user, loadUser, auth } = this.props;
         try{
             await editLoggedInUser({...user, username, password, email, phoneNumber, streetAddress, city, state, zipcode }, history);
-            await update(Math.random())
+            await loadUser(auth)
         } 
         catch (ex){
             this.setState({error: ex.response.data.error});  
@@ -58,35 +60,32 @@ class UpdatePersonalInfo extends Component {
 
         if (!this.props.user) return '...loading'
         return (
+            <>
+            <Link to={"/home"}><h4>Back</h4></Link> 
             <Box
             component="form"
             sx={{
                 '& .MuiTextField-root': { m: 1, width: '25ch' },
-                backgroundColor: 'white'
+                backgroundColor: 'black',
+                border: '1px solid white',
+                borderRadius: '4px'
             }}
             noValidate
             autoComplete="off"
             >
                 <div style={{display: 'flex', flexDirection: 'column'}}>
-                    <TextField name='username' value={username || ''} label='Username' onChange={onChange} >
-                    </TextField>
-                    <TextField name='password' value={password || ''} label='Password' onChange={onChange} >
-                    </TextField>
-                    <TextField name='email' value={email || ''} label='Email' onChange={onChange} >
-                    </TextField>
-                    <TextField name='phoneNumber' value={phoneNumber || ''} label='Phone Number' onChange={onChange} >
-                    </TextField>
-                    <TextField name='streetAddress' value={streetAddress || ''} label='Street Address' onChange={onChange} >
-                    </TextField>
-                    <TextField name='city' value={city || ''} label='City' onChange={onChange} >
-                    </TextField>
-                    <TextField name='state' value={state || ''} label='State' onChange={onChange} >
-                    </TextField>
-                    <TextField name='zipcode' value={zipcode || ''} label='Zipcode' onChange={onChange} >
-                    </TextField>
-                    <Button disabled={!username || !password} onClick={onSubmit}>Edit User</Button>
+                    <StyledTextField name='username' value={username || ''} label='Username' onChange={onChange} />
+                    <StyledTextField name='password' value={password || ''} label='Password' onChange={onChange} />
+                    <StyledTextField name='email' value={email || ''} label='Email' onChange={onChange} />
+                    <StyledTextField name='phoneNumber' value={phoneNumber || ''} label='Phone Number' onChange={onChange} />
+                    <StyledTextField name='streetAddress' value={streetAddress || ''} label='Street Address' onChange={onChange} />
+                    <StyledTextField name='city' value={city || ''} label='City' onChange={onChange} />
+                    <StyledTextField name='state' value={state || ''} label='State' onChange={onChange} />
+                    <StyledTextField name='zipcode' value={zipcode || ''} label='Zipcode' onChange={onChange} />
+                    <Button style={{backgroundColor: 'white'}} disabled={!username || !password} onClick={onSubmit}>Edit User Info</Button>
                 </div>
             </Box>
+            </>
         )
     }
 }
@@ -97,13 +96,14 @@ class UpdatePersonalInfo extends Component {
 const mapState = state => {
     return {
         auth: state.auth,
-        user: state.user
+        user: state.user,
     }
 }
 const mapDispatch = (dispatch, {history}) => {
     return {
         editLoggedInUser: (user) => dispatch(editLoggedInUser(user, history)),
-        update: (num) => dispatch(update(num))
+        update: () => dispatch(update(Math.random())),
+        loadUser: (auth) => dispatch(loadUser(auth))
     }
 }
 

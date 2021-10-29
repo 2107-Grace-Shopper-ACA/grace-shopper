@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import Box from '@material-ui/core/Box'
-import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button'
 import { editAdminOrderItem, deleteAdminOrderItem } from '../store'
+import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
+import { StyledTextField } from './StyledMUIComponents';
 /**
  * CLASS COMPONENT
  */
@@ -22,15 +22,10 @@ class AdminOrderItemForm extends Component {
     }
     
     componentDidMount(){
-        console.log(this.props)
         const { quantity } = this.props.orderItem;
         this.setState({quantity})
     }
-    // componentDidUpdate(prevProps){
-    //     console.log(this.props)
-    //     console.log(prevProps)
-    // }
-
+    
     onChange(ev) {
         const change = {};
         change[ev.target.name] = ev.target.value;
@@ -65,41 +60,18 @@ class AdminOrderItemForm extends Component {
         if (!orderItem) return "...loading"
         
         return (
-            <div>
-                {/* <Box
-                    component="form"
-                    sx={{
-                        '& .MuiTextField-root': { m: 1, width: '25ch' },
-                        backgroundColor: 'white'
-                    }}
-                    noValidate
-                    autoComplete="off"
-                >
-                <div style={{display: 'flex', flexDirection: 'column'}}>
-                    <TextField value={orderItem.name} label='Product Name' />
-                    <TextField value={order.date || ''} label='Quantity' />
-                    <TextField value={order.purchaser || ''} label='Purchaser' />
-                    <TextField name='status' value={status || ''} label='Status' onChange={onChange} />
-                    <FormControlLabel
-                        control={
-                            <Checkbox 
-                                name='isCart' 
-                                checked={isCart || ''} 
-                                onChange={onChange}
-                            />
-                        }
-                        label='Cart Order'
-                    />
-                    <Button onClick={onSubmit}>
-                        Edit Order
-                    </Button>
-                </div>
-            </Box> */}
-                <form onSubmit={onSubmit}>
-                    <label>
-                        Product Name: {orderItem.name}
-                    </label>
-                    <label>
+            <Box
+                component="form"
+                sx={{
+                    '& .MuiTextField-root': { m: 1, width: '25ch' },
+                    backgroundColor: 'black'
+                }}
+                noValidate
+                autoComplete="off"
+            >
+                <div style={{display: 'flex', flexDirection: 'column', border: '1px solid white', borderRadius: '4px'}}>
+                    <StyledTextField value={orderItem.productName} label='Product Name' />
+                    <label style={{color: '#ff2c61', marginLeft: '1rem', marginBottom: '1rem'}}>
                         Quantity: 
                         <select name='quantity' value={quantity} onChange={onChange}>
                             {
@@ -111,16 +83,11 @@ class AdminOrderItemForm extends Component {
                             }
                         </select>
                     </label>
-                    <label>
-                        Price: {orderItem.price}
-                    </label>
-                    <label>
-                        Subtotal:{orderItem.subtotal}
-                    </label>
-                    <br/>
-                    <button>Edit Item</button>
-                </form>
-            </div>
+                    <StyledTextField value={'$' + orderItem.price} label='Price' />
+                    <StyledTextField value={'$' + orderItem.subtotal.toFixed(2)} label='Subtotal' />
+                    <Button style={{backgroundColor: 'white', margin: '1rem'}} onClick={onSubmit} >Edit Item</Button>
+                </div>
+            </Box>
         )
     }
 }
@@ -128,13 +95,7 @@ class AdminOrderItemForm extends Component {
 /**
  * CONTAINER
  */
-// const mapState = (state, {match, history}) => {
-//     return {
-//         order: state.orders.find(order => order.id === match.params.id),
-//         orderItems: state.orderItems.filter(item => item.orderId === match.params.id),
-//         history: history
-//     }
-// }
+
 const mapDispatch = (dispatch, {history}) => {
     return {
         editOrderItem: (orderItem) => dispatch(editAdminOrderItem(orderItem, history)),

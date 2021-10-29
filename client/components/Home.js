@@ -1,8 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import UpdatePersonalInfo from './UpdatePersonalInfo'
-import {editOrderItem, createOrderItem, loadOrderItems, update } from '../store'
+import {editOrderItem, createOrderItem } from '../store'
 
 /**
  * COMPONENT
@@ -13,7 +12,6 @@ export const Home = props => {
   if (orders.length === 0) return '...loading'
   
   let cartOrder = orders.find(order => order.isCart);
-  if (!cartOrder) console.log('nocartorder')
   let cartItems = orderItems.filter(orderItem => orderItem.orderId === cartOrder.id);
   let localCart = JSON.parse(localStorage.getItem('localCart')) || [];
   //IF GUEST STILL ADD TO CART
@@ -44,7 +42,6 @@ export const Home = props => {
   
   return (
     <div>
-      <h3>Welcome, {username}</h3>
       <Link to="/orders"><h4>Your Orders</h4></Link>
       <Link to="/updatePersonalInfo"><h4>Update Personal Info</h4></Link>
     </div>
@@ -68,7 +65,6 @@ const mapDispatch = dispatch => {
   return {
     createOrderItem: (item) => dispatch(createOrderItem(item)),
     editOrderItem: (item) => dispatch(editOrderItem(item)),
-    
   }
 }
 export default connect(mapState, mapDispatch)(Home)

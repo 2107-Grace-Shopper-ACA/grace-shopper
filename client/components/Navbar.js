@@ -1,10 +1,17 @@
 import React, {useEffect} from 'react'
+import { useHistory } from 'react-router'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import HomeIcon from '@material-ui/icons/Home';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+
 import {logout, loadOrders} from '../store'
+import { Button } from '@material-ui/core'
 
 const Navbar = ({handleClick, isLoggedIn, orderItems, orders, auth, products, update}) => {
-
+  const history = useHistory();
   //I moved this from line 33 and changed it so we don't get errors about not finding id
   const cartOrder = orders.find(order => order.isCart);
   const localCart = JSON.parse(localStorage.getItem('localCart')) || [];
@@ -38,47 +45,79 @@ useEffect(() => {
   findCartLength()
 }, [window.location.pathname, totalInventory])
   
-//TODO: Doesn't update when admin changes quantity of cart order item
-  // useEffect(() => {
-  //   loadOrderItems()
-  // }, [...itemsMap])
 
 return (
   <div>
-    <h1>Pasta Peddler</h1>
     <nav>
       {
       window.location.pathname.includes('success') ? '' :
       isLoggedIn  ? (
-        <div>
+        <>
           {/* The navbar will show these links after you log in */}
-          <Link to="/products">Products</Link>
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={()=>{
-            handleClick()
-            loadOrders()
-          }}>
-            Logout
-          </a>
-  
-          <Link to ="/cart">Cart({findCartLength()})</Link>
-          
-          {
-            !!auth.isAdmin && <Link to="/admin">Admin</Link>
-          }
-        </div>
+          <AppBar position='sticky'>
+            <Toolbar>
+              <Button
+                color='secondary'
+                onClick={() => history.push('/home')}
+                startIcon={<HomeIcon />}
+              >
+                Pasta Peddler
+              </Button>
+              <Button>
+                <Link to="/products">Products</Link>
+              </Button>
+              <Button color='secondary' startIcon={<ShoppingCartIcon />} onClick={() => history.push('/cart')}>
+                  ({findCartLength()})
+              </Button> 
+              <Button sx={{flexGrow: '3'}}>
+                <Link to="#" onClick={()=>{
+                  handleClick()
+                  loadOrders()
+                }}>
+                  Logout {auth.username}
+                </Link>
+              </Button>
+              {
+                !!auth.isAdmin && 
+                <Button>
+                  <Link to="/admin">Admin</Link>
+                </Button>
+              }
+            </Toolbar>
+          </AppBar>  
+        </>
       ) : (
-        <div>
+        <>
           {/* The navbar will show these links before you log in */}
-          <Link to="/products">Products</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-          <Link to ="/cart">Cart({findCartLength()})</Link>
-          {/* <Link to ="/cart">Cart({orderItems.filter(orderItem => orderItem.orderId === (orders.find(order => order.isCart)).id).reduce((accu, cur) => {return accu + cur.quantity}, 0)})</Link> */}
-        </div>
+          <AppBar position='sticky'>
+            <Toolbar>
+              <Button>
+                <Link to="/home">Pasta Peddler</Link>
+              </Button>
+              <Button>
+                <Link to="/products">Products</Link>
+              </Button>
+              <Button color='secondary' startIcon={<ShoppingCartIcon />} onClick={() => history.push('/cart')}>
+                  ({findCartLength()})
+              </Button>
+                <Button>
+                  <Link to="/login" style={{alignSelf: 'flex-end'}} onClick={()=>{
+                    handleClick()
+                    loadOrders()
+                  }}>
+                    Login
+                  </Link>
+                </Button>
+                <Button>
+                  <Link to="/signup">
+                    Sign Up
+                  </Link>
+                </Button>
+            </Toolbar>
+          </AppBar>
+        </>
       )}
     </nav>
-    <hr />
   </div>
 )}
 /**
