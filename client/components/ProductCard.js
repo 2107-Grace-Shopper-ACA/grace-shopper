@@ -35,49 +35,42 @@ const ProductCard = ({
   let cartItems =
     orderItems.filter((item) => item.orderId === cartOrder.id) || []
 
-  //   const GreenTextTypography = withStyles({
-  //     root: {
-  //       color: 'linear-gradient(45deg, #00fc62, #00ffee)',
-  //     },
-  //   })(Typography)
-  //
   const theme = createTheme({
     palette: {
-        primary: {
-            main: '#00fc62'
-        },
-        secondary:{
-            light:'#ff2c61',
-            main: '#ff45cd'
-        }
+      primary: {
+        main: '#00fc62',
+      },
+      secondary: {
+        light: '#ff2c61',
+        main: '#ff45cd',
+      },
     },
     select: {
-        '&:before': {
-            color: "black"
-        },
-        '&:after': {
-            color: "black"
-        }
+      '&:before': {
+        color: 'black',
+      },
+      '&:after': {
+        color: 'black',
+      },
     },
     icon: {
-        fill: "black"
-    }
+      fill: 'black',
+      color: 'white',
+    },
   })
 
   if (!product) return '...loading'
 
   return (
     //TODO: can't get them to be same height
-    <div height="500px">
+    <div>
       <Card
         key={product.id}
-        height="100%"
+        height="50%"
         theme={theme}
         style={{
           alignItems: 'stretch',
-          backgroundColor: '#363334',
-          border: 50,
-          borderColor: 'primary',
+          background: '#000000',
         }}
       >
         <CardActionArea onClick={() => history.push(`/products/${product.id}`)}>
@@ -87,13 +80,15 @@ const ProductCard = ({
             image={product.imageUrl || 'https://i.gifer.com/MNu.gif'}
             alt="product image"
           />
-          <CardContent align="center" style={{color:"white"}}>
-            <Typography variant="h5" component="div"  >
-              {product.name} 
+          <CardContent align="center" style={{ color: 'white' }}>
+            <Typography variant="h5" component="div">
+              {product.name}
             </Typography>
             <hr></hr>
-            <ThemeProvider theme={theme} >
-              <Typography variant="body1" color="primary">${product.price}</Typography>
+            <ThemeProvider theme={theme}>
+              <Typography variant="body1" color="primary">
+                ${product.price}
+              </Typography>
             </ThemeProvider>
             <hr></hr>
             {product.inventory < 10 && product.inventory > 0 ? (
@@ -101,18 +96,20 @@ const ProductCard = ({
                 Only {product.inventory} left in stock!
               </Typography>
             ) : !product.isActive || product.inventory <= 0 ? (
-                <Typography variant="body2" color="secondary">
-                  Out of stock!
-                </Typography>
+              <Typography variant="body2" color="secondary">
+                Out of stock!
+              </Typography>
             ) : (
-              <br style={{margin: '.5rem'}}></br>
-              )
-            }
+              <br style={{ margin: '.5rem' }}></br>
+            )}
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <FormControl fullWidth style={{ marginBottom: '3rem', color: "white" }}>
-            <InputLabel variant="outlined" style={{color: "white"}}>
+          <FormControl
+            fullWidth
+            style={{ marginBottom: '3rem', color: 'white' }}
+          >
+            <InputLabel variant="outlined" style={{ color: 'white' }}>
               Quantity:
             </InputLabel>
             <Select
@@ -120,7 +117,7 @@ const ProductCard = ({
               label="Quantity"
               name={product.id}
               onChange={(ev) => setQuantity(ev.target.value)}
-              style={{color: "white"}}
+              style={{ color: 'white' }}
             >
               {Array.from(Array(maxQuantity).keys()).map((idx) => {
                 return (
@@ -132,15 +129,20 @@ const ProductCard = ({
             </Select>
           </FormControl>
           <Button
+            theme={theme}
             disabled={quantity === 0}
             variant="outlined"
-            color="secondary"
-            style={{ marginBottom: '3rem', backgroundColor: "white"}}
+            style={{
+              marginBottom: '3rem',
+              background: 'linear-gradient(45deg, #ffc234, #ff45cd)',
+              color: 'white',
+              boxShadow: '0 0px 3px 3px #9c761f',
+            }}
             onClick={async (ev) => {
               const correctQuantity = (item, product, quantity) => {
                 if (quantity + item.quantity > product.inventory) {
                   alert(
-                    `Your ${product.name} order quantity exceeds our inventory. YOU WILL GET ${product.inventory} ${product.name} AND YOU'LL LOVE IT!!!!`
+                    `Your ${product.name} order quantity exceeds our inventory. We have placed ${product.inventory} ${product.name} in your cart.`
                   )
                   return product.inventory
                 } else {
@@ -221,7 +223,7 @@ const ProductCard = ({
               update(Math.random())
             }}
           >
-            <AddShoppingCart color="primary" />
+            <AddShoppingCart />
           </Button>
         </CardActions>
       </Card>
