@@ -159,7 +159,7 @@ const handleSubmit = async() => {
           ))
         }
       </Grid>
-        <Box className="container" style={{marginTop: '8em', marginRight: '2rem'}}>
+        <Box className="container" style={{marginTop: '1rem', marginRight: '2rem'}}>
           <Typography variant='h6'>
             Subtotal <span>${total.toFixed(2)}</span>
           </Typography>
@@ -169,7 +169,7 @@ const handleSubmit = async() => {
           <Typography color='secondary' variant='h6'>
             TOTAL <span>${+total + +(total * tax).toFixed(2)}</span>
           </Typography>
-          <div>
+          <div style={{marginTop: '6rem'}}>
             <CartAddress history={history}/>
           </div>
           <div className="checkout">
