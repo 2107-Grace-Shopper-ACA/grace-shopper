@@ -23,12 +23,9 @@ class Products extends Component {
         ...this.state,
         category: 'All',
         sort: 'A-Z',
-        products: this.props.products,
+        products: this.props.products.sort((a, b) => (a.name > b.name ? 1 : -1)),
       })
     }
-    console.log(this.props.products.length)
-    console.log(`sort:`, this.state.sort)
-    console.log(`category:`, this.state.category)
   }
 
   filterProducts(event) {
@@ -74,9 +71,7 @@ class Products extends Component {
   }
 
   render() {
-    let { products } = this.state
-    if (!this.props.products.length) return '...loading'
-    products = this.props.products.sort((a, b) => (a.name > b.name ? 1 : -1))
+    const { products } = this.state
     //TODO: only bring in what we need from the store, like we should only bring in products that are active like in the line below -C
     return (
       <div id="product-gallery">
