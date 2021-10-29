@@ -34,7 +34,7 @@ export default class Filter extends Component {
           <select
             value={this.props.sort}
             onChange={this.props.sortProducts}
-            style={{ background: 'none', color: 'white', border: 'none' }}
+            style={{ background: 'none', color: 'white', border: 'none', outline: 'none' }}
           >
             <option>A-Z</option>
             <option value="lowest">Price Low to High</option>

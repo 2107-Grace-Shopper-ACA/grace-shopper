@@ -17,6 +17,15 @@ class Products extends Component {
     this.sortProducts = this.sortProducts.bind(this)
   }
 
+  componentDidMount(){
+    this.setState({
+      ...this.state,
+      products: this.props.products.sort((a, b) =>
+        a.name > b.name ? 1 : -1
+      ),
+    })
+  }
+
   componentDidUpdate(prevProps) {
     if (!prevProps.products.length && this.props.products.length) {
       this.setState({
@@ -46,6 +55,7 @@ class Products extends Component {
         ),
       })
     }
+    //sortProducts(lastEvent???) -Alex
   }
 
   sortProducts(event) {

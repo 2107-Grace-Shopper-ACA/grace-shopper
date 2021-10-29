@@ -163,7 +163,7 @@ const ProductCard = ({
             <select
               value={quantity || ''}
               name={product.id}
-              onChange={(ev) => setQuantity(ev.target.value)}
+              onChange={(ev) => setQuantity(+ev.target.value)}
               style={{
                 background: 'none',
                 color: 'white',
