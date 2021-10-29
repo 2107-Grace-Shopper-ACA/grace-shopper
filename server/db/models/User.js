@@ -32,9 +32,6 @@ const User = db.define('user', {
   email: {
     type: STRING,
     defaultValue: '',
-    validate: {
-      isEmail: true
-    }
   },
   phoneNumber: {
     type: STRING,
