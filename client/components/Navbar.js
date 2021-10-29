@@ -63,7 +63,7 @@ const Navbar = ({
         {window.location.pathname.includes('success') ? (
           ''
         ) : isLoggedIn ? (
-          <div id="navbar">
+          <div id="navbar-logged">
             {/* The navbar will show these links after you log in */}
             <AppBar
               position="sticky"
@@ -107,7 +107,6 @@ const Navbar = ({
                       boxShadow: '0 0px 3px 3px #1e23b0',
                     }}
                     startIcon={<ShoppingCartIcon />}
-                    //onClick={() => history.push('/cart')}
                   >
                     ({findCartLength()})
                   </Button>
@@ -148,41 +147,88 @@ const Navbar = ({
             </AppBar>
           </div>
         ) : (
-          <>
+          <div id="navbar-guest">
             {/* The navbar will show these links before you log in */}
-            <AppBar position="sticky">
-              <Toolbar>
-                <Button>
-                  <Link to="/home">Pasta Peddler</Link>
-                </Button>
-                <Button>
-                  <Link to="/products">Products</Link>
-                </Button>
-                <Button
-                  color="secondary"
-                  startIcon={<ShoppingCartIcon />}
-                  onClick={() => history.push('/cart')}
+            <AppBar
+              position="sticky"
+              style={{
+                background: 'black',
+                alignContent: 'center',
+              }}
+            >
+              <Toolbar style={{ justifyContent: 'space-around' }}>
+                <Link to="/login">
+                  <Button
+                    style={{
+                      color: 'white',
+                      background: 'linear-gradient(45deg, #ff820d, #f21f2a)',
+                      borderRadius: 10,
+                      boxShadow: '0 0px 3px 3px #c7570c',
+                    }}
+                    startIcon={<HomeIcon />}
+                  >
+                    Pasta Peddler
+                  </Button>
+                </Link>
+                <Link to="/products">
+                  <Button
+                    style={{
+                      color: 'white',
+                      background: 'linear-gradient(45deg, #26b7ff, #28fcdd)',
+                      borderRadius: 10,
+                      boxShadow: '0 0px 3px 3px #20c9c9',
+                    }}
+                  >
+                    Products
+                  </Button>
+                </Link>
+                <Link to="/cart">
+                  <Button
+                    style={{
+                      color: 'white',
+                      background: 'linear-gradient(45deg, #b329f2, #2e35ff)',
+                      borderRadius: 10,
+                      boxShadow: '0 0px 3px 3px #1e23b0',
+                    }}
+                    startIcon={<ShoppingCartIcon />}
+                  >
+                    ({findCartLength()})
+                  </Button>
+                </Link>
+                <Link
+                  to="/login"
+                  style={{ alignSelf: 'flex-end' }}
+                  onClick={() => {
+                    handleClick()
+                    loadOrders()
+                  }}
                 >
-                  ({findCartLength()})
-                </Button>
-                <Button>
-                  <Link
-                    to="/login"
-                    style={{ alignSelf: 'flex-end' }}
-                    onClick={() => {
-                      handleClick()
-                      loadOrders()
+                  <Button
+                    style={{
+                      color: 'white',
+                      background: 'linear-gradient(45deg, #16f53b, #faef52)',
+                      borderRadius: 10,
+                      boxShadow: '0 0px 3px 3px #10b32b',
                     }}
                   >
                     Login
-                  </Link>
-                </Button>
-                <Button>
-                  <Link to="/signup">Sign Up</Link>
-                </Button>
+                  </Button>
+                </Link>
+                <Link to="/signup">
+                  <Button
+                    style={{
+                      color: 'white',
+                      background: 'linear-gradient(45deg, #f44af7, #f74a95)',
+                      borderRadius: 10,
+                      boxShadow: '0 0px 3px 3px #b0377b',
+                    }}
+                  >
+                    Sign Up
+                  </Button>
+                </Link>
               </Toolbar>
             </AppBar>
-          </>
+          </div>
         )}
       </nav>
     </div>
