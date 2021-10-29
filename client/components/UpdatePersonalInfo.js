@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import Box from '@material-ui/core/Box'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import { StyledTextField } from './StyledMUIComponents'
 import { editLoggedInUser, update } from '../store'
 
 class UpdatePersonalInfo extends Component {
@@ -62,29 +63,23 @@ class UpdatePersonalInfo extends Component {
             component="form"
             sx={{
                 '& .MuiTextField-root': { m: 1, width: '25ch' },
-                backgroundColor: 'white'
+                backgroundColor: 'black',
+                border: '1px solid white',
+                borderRadius: '4px'
             }}
             noValidate
             autoComplete="off"
             >
                 <div style={{display: 'flex', flexDirection: 'column'}}>
-                    <TextField name='username' value={username || ''} label='Username' onChange={onChange} >
-                    </TextField>
-                    <TextField name='password' value={password || ''} label='Password' onChange={onChange} >
-                    </TextField>
-                    <TextField name='email' value={email || ''} label='Email' onChange={onChange} >
-                    </TextField>
-                    <TextField name='phoneNumber' value={phoneNumber || ''} label='Phone Number' onChange={onChange} >
-                    </TextField>
-                    <TextField name='streetAddress' value={streetAddress || ''} label='Street Address' onChange={onChange} >
-                    </TextField>
-                    <TextField name='city' value={city || ''} label='City' onChange={onChange} >
-                    </TextField>
-                    <TextField name='state' value={state || ''} label='State' onChange={onChange} >
-                    </TextField>
-                    <TextField name='zipcode' value={zipcode || ''} label='Zipcode' onChange={onChange} >
-                    </TextField>
-                    <Button disabled={!username || !password} onClick={onSubmit}>Edit User</Button>
+                    <StyledTextField name='username' value={username || ''} label='Username' onChange={onChange} />
+                    <StyledTextField name='password' value={password || ''} label='Password' onChange={onChange} />
+                    <StyledTextField name='email' value={email || ''} label='Email' onChange={onChange} />
+                    <StyledTextField name='phoneNumber' value={phoneNumber || ''} label='Phone Number' onChange={onChange} />
+                    <StyledTextField name='streetAddress' value={streetAddress || ''} label='Street Address' onChange={onChange} />
+                    <StyledTextField name='city' value={city || ''} label='City' onChange={onChange} />
+                    <StyledTextField name='state' value={state || ''} label='State' onChange={onChange} />
+                    <StyledTextField name='zipcode' value={zipcode || ''} label='Zipcode' onChange={onChange} />
+                    <Button style={{backgroundColor: 'white'}} disabled={!username || !password} onClick={onSubmit}>Edit User</Button>
                 </div>
             </Box>
         )

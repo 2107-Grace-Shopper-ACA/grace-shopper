@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 
 import Box from '@material-ui/core/Box'
-import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Checkbox from '@material-ui/core/Checkbox'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
+import { StyledTextField } from './StyledMUIComponents'
 import { editAdminOrder, loadAdminOrders, loadAdminOrderItems } from '../store'
 
 /**
@@ -64,16 +64,16 @@ class AdminOrderForm extends Component {
                 component="form"
                 sx={{
                     '& .MuiTextField-root': { m: 1, width: '25ch' },
-                    backgroundColor: 'white'
+                    backgroundColor: 'black'
                 }}
                 noValidate
                 autoComplete="off"
             >
-                <div style={{display: 'flex', flexDirection: 'column'}}>
-                    <TextField value={order.id || ''} label='Order ID' />
-                    <TextField value={order.date || ''} label='Order Date' />
-                    <TextField value={order.purchaser || ''} label='Purchaser' />
-                    <TextField name='status' value={status || ''} label='Status' onChange={onChange} />
+                <div style={{display: 'flex', flexDirection: 'column', border: '1px solid white', borderRadius: '4px'}}>
+                    <StyledTextField value={order.id || ''} label='Order ID' />
+                    <StyledTextField value={order.date || ''} label='Order Date' />
+                    <StyledTextField value={order.purchaser || ''} label='Purchaser' />
+                    <StyledTextField name='status' value={status || ''} label='Status' onChange={onChange} />
                     <FormControlLabel
                         control={
                             <Checkbox 
@@ -82,9 +82,10 @@ class AdminOrderForm extends Component {
                                 onChange={onChange}
                             />
                         }
+                        style={{marginLeft: '1rem'}}
                         label='Cart Order'
                     />
-                    <Button onClick={onSubmit}>
+                    <Button style={{backgroundColor: 'white', margin: '1rem'}} onClick={onSubmit}>
                         Edit Order
                     </Button>
                 </div>

@@ -1,7 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {authenticate} from '../store'
-
+import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
+import { StyledTextField } from './StyledMUIComponents';
 /**
  * COMPONENT
  */
@@ -10,7 +12,26 @@ const AuthForm = props => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} name={name}>
+      <Box
+        component="form"
+        sx={{
+            '& .MuiTextField-root': { m: 1, width: '25ch' },
+            backgroundColor: 'black',
+            name: {name}
+        }}
+        noValidate
+        autoComplete="off"
+        name={name}
+        onSubmit={handleSubmit}
+      >
+        <div style={{display: 'flex', border: '1px solid white', borderRadius: '4px'}}>
+            <StyledTextField label='Username:' name='username'/>
+            <StyledTextField label='Password:' name='password' type='password'/>
+            <Button style={{backgroundColor: 'white', margin: '1rem'}} type="submit" >{displayName}</Button>
+            {error && error.response && <div> {error.response.data} </div>}
+        </div>
+      </Box>
+      {/* <form onSubmit={handleSubmit} name={name}>
         <div>
           <label htmlFor="username">
             <small>Username</small>
@@ -27,7 +48,7 @@ const AuthForm = props => {
           <button type="submit">{displayName}</button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
-      </form>
+      </form> */}
     </div>
   )
 }

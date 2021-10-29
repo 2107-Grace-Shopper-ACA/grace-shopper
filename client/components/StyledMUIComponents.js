@@ -7,7 +7,8 @@ export const StyledTextField = withStyles(() => ({
             color: 'whitesmoke'
         },
         "& .MuiFormLabel-root": {
-            color: '#ff2c61'
+            color: '#ff2c61',
+            marginLeft: '1rem'
         },
       },
 }))(TextField);
