@@ -207,6 +207,7 @@ const ProductCardSingle = ({
                   await createOrderItem({
                     orderId: cartOrder.id,
                     productId: product.id,
+                    userId: auth.id,
                     quantity: correctQuantity(
                       { quantity: 0 },
                       product,

@@ -47,6 +47,9 @@ router.post('/', async (req, res, next) => {
             },
             {
               model: User
+            },
+            {
+              model: Order
             }
           ]
       });
@@ -56,10 +59,10 @@ router.post('/', async (req, res, next) => {
     }
   });
   router.put('/:orderItemId', async (req, res, next) => {
-    const { quantity, userId } = req.body;
+    const { quantity, userId, orderId } = req.body;
     try {
       const _orderItem = await OrderItem.findByPk(req.params.orderItemId);
-      await _orderItem.update({..._orderItem, quantity, userId});
+      await _orderItem.update({..._orderItem, quantity, userId, orderId});
       const orderItem = await OrderItem.findByPk(_orderItem.id, {
           include: [
             {
@@ -67,6 +70,9 @@ router.post('/', async (req, res, next) => {
             },
             {
               model: User
+            },
+            {
+              model: Order
             }
           ]
       });
