@@ -328,3 +328,12 @@ header .count {
   align-items: center;
   justify-content: center;
 }
+
+
+/* --- Input Fields --- */
+/* .MuiInputBase-input {
+  color: whitesmoke
+}
+.MuiInputBase-root .MuiInput-root .MuiInput-underline .MuiInputBase-formControl .MuiInput-formControl {
+  color: whitesmoke
+} */

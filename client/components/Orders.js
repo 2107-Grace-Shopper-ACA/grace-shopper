@@ -13,19 +13,18 @@ import Rating from 'material-ui-rating';
 import { loadOrders } from "../store";
 
 
-const Orders = ({ orders, auth }) => {
+const Orders = ({ orders, auth, loadOrders }) => {
   useEffect(()=> {
     loadOrders()
   }, [])
+
   const [rating, setRating] = useState(2.5);
-  orders = orders.filter(order => {
-    // console.log(Date.UTC(order.date));
-    // console.log(Date.toUTCString(order.date));
-    return !order.isCart});
+  orders = orders.filter(order => !order.isCart);
 
   
-  return (  
+  return ( 
     <div id="order-gallery">
+      <Link to={"/home"}><h4>Back</h4></Link> 
       <Grid className="cart" container style={{margin:'2rem'}} display='flex' direction='column' xs={7} >
         <header className="container">
         <Typography variant="h5" >{auth.username}'s Previous Orders <span className="count">({orders.length})</span></Typography>
@@ -130,45 +129,6 @@ const Orders = ({ orders, auth }) => {
           ))
         }
         </Grid>
-      {/* {orders.filter(order => !order.isCart).map((order) => {
-        return (
-          <Card sx={{ display: 'flex', key: `${order.id}` }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column'}}>
-              <Typography component="div" variant="h5">
-                  Order Placed {order.date}
-              </Typography>
-              <Typography variant="subtitle1" color="text.secondary" component="div">
-                Quantity: {order.orderItems.reduce((accu, cur) => accu + cur.quantity, 0)}
-              </Typography>
-              <Typography variant="subtitle1" color="text.secondary" component="div">
-                Total: ${order.orderItems.reduce((accu, cur) => accu + cur.quantity*cur.product.price, 0)}
-              </Typography>
-            </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <CardContent>
-                <Typography component="div" variant="h5">
-                  Order Placed {order.date}
-                </Typography>
-                <Typography variant="subtitle1" color="text.secondary" component="div">
-                  Quantity: {order.orderItems.reduce((accu, cur) => accu + cur.quantity, 0)}
-                </Typography>
-                <Typography variant="subtitle1" color="text.secondary" component="div">
-                  Total: ${order.orderItems.reduce((accu, cur) => accu + cur.quantity*cur.product.price, 0)}
-                </Typography>
-              </CardContent>
-            </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <CardMedia
-                component="img"
-                sx={{ width: 20 }}
-                image="https://i.gifer.com/MNu.gif"
-                alt="gif of tasty pasta"
-              />
-            </Box>
-          </Card> */}
-        {/* );
-      })} */}
-    <Link to={"/home"}><h4>Back</h4></Link>
     </div>
   );
 };
@@ -178,4 +138,4 @@ const mapDispatch = dispatch => (
     loadOrders: () => dispatch(loadOrders())
   }
 )
-export default connect((state) => state)(Orders);
+export default connect((state) => state, mapDispatch)(Orders);

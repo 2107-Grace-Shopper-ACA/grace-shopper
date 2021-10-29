@@ -10,7 +10,6 @@ const SingleOrder = ({orders, match}) => {
             {orderItems.map((orderItem) => {
         return (
           <div key={orderItem.id}>
-              {console.log(orderItem)}
             <h4>{orderItem.product.name}</h4>
             <h4>Quantity: {orderItem.quantity}</h4>
             <h4>Price: ${orderItem.product.price}</h4>

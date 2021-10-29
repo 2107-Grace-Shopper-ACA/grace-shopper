@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router'
 import { createOrder, createOrderItem, editOrderItem, update } from '../store'
 import Button from '@material-ui/core/Button'
@@ -15,7 +14,6 @@ import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import AddShoppingCart from '@material-ui/icons/AddShoppingCart'
-// import { withStyles, createTheme } from '@material-ui/core/styles'
 import { createTheme, ThemeProvider, shadows } from '@material-ui/core'
 
 const ProductCard = ({
@@ -91,20 +89,25 @@ const ProductCard = ({
           />
           <CardContent align="center" style={{color:"white"}}>
             <Typography variant="h5" component="div"  >
-              {product.name}
+              {product.name} 
             </Typography>
             <hr></hr>
             <ThemeProvider theme={theme} >
               <Typography variant="body1" color="primary">${product.price}</Typography>
             </ThemeProvider>
-            {product.inventory < 10 ? (
+            <hr></hr>
+            {product.inventory < 10 && product.inventory > 0 ? (
               <Typography variant="body2" color="secondary">
                 Only {product.inventory} left in stock!
               </Typography>
+            ) : !product.isActive || product.inventory <= 0 ? (
+                <Typography variant="body2" color="secondary">
+                  Out of stock!
+                </Typography>
             ) : (
-              <br></br>
-            )}
-            <hr></hr>
+              <br style={{margin: '.5rem'}}></br>
+              )
+            }
           </CardContent>
         </CardActionArea>
         <CardActions>
@@ -205,6 +208,7 @@ const ProductCard = ({
                   await createOrderItem({
                     orderId: cartOrder.id,
                     productId: product.id,
+                    userId: auth.id,
                     quantity: correctQuantity(
                       { quantity: 0 },
                       product,
@@ -237,7 +241,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(createOrder(user))
     },
     createOrderItem: (product) => {
-      console.log(`product object: ${JSON.stringify(product)}`)
       dispatch(createOrderItem(product))
     },
     editOrderItem: (orderItem) => {

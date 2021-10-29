@@ -1,33 +1,12 @@
-import React, { useState, useEffect, Component } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { useHistory } from 'react-router'
-import { createOrder, createOrderItem, editOrderItem } from '../store'
-import {
-  Button,
-  Box,
-  Grid,
-  Typography,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  Card,
-  CardMedia,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  TextField,
-  Select,
-} from '@material-ui/core'
-import AddShoppingCart from '@material-ui/icons/AddShoppingCart'
-import IconButton from '@material-ui/core/IconButton'
-import ProductCard from './ProductCard'
-import CategoriesTest from './CategoriesTest'
-import Filter from './Filter'
 
-// { products, orders, auth, orderItems, createOrder, createOrderItem, editOrderItem}
+import React, {Component} from "react";
+import { connect } from "react-redux";
+import Card from '@material-ui/core/Card'
+import Grid from '@material-ui/core/Grid';
+import ProductCard from "./ProductCard";
+import Filter from "./Filter"
 
-class Products extends Component {
+class Products extends Component{
   constructor(props) {
     super(props)
     this.state = {
@@ -39,9 +18,9 @@ class Products extends Component {
     this.sortProducts = this.sortProducts.bind(this)
   }
 
-  filterProducts(event) {
-    console.log(event.target.value)
-    if (event.target.value === '') {
+
+  filterProducts (event) {
+    if(event.target.value === '') {
       this.setState({
         ...this.state,
         category: event.target.value,
@@ -60,7 +39,6 @@ class Products extends Component {
 
   sortProducts(event) {
     const sort = event.target.value
-    console.log(event.target.value)
     this.setState({
       ...this.state,
       sort: sort,
@@ -82,22 +60,10 @@ class Products extends Component {
     })
   }
 
-  render() {
-    const {
-      products,
-      orders,
-      auth,
-      orderItems,
-      createOrder,
-      createOrderItem,
-      editOrderItem,
-    } = this.state
+  
+  render () {
+    const { products } = this.state
     //TODO: only bring in what we need from the store, like we should only bring in products that are active like in the line below -C
-    // products = products.filter(product => product.isActive)
-    //.sort((a, b) => {return a.name < b.name ? -1 : 1});
-    //TODO: we can change the logic below now that a cart order is created after someone makes a sale
-    //if (products.length === 0) return '...loading'
-    // const history = useHistory();
     return (
       <div id="product-gallery">
         {/* <CategoriesTest /> */}
@@ -118,7 +84,6 @@ class Products extends Component {
           alignItems="stretch"
         >
           {products
-            .filter((product) => product.isActive)
             .map((product) => {
               return (
                 <Grid
@@ -142,19 +107,5 @@ class Products extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    createOrder: (user) => {
-      dispatch(createOrder(user))
-    },
-    createOrderItem: (product) => {
-      console.log(`product object: ${JSON.stringify(product)}`)
-      dispatch(createOrderItem(product))
-    },
-    editOrderItem: (orderItem) => {
-      dispatch(editOrderItem(orderItem))
-    },
-  }
-}
 
-export default connect((state) => state, mapDispatchToProps)(Products)
+export default connect((state) => state)(Products)

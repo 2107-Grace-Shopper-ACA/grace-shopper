@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 
 import Box from '@material-ui/core/Box'
-import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Checkbox from '@material-ui/core/Checkbox'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
+import { StyledTextField } from './StyledMUIComponents'
 import { editAdminOrder, loadAdminOrders, loadAdminOrderItems } from '../store'
 
 /**
@@ -27,7 +27,6 @@ class AdminOrderForm extends Component {
     }
     
     componentDidMount(){
-        console.log(this.props)
         const { isCart, status } = this.props.order;
         this.setState({isCart, status});
     }
@@ -41,9 +40,9 @@ class AdminOrderForm extends Component {
     async onSubmit(ev){
         ev.preventDefault();
         const { isCart, status} = this.state;
-        const { editOrder, history, order, handleClose} = this.props;
+        const { editOrder, order, handleClose } = this.props;
         try{
-            await editOrder({id: order.id, userId: order.userId, isCart, status}, history);
+            await editOrder({id: order.id, userId: order.userId, isCart, status});
             handleClose();
         } 
         catch (ex){
@@ -64,16 +63,16 @@ class AdminOrderForm extends Component {
                 component="form"
                 sx={{
                     '& .MuiTextField-root': { m: 1, width: '25ch' },
-                    backgroundColor: 'white'
+                    backgroundColor: 'black'
                 }}
                 noValidate
                 autoComplete="off"
             >
-                <div style={{display: 'flex', flexDirection: 'column'}}>
-                    <TextField value={order.id || ''} label='Order ID' />
-                    <TextField value={order.date || ''} label='Order Date' />
-                    <TextField value={order.purchaser || ''} label='Purchaser' />
-                    <TextField name='status' value={status || ''} label='Status' onChange={onChange} />
+                <div style={{display: 'flex', flexDirection: 'column', border: '1px solid white', borderRadius: '4px'}}>
+                    <StyledTextField value={order.id || ''} label='Order ID' />
+                    <StyledTextField value={order.date || ''} label='Order Date' />
+                    <StyledTextField value={order.purchaser || ''} label='Purchaser' />
+                    <StyledTextField name='status' value={status || ''} label='Status' onChange={onChange} />
                     <FormControlLabel
                         control={
                             <Checkbox 
@@ -82,9 +81,10 @@ class AdminOrderForm extends Component {
                                 onChange={onChange}
                             />
                         }
+                        style={{marginLeft: '1rem', color: 'white'}}
                         label='Cart Order'
                     />
-                    <Button onClick={onSubmit}>
+                    <Button style={{backgroundColor: 'white', margin: '1rem'}} onClick={onSubmit}>
                         Edit Order
                     </Button>
                 </div>
@@ -99,7 +99,7 @@ class AdminOrderForm extends Component {
 
 const mapDispatch = (dispatch) => {
     return {
-        editOrder: (order, history) => dispatch(editAdminOrder(order, history)),
+        editOrder: (order) => dispatch(editAdminOrder(order)),
         loadAdminOrders: () => dispatch(loadAdminOrders()),
         loadAdminOrderItems: () => dispatch(loadAdminOrderItems()),
     }
