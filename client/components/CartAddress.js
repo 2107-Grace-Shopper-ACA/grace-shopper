@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
+import Box from '@material-ui/core/Box'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
 import { editCartUser } from '../store'
 
 class CartAddress extends Component {
@@ -47,28 +50,25 @@ class CartAddress extends Component {
 
         if (!this.props.user) return '...loading'
         return (
-            <div>
-                <form onSubmit={onSubmit}>
-                    Please confirm your address before checkout.
-                    <label>
-                        Street Address:
-                    </label>
-                        <input name='streetAddress' value={streetAddress} onChange={onChange} /> 
-                    <label>
-                        City:
-                    </label>
-                        <input name='city' value={city} onChange={onChange} /> 
-                    <label>
-                        State:
-                    </label>
-                        <input name='state' value={state} onChange={onChange} /> 
-                    <label>
-                        Zipcode:
-                    </label>
-                        <input name='zipcode' value={zipcode} onChange={onChange} /> 
-                    <button type='submit' disabled={!streetAddress || !city || !state || !zipcode}>Confirm</button>
-                </form>
-            </div>
+            <Box
+                component="form"
+                sx={{
+                    '& .MuiTextField-root': { m: 1, width: '25ch' },
+                    backgroundColor: 'white'
+                }}
+                noValidate
+                autoComplete="off"
+            >
+                <div style={{display: 'flex', flexDirection: 'column'}}>
+                    <TextField name='streetAddress' value={streetAddress || ''} label='Street Address' onChange={onChange} />
+                    <TextField name='city' value={city || ''} label='City' onChange={onChange} />
+                    <TextField name='state' value={state || ''} label='State' onChange={onChange} />
+                    <TextField name='zipcode' value={zipcode || ''} label='Zipcode' onChange={onChange} />
+                    <Button onClick={onSubmit} disabled={!streetAddress || !city || !state || !zipcode}>
+                        Confirm Address
+                    </Button>
+                </div>
+            </Box>
         )
     }
 }

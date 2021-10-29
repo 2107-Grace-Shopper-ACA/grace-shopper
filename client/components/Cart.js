@@ -25,7 +25,6 @@ import CartAddress from './CartAddress';
       )
     }
     
-    //THERE SHOULD ALWAYS BE ONE NOW UNLESS GUEST!  
       let cartOrder = orders.find(order => order.isCart && auth.id ===order.userId) || {};
       let cartItems = orderItems.filter(orderItem => orderItem.orderId === cartOrder.id) || [];
       let localCart = JSON.parse(localStorage.getItem('localCart')) || [];
@@ -95,7 +94,9 @@ const handleSubmit = async() => {
     }
     
     return (
-      <>
+      <Box
+        display='flex'
+      >
       <Grid className="cart" container style={{margin:'2rem'}} display='flex' direction='column' xs={6} >
         <header className="container">
         <Typography variant="h5" >{auth.username || "Guest"}'s Shopping Cart <span className="count">({totalItems} items)</span></Typography>
@@ -157,29 +158,25 @@ const handleSubmit = async() => {
             </Grid>
           ))
         }
-       <section className="container">
-          <div className="summary">
-            <ul>
-              <li>
-                Subtotal <span>${total.toFixed(2)}</span>
-              </li>
-              <li>
-                Tax <span>${(total * tax).toFixed(2)}</span>
-              </li>
-              <li className="total">
-                Total <span>${+total + +(total * tax).toFixed(2)}</span>
-              </li>
-            </ul>
-          </div>
+      </Grid>
+        <Box className="container" style={{marginTop: '8em', marginRight: '2rem'}}>
+          <Typography variant='h6'>
+            Subtotal <span>${total.toFixed(2)}</span>
+          </Typography>
+          <Typography variant='h6'>
+            Tax <span>${(total * tax).toFixed(2)}</span>
+          </Typography>
+          <Typography color='secondary' variant='h6'>
+            TOTAL <span>${+total + +(total * tax).toFixed(2)}</span>
+          </Typography>
           <div>
             <CartAddress history={history}/>
           </div>
           <div className="checkout">
             <button disabled={!user.streetAddress || !user.city || !user.state || !user.zipcode} onClick={handleSubmit} type="button">Check Out</button>
           </div>
-        </section>
-      </Grid>
-    </>
+        </Box>
+    </Box>
   );
 }
 
