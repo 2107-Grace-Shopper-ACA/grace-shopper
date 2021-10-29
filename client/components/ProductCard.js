@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router'
+import { Link } from 'react-router-dom'
 import { createOrder, createOrderItem, editOrderItem, update } from '../store'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
@@ -73,51 +74,111 @@ const ProductCard = ({
           background: '#000000',
         }}
       >
-        <CardActionArea onClick={() => history.push(`/products/${product.id}`)}>
-          <CardMedia
-            component="img"
-            height="200"
-            image={product.imageUrl || 'https://i.gifer.com/MNu.gif'}
-            alt="product image"
-          />
-          <CardContent align="center" style={{ color: 'white' }}>
-            <Typography variant="h5" component="div">
+        <CardActionArea
+          //onClick={() => history.push(`/products/${product.id}`)}
+          style={{
+            hover: {
+              '&:hover fieldset': {
+                border: '100px solid red',
+              },
+            },
+          }}
+        >
+          <Link to={`/products/${product.id}`}>
+            <CardMedia
+              component="img"
+              height="200"
+              image={product.imageUrl || 'https://i.gifer.com/MNu.gif'}
+              alt="product image"
+            />
+          </Link>
+        </CardActionArea>
+        <CardContent
+          align="center"
+          style={{
+            color: 'white',
+            hover: {
+              '&:hover': {
+                background: 'white',
+              },
+            },
+          }}
+        >
+          <Link to={`/products/${product.id}`}>
+            <Typography
+              variant="h5"
+              component="div"
+              style={{
+                color: 'white',
+                background: 'linear-gradient(45deg, #ff820d, #f21f2a)',
+                borderRadius: 10,
+                boxShadow: '0 0px 3px 3px #c7570c',
+              }}
+            >
               {product.name}
             </Typography>
-            <hr></hr>
-            <ThemeProvider theme={theme}>
-              <Typography variant="body1" color="primary">
-                ${product.price}
-              </Typography>
-            </ThemeProvider>
-            <hr></hr>
-            {product.inventory < 10 && product.inventory > 0 ? (
-              <Typography variant="body2" color="secondary">
-                Only {product.inventory} left in stock!
-              </Typography>
-            ) : !product.isActive || product.inventory <= 0 ? (
-              <Typography variant="body2" color="secondary">
-                Out of stock!
-              </Typography>
-            ) : (
-              <br style={{ margin: '.5rem' }}></br>
-            )}
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
+          </Link>
+          <hr></hr>
+          <Typography
+            variant="body1"
+            style={{
+              color: 'white',
+              background: 'linear-gradient(45deg, #16f53b, #faef52)',
+              borderRadius: 10,
+              boxShadow: '0 0px 3px 3px #10b32b',
+            }}
+          >
+            ${product.price}
+          </Typography>
+          <hr></hr>
+          {product.inventory < 10 && product.inventory > 0 ? (
+            <Typography variant="body2" style={{
+              color: 'white',
+              background: 'linear-gradient(45deg, #f44af7, #f74a95)',
+              borderRadius: 10,
+              boxShadow: '0 0px 3px 3px #b0377b',
+            }}>
+              Only {product.inventory} left in stock!
+            </Typography>
+          ) : !product.isActive || product.inventory <= 0 ? (
+            <Typography
+              variant="body2"
+              style={{
+                color: 'white',
+                background: 'linear-gradient(45deg, #16f53b, #faef52)',
+                borderRadius: 10,
+                boxShadow: '0 0px 3px 3px #10b32b',
+              }}
+            >
+              Out of stock!
+            </Typography>
+          ) : (
+            <br style={{ margin: '1rem' }}></br>
+          )}
+        </CardContent>
+        <CardActions
+          style={{ align: 'center', justifyContent: 'space-around' }}
+        >
           <FormControl
             fullWidth
-            style={{ marginBottom: '3rem', color: 'white' }}
+            variant="outlined"
+            style={{
+              marginBottom: '1rem',
+              color: 'white',
+              borderRadius: 10,
+              boxShadow: '0 0px 3px 3px #ffffff',
+              width: '4rem',
+            }}
           >
-            <InputLabel variant="outlined" style={{ color: 'white' }}>
-              Quantity:
-            </InputLabel>
+            {/* <InputLabel  style={{ color: 'white' }}>
+              //Quantity:
+            </InputLabel> */}
             <Select
-              value={quantity || ''}
-              label="Quantity"
+              value={quantity || 'Quantity'}
+              //label="Quantity"
               name={product.id}
               onChange={(ev) => setQuantity(ev.target.value)}
-              style={{ color: 'white' }}
+              style={{ color: 'white', alignContent: 'right' }}
             >
               {Array.from(Array(maxQuantity).keys()).map((idx) => {
                 return (
@@ -133,16 +194,16 @@ const ProductCard = ({
             disabled={quantity === 0}
             variant="outlined"
             style={{
-              marginBottom: '3rem',
-              background: 'linear-gradient(45deg, #ffc234, #ff45cd)',
+              marginBottom: '1rem',
+              background: 'linear-gradient(45deg, #b329f2, #2e35ff)',
               color: 'white',
-              boxShadow: '0 0px 3px 3px #9c761f',
+              boxShadow: '0 0px 3px 3px #1e23b0',
             }}
             onClick={async (ev) => {
               const correctQuantity = (item, product, quantity) => {
                 if (quantity + item.quantity > product.inventory) {
                   alert(
-                    `Your ${product.name} order quantity exceeds our inventory. We have placed ${product.inventory} ${product.name} in your cart.`
+                    `Your ${product.name} order quantity exceeds our inventory. We have placed the remaining quantity in your cart.`
                   )
                   return product.inventory
                 } else {
