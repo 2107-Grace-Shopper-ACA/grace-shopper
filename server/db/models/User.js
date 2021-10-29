@@ -31,7 +31,7 @@ const User = db.define('user', {
   },
   email: {
     type: STRING,
-    defaultValue: ''
+    defaultValue: '',
   },
   phoneNumber: {
     type: STRING,
