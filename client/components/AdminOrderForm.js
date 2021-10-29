@@ -27,7 +27,6 @@ class AdminOrderForm extends Component {
     }
     
     componentDidMount(){
-        console.log(this.props)
         const { isCart, status } = this.props.order;
         this.setState({isCart, status});
     }
@@ -82,7 +81,7 @@ class AdminOrderForm extends Component {
                                 onChange={onChange}
                             />
                         }
-                        style={{marginLeft: '1rem'}}
+                        style={{marginLeft: '1rem', color: 'white'}}
                         label='Cart Order'
                     />
                     <Button style={{backgroundColor: 'white', margin: '1rem'}} onClick={onSubmit}>

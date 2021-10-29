@@ -30,12 +30,19 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
  * COMPONENT
  */
 const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrders}) => {
+    const totalQuantities = orderItems.reduce((accum, item) => {
+        accum += item.quantity;
+        return accum;
+    }, 0)
 //TODO WHY NEED TO REFRESH AFTER EDITING    
 //TODO not sure if i need this
-    // useEffect(() => {
-    //     loadAdminOrderItems();
-    //     loadAdminOrders();
-    // }, []);
+    useEffect(() => {
+        async function loadData (){
+            await loadAdminOrders();
+            await loadAdminOrderItems();
+        };
+        loadData();
+    }, [totalQuantities]);
     
     const tableIcons = {
         Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -140,15 +147,14 @@ const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrd
         setOpen(true);
     }
     const handleClose = async (ev) => {
-        ev.preventDefault();
-        await loadAdminOrders();
+        // ev.preventDefault();
+        // await loadAdminOrders();
         setOpen(false);
     }
     const [openItem, setOpenItem] = useState(false);
     const [orderItem, setOrderItem] = useState({});
     const handleOpenItem = (ev, orderItem) => {
         // ev.persist()
-        console.log(orderItem)
         setOrderItem(orderItem);
         setOpenItem(true);
     }
@@ -218,7 +224,7 @@ const AdminOrders = ({orders, orderItems, match, history, products, loadAdminOrd
                                     tooltip: 'Edit Order',
                                     isFreeAction: false,
                                     onClick: (ev,rowData) => handleOpenItem(ev, rowData)
-                                    // onClick: (ev, rowData) => history.push(`/admin/orderItems/${rowData.id}`)
+                                    // onClick: (ev, rowData) => console.log(rowData.id)
                                 }
                             ]}
                             style={{

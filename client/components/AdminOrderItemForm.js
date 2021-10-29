@@ -88,8 +88,8 @@ class AdminOrderItemForm extends Component {
                             }
                         </select>
                     </label>
-                    <StyledTextField value={orderItem.price} label='Price' />
-                    <StyledTextField value={orderItem.subtotal} label='Subtotal' />
+                    <StyledTextField value={'$' + orderItem.price} label='Price' />
+                    <StyledTextField value={'$' + orderItem.subtotal.toFixed(2)} label='Subtotal' />
                     <Button style={{backgroundColor: 'white', margin: '1rem'}} onClick={onSubmit} >Edit Item</Button>
                 </div>
             </Box>
