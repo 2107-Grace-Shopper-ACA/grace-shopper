@@ -1,12 +1,11 @@
-
-import React, {Component} from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import Card from '@material-ui/core/Card'
-import Grid from '@material-ui/core/Grid';
-import ProductCard from "./ProductCard";
-import Filter from "./Filter"
+import Grid from '@material-ui/core/Grid'
+import ProductCard from './ProductCard'
+import Filter from './Filter'
 
-class Products extends Component{
+class Products extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -18,9 +17,21 @@ class Products extends Component{
     this.sortProducts = this.sortProducts.bind(this)
   }
 
+  componentDidUpdate(prevProps) {
+    if (!prevProps.products.length && this.props.products.length) {
+      this.setState({
+        ...this.state,
+        category: 'All',
+        sort: 'A-Z',
+        products: this.props.products.sort((a, b) =>
+          a.name > b.name ? 1 : -1
+        ),
+      })
+    }
+  }
 
-  filterProducts (event) {
-    if(event.target.value === '') {
+  filterProducts(event) {
+    if (event.target.value === '') {
       this.setState({
         ...this.state,
         category: event.target.value,
@@ -60,13 +71,11 @@ class Products extends Component{
     })
   }
 
-  
-  render () {
+  render() {
     const { products } = this.state
     //TODO: only bring in what we need from the store, like we should only bring in products that are active like in the line below -C
     return (
       <div id="product-gallery">
-        {/* <CategoriesTest /> */}
         <Filter
           count={products.length}
           category={this.state.category}
@@ -83,29 +92,27 @@ class Products extends Component{
           direction="row"
           alignItems="stretch"
         >
-          {products
-            .map((product) => {
-              return (
-                <Grid
-                  key={product.id}
-                  item
-                  component={Card}
-                  xs={12}
-                  sm={8}
-                  md={6}
-                  lg={3}
-                  xl={2}
-                  style={{ margin: '1rem' }}
-                >
-                  <ProductCard product={product} />
-                </Grid>
-              )
-            })}
+          {products.map((product) => {
+            return (
+              <Grid
+                key={product.id}
+                item
+                component={Card}
+                xs={12}
+                sm={8}
+                md={6}
+                lg={3}
+                xl={2}
+                style={{ margin: '1rem' }}
+              >
+                <ProductCard product={product} />
+              </Grid>
+            )
+          })}
         </Grid>
       </div>
     )
   }
 }
-
 
 export default connect((state) => state)(Products)
