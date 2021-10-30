@@ -74,7 +74,7 @@ export default class Filter extends Component {
             }}>
         <Typography>
         The Pasta Peddler peddles only the finest pasta known to man.
-        Each piece of pasta is hand-crafted by a Pasta Maestro and carefully inspected by the International Pasta Association. 
+        Every single strand, tube, ribbon, and pocket of Pasta Peddler pasta is hand-crafted by an accredited Pasta Maestro and carefully inspected by the International Pasta Association. We guarantee that Pasta Peddler will change your relationship with pasta forever.
           </Typography>
         
       </div>
