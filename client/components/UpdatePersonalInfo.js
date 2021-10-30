@@ -115,7 +115,9 @@ class UpdatePersonalInfo extends Component {
                 borderRadius: 10,
                 boxShadow: '0 0px 7px 7px #ffffff',
                 padding: '1rem',
-                margin: '1rem'
+                margin: '1rem 5rem 1rem 5rem',
+                width: '50%',
+                alignSelf: 'center'
             }}
             noValidate
             autoComplete="off"
@@ -138,12 +140,14 @@ class UpdatePersonalInfo extends Component {
                                           <small style={{color: 'red'}}>{errors.stateLength}</small>
                     <StyledTextField name='zipcode' value={zipcode || ''} label='Zipcode' onChange={onChange} />
                                           <small style={{color: 'red'}}>{errors.zipcodeLength}</small>
-                    <Button style={{backgroundColor: 'white'}} disabled={!username || !password} onClick={onSubmit}
+                    <Button disabled={!username || !password} onClick={onSubmit}
                     style={{
                         borderRadius: 10,
                         background: 'linear-gradient(45deg, #ff2c61, #ff6c61)',
                         color: 'white',
                         boxShadow: '0 0px 3px 3px #1e23b0',
+                        width: '30%',
+                        alignSelf: 'center'
                     }} 
                     >
                         Edit User Info

@@ -101,9 +101,11 @@ class AdminOrderItemForm extends Component {
                             background: 'linear-gradient(45deg, #ff2c61, #ff6c61)',
                             color: 'white',
                             boxShadow: '0 0px 3px 3px #1e23b0',
+                            width: '60%',
+                            alignSelf: 'center'
                         }} 
                     >
-                        Edit Order Item
+                        Edit Quantity
                     </Button>
                 </div>
             </Box>

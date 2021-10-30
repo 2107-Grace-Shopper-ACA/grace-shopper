@@ -92,7 +92,8 @@ class CartAddress extends Component {
                     '& .MuiTextField-root': { m: 1, width: '25ch' },
                     backgroundColor: 'black',
                     borderRadius: 10,
-                    boxShadow: '0 0px 7px 7px #ffffff'
+                    boxShadow: '0 0px 7px 7px #ffffff',
+                    margin: '0 3rem 0 3rem'
                 }}
                 noValidate
                 autoComplete="off"
@@ -116,6 +117,8 @@ class CartAddress extends Component {
                         background: 'linear-gradient(45deg, #ff2c61, #ff6c61)',
                         color: 'white',
                         boxShadow: '0 0px 3px 3px #1e23b0',
+                        width: '40%',
+                        alignSelf: 'center'
                     }} 
                     onClick={onSubmit} 
                     disabled={!streetAddress || !city || !state || !zipcode}

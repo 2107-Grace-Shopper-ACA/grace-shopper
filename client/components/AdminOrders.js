@@ -239,7 +239,7 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrders}) => 
                                 toolbar: false,
                                 headerStyle: {
                                     color: 'black',
-                                    background: '#ff820d',
+                                    background: 'rgb(0,186,246)',
                                 }
                             }}
                             actions={[
