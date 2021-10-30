@@ -112,8 +112,10 @@ class UpdatePersonalInfo extends Component {
             sx={{
                 '& .MuiTextField-root': { m: 1, width: '25ch' },
                 backgroundColor: 'black',
-                border: '1px solid white',
-                borderRadius: '4px'
+                borderRadius: 10,
+                boxShadow: '0 0px 7px 7px #ffffff',
+                padding: '1rem',
+                margin: '1rem'
             }}
             noValidate
             autoComplete="off"
@@ -136,7 +138,16 @@ class UpdatePersonalInfo extends Component {
                                           <small style={{color: 'red'}}>{errors.stateLength}</small>
                     <StyledTextField name='zipcode' value={zipcode || ''} label='Zipcode' onChange={onChange} />
                                           <small style={{color: 'red'}}>{errors.zipcodeLength}</small>
-                    <Button style={{backgroundColor: 'white'}} disabled={!username || !password} onClick={onSubmit}>Edit User Info</Button>
+                    <Button style={{backgroundColor: 'white'}} disabled={!username || !password} onClick={onSubmit}
+                    style={{
+                        borderRadius: 10,
+                        background: 'linear-gradient(45deg, #ff2c61, #ff6c61)',
+                        color: 'white',
+                        boxShadow: '0 0px 3px 3px #1e23b0',
+                    }} 
+                    >
+                        Edit User Info
+                    </Button>
                 </div>
             </Box>
             </>

@@ -5,6 +5,7 @@ import { deleteOrderItem, editOrderItem } from '../store';
 import CartAddress from './CartAddress';
 
 
+import FormControl from '@material-ui/core/FormControl'
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
@@ -116,9 +117,10 @@ const handleSubmit = async() => {
     return (
       <Box
         display='flex'
+        flexDirection='column'
+        xs={12}
+        sm={10}
       >
-      <Grid className="cart" container style={{margin:'2rem'}} display='flex' direction='column' >
-        
         <Typography 
           variant="h5" 
           component='div'
@@ -131,181 +133,181 @@ const handleSubmit = async() => {
         >
           {auth.username || "Guest"}'s Shopping Cart <span className="count">({totalItems} items)</span>
         </Typography>
-        
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            background: 'black',
-            borderRadius: 10,
-            boxShadow: '0 0px 7px 7px #ffffff',
-          }}
-        >
-          <Typography 
-            variant="h6" 
+        <Box
+          display='flex'
+          justifyContent='space-evenly'
+          margin='1rem'
+        > 
+          <Box
+            display='flex'
+            flexDirection='column'
             style={{
-              color: 'darkslategrey',
-              background: 'linear-gradient(45deg, #26b7ff, #28fcdd)',
-              borderRadius: 5,
-              textAlign: 'center',
-              marginBottom: '.5rem'
+              background: 'black',
+              borderRadius: 10,
+              boxShadow: '0 0px 7px 7px #ffffff',
+              width: '40%'
             }}
           >
-            Order # {cartOrder.id || "Guest"}
-          </Typography>
-        {
-          cartItems.map(item => (
-            <>
-            <div
+            <Typography 
+              variant="h6" 
               style={{
-                display: 'flex',
-                flexDirection: 'column',
-                background: 'black',
-                
+                color: 'darkslategrey',
+                background: 'linear-gradient(45deg, #26b7ff, #28fcdd)',
+                borderRadius: 5,
+                textAlign: 'center',
+                marginBottom: '.5rem'
               }}
             >
-              <div
-                style={{
-                  margin: '1rem'
-                }}
-              >
-                <Typography
-                  style={{
-                    color: 'slategrey'
-                  }}
-                >
-                  ID# {item.id}
-                </Typography>
-              </div>
-              <div
+              Order # {cartOrder.id || "Guest"}
+            </Typography>
+          {
+            cartItems.map(item => (
+              <>
+              <Box
                 style={{
                   display: 'flex',
-                  justifyContent: 'space-between'
+                  flexDirection: 'column',
+                  background: 'black',
+                  marginTop: '1rem',
                 }}
               >
-                <div>
-                  <img 
-                    src={item.product.imageUrl}
-                    alt='product image'
-                    style={{
-                      maxWidth: '130px',
-                      border: '1px solid white',
-                      borderRadius: 10,
-                      boxShadow: '0 0px 3px 3px #20c9c9',
-                      marginBottom: '.5rem',
-                      marginLeft: '1rem'
-                    }}
-                  />
-                  <br></br>
+                <div
+                  style={{
+                    marginLeft: '1rem',
+                    marginBottom: '1rem'
+                  }}
+                >
                   <Typography
                     style={{
-                      marginLeft: '1rem'
+                      color: 'slategrey'
                     }}
                   >
-                    {item.product.name}
+                    ID# {item.id}
                   </Typography>
-                  <br></br>
                 </div>
                 <div
                   style={{
                     display: 'flex',
-                    flexDirection: 'column'
+                    justifyContent: 'space-between'
                   }}
                 >
-                  <div
+                  <Box
                     style={{
                       display: 'flex',
-                      justifyContent: 'space-between'
+                      flexDirection: 'column',
+                      justifyContent: 'space-evenly',
+                      marginBottom: '.5rem'
                     }}
                   >
-                    <Typography>
-                      Price:
-                    </Typography>
-                    <Typography>
-                      ${item.product.price}
-                    </Typography>
-                  </div>
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <Typography>
-                      Quantity: 
-                    </Typography>
-                    <Typography>
-                    {+item.quantity}
-                    </Typography>
-                  </div>
-                  <hr color='black'></hr>
-                  <hr color='black'></hr>
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <Typography>
-                      Subtotal: 
-                    </Typography>
-                    <Typography>
-                      ${(item.product.price * +item.quantity).toFixed(2)}
-                    </Typography>
-                  </div>
-                </div>
-                <div>
-                  <Typography 
-                    variant='subtitle2' 
-                    style={{
-                      marginLeft: '.5rem',
-                      color: '#26b7ff'
-                    }}
-                  >
-                      Edit
-                  </Typography>
-                  <div className="quantity" style={{marginBottom: '1rem', marginRight: '1rem'}}>
-                    <input
-                      type="number"
-                      className="quantity"
-                      min="1"
-                      max={item.product.inventory < 10 ? item.product.inventory : 10}
-                      id={item.id}
-                      value={item.quantity}
-                      onChange={onChange}
+                    <Avatar alt={item.product.name + ' image'} src={item.product.imageUrl} 
+                      style={{
+                        boxShadow: '0 0px 3px 3px #20c9c9',
+                        marginLeft: '1rem'
+                      }}
                     />
-                  </div>
-                  <div style={{marginRight: '2rem'}}>
-                  <Button onClick={()=>{deleteOrderItem(item.id)}} color='secondary' variant='outlined' size='small'>
-                    Delete
-                  </Button>
-                  </div>
+                    
+                    <Typography
+                      style={{
+                        marginLeft: '1rem',
+                        marginTop: '.25rem',
+                        color: 'white'
+                      }}
+                    >
+                      {item.product.name  } 
+                    </Typography>
+                  </Box>
+                  <Box
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-evenly',
+                      alignItems: 'flex-end',
+                      marginTop: 0
+                    }}
+                  >
+                    <Typography style={{color: 'white'}}>
+                      Price: ${item.product.price}
+                    </Typography>
+                    <Typography style={{fontWeight: 'bold', color: 'secondary'}}>
+                      Total: ${(item.product.price * +item.quantity).toFixed(2)}
+                    </Typography>
+                  </Box>
+                  <Box display='flex' justifyContent='space-around' style={{ marginRight: '1rem', marginTop: '.5rem'}}>
+                    <Box >
+                      <input
+                        type="number"
+                        className="quantity"
+                        min="1"
+                        max={item.product.inventory < 10 ? item.product.inventory : 10}
+                        id={item.id}
+                        value={item.quantity}
+                        onChange={onChange}
+                        style={{
+                          marginRight: '2rem',
+                          color: 'black',
+                          background: 'linear-gradient(45deg, #26b7ff, #28fcdd)',
+                          borderRadius: 10,
+                          boxShadow: '0 0px 3px 3px #20c9c9',
+                          width: '2.5rem',
+                        }}
+                      />
+                    </Box>
+                    <div>
+                      <Button onClick={() => deleteOrderItem(item.id)} 
+                      variant='outlined' 
+                      size='small'
+                      style={{
+                        borderRadius: 10,
+                        marginBottom: '1rem',
+                        background: 'linear-gradient(45deg, #ff2c61, #ff6c61)',
+                        color: 'white',
+                        boxShadow: '0 0px 3px 3px #1e23b0',
+                      }}>
+                        Delete
+                      </Button>
+                    </div>
+                  </Box>
                 </div>
-              </div>
-            </div>
-            <Divider 
-              style={{
-                color: 'white',
-                borderRadius: 5,
-                boxShadow: '0 0px 7px 7px #ffffff',
-              }}
-            />
-            </>
-          ))
-        }
-        </div>
-      </Grid>
-        <Box className="container" style={{marginTop: '1rem', marginRight: '2rem'}}>
-          <Typography variant='h6'>
-            Subtotal <span>${total.toFixed(2)}</span>
-          </Typography>
-          <Typography variant='h6'>
-            Tax <span>${(total * tax).toFixed(2)}</span>
-          </Typography>
-          <Typography color='secondary' variant='h6'>
-            TOTAL <span>${+total + +(total * tax).toFixed(2)}</span>
-          </Typography>
-          <div style={{marginTop: '6rem'}}>
+              </Box>
+              <Divider 
+                style={{
+                  borderRadius: 7,
+                  boxShadow: '0 0px 4px 2px #ff2c61',
+                }}
+              />
+              </>
+            ))
+          }
+          <Box style={{
+              alignSelf: 'end',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-end',
+              marginRight: '1rem',
+              marginTop: '1rem',
+            }}
+          >
+            <Typography variant='h6'>
+              Subtotal: <span>${total.toFixed(2)}</span>
+            </Typography>
+            <Typography variant='h6'>
+              Tax: <span>${(total * tax).toFixed(2)}</span>
+            </Typography>
+            <Typography color='secondary' variant='h6'>
+              TOTAL: <span>${+total + +(total * tax).toFixed(2)}</span>
+            </Typography>
+          </Box>
+        </Box>
+        <Box 
+          display="flex" 
+          flexDirection='column'
+          style={{
+            width: '40%'
+          }}>
+          <Box style={{
+              margin: '2rem'
+            }}
+          >
             {
               auth.id ?
               <CartAddress history={history}/>
@@ -314,11 +316,22 @@ const handleSubmit = async() => {
                 You must be logged in to checkout.
               </Typography>
             }
-          </div>
+          </Box>
           <div className="checkout">
-            <button disabled={!user.streetAddress || !user.city || !user.state || !user.zipcode} onClick={handleSubmit} type="button">Check Out</button>
+            <Button 
+              disabled={!user.streetAddress || !user.city || !user.state || !user.zipcode} 
+              onClick={handleSubmit} 
+              style={{
+                background: 'linear-gradient(45deg, #15c7d4, #07ab1d)',
+                color: 'white',
+                boxShadow: '0 0px 3px 3px #0c9ea8',
+              }}
+            >
+              Check Out
+            </Button>
           </div>
         </Box>
+      </Box>
     </Box>
   );
 }
