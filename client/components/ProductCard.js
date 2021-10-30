@@ -172,7 +172,7 @@ const ProductCard = ({
                 height: '2rem',
               }}
             >
-            {/* <option value=''>-</option> */}
+            <option value=''>-</option>
               {Array.from(Array(maxQuantity).keys()).map((idx) => {
                 return (
                   <option key={idx} value={idx + 1}>

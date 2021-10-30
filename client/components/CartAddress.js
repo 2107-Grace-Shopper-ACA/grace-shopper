@@ -15,9 +15,12 @@ class CartAddress extends Component {
             state: user.id ? user.state : '',
             zipcode: user.id ? user.zipcode : '',
             error: '',
+            errors:{}
         }
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.formValidation = this.formValidation.bind(this)
+
     }
     
     componentDidUpdate (prevProps){
@@ -36,10 +39,38 @@ class CartAddress extends Component {
         this.setState(change);
     }
 
+    formValidation = () => {
+        const {streetAddress, state, city, zipcode} = this.state
+        let isValid = true
+        const errors = {}
+        if(streetAddress.trim().length < 1) {
+            errors.streetAddressLength = 'Street address cannot be empty.'
+            isValid = false
+        }
+        if(state.trim().length !== 2) {
+            errors.stateLength = 'State must be 2 characters.'
+            isValid = false
+        }
+        if(city.trim().length < 1) {
+            errors.cityLength = 'City cannot be empty.'
+            isValid = false
+        }
+        if(zipcode.trim().length !== 5) {
+            errors.zipcodeLength = 'Zipcode must be 5 digits.'
+            isValid = false
+        }
+        this.setState({errors})
+        return isValid
+    }
+
     async onSubmit(ev){
         ev.preventDefault();
+        const isValid = this.formValidation()
         const { streetAddress, city, state, zipcode } = this.state;
+
         const { history, editCartUser, user, loadUser, auth } = this.props;
+        if (isValid) {
+
         try{
             await editCartUser({...user, streetAddress, city, state, zipcode }, history);
             await loadUser(auth);
@@ -47,9 +78,10 @@ class CartAddress extends Component {
         catch (ex){
             this.setState({error: ex.response.data.error});  
         }
+        }
     }
     render () {
-        const { streetAddress, city, state, zipcode } = this.state;
+        const { streetAddress, city, state, zipcode, errors } = this.state;
         const { onChange, onSubmit } = this;
 
         if (!this.props.user) return '...loading'
@@ -67,9 +99,13 @@ class CartAddress extends Component {
             >
                 <div style={{display: 'flex', flexDirection: 'column'}}>
                     <StyledTextField name='streetAddress' value={streetAddress || ''} label='Street Address' onChange={onChange} />
+                                          <small style={{color: 'red'}}>{errors.streetAddressLength}</small>
                     <StyledTextField name='city' value={city || ''} label='City' onChange={onChange} />
+                                          <small style={{color: 'red'}}>{errors.cityLength}</small>
                     <StyledTextField name='state' value={state || ''} label='State' onChange={onChange} />
+                     <small style={{color: 'red'}}>{errors.stateLength}</small>
                     <StyledTextField name='zipcode' value={zipcode || ''} label='Zipcode' onChange={onChange} />
+                    <small style={{color: 'red'}}>{errors.zipcodeLength}</small>
                     <Button style={{backgroundColor: 'white'}} onClick={onSubmit} disabled={!streetAddress || !city || !state || !zipcode}>
                         Confirm Address
                     </Button>

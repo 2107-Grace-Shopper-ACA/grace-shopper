@@ -10,9 +10,9 @@ export default class Filter extends Component {
           className="filter-result"
           style={{
             color: 'white',
-            background: 'linear-gradient(45deg, #ff820d, #f21f2a)',
+            background: 'linear-gradient(45deg, #2ef2a0, #e8de27)',
             borderRadius: 10,
-            boxShadow: '0 0px 3px 3px #c7570c',
+            boxShadow: '0 0px 3px 3px #34ba20',
             padding: '.4rem',
           }}
         >
@@ -23,7 +23,7 @@ export default class Filter extends Component {
           style={{
             margin: '1rem',
             color: 'white',
-            background: 'linear-gradient(45deg, #ff820d, #f21f2a)',
+            background: 'linear-gradient(45deg, #ba20a8, #e35927)',
             flexDirection: 'row',
             borderRadius: 10,
             boxShadow: '0 0px 3px 3px #c7570c',
@@ -36,7 +36,7 @@ export default class Filter extends Component {
             onChange={this.props.sortProducts}
             style={{ background: 'none', color: 'white', border: 'none', outline: 'none' }}
           >
-            <option>A-Z</option>
+            <option value="A-Z">A-Z</option>
             <option value="lowest">Price Low to High</option>
             <option value="highest">Price High to Low</option>
           </select>
@@ -45,10 +45,10 @@ export default class Filter extends Component {
           className="filter-category"
           style={{
             color: 'white',
-            background: 'linear-gradient(45deg, #ff820d, #f21f2a)',
+            background: 'linear-gradient(45deg, #3523d9, #00d3de)',
             flexDirection: 'row',
             borderRadius: 10,
-            boxShadow: '0 0px 3px 3px #c7570c',
+            boxShadow: '0 0px 3px 3px #0745a3',
             padding: '.4rem',
           }}
         >
@@ -58,7 +58,7 @@ export default class Filter extends Component {
             onChange={this.props.filterProducts}
             style={{ background: 'none', color: 'white', border: 'none', outline: 'none' }}
           >
-            <option value="">All</option>
+            <option value="All">All</option>
             <option value="Small Pastas">Small Pastas</option>
             <option value="Ribbon-Cut">Ribbon-Cut</option>
             <option value="Stuffed">Stuffed</option>
