@@ -30,8 +30,8 @@ const Orders = ({ orders, auth, loadOrders }) => {
               background: 'black',
               borderRadius: 10,
               boxShadow: '0 0px 7px 7px #ffffff',
-              width: '60%',
-              marginLeft: '2rem'
+              width: 600,
+              margin: '.5rem 2rem 0 2rem',
             }}
           >
             <Typography 
@@ -50,16 +50,16 @@ const Orders = ({ orders, auth, loadOrders }) => {
             <div
               style={{
                 marginLeft: '1rem',
-                marginBottom: '1rem',
+                
                 display: 'flex',
-                justifyContent: 'space-around'
+                justifyContent: 'space-around',
               }}
             >
-              <Typography variant='subtitle1' color='secondary'
+              <Typography variant='subtitle1' color='secondary' 
               >
                 Date Ordered:  {order.date.slice(0, order.date.indexOf('T'))}
               </Typography>
-              <Typography color='secondary' variant='h6'>
+              <Typography color='secondary'>
                 Total:  ${(order.orderItems.reduce((accum, item) => {
                   accum += item.product.price * +item.quantity;
                   return accum;
@@ -77,7 +77,7 @@ const Orders = ({ orders, auth, loadOrders }) => {
                 style={{
                   borderRadius: 1,
                   boxShadow: '0 0px 4px 2px #ffffff',
-                  margin: '1rem',
+                  margin: '.25rem',
                   marginTop: 0
                 }}
               />
@@ -86,14 +86,14 @@ const Orders = ({ orders, auth, loadOrders }) => {
                   display: 'flex',
                   flexDirection: 'row',
                   justifyContent: 'space-evenly',
-                  marginBottom: '.5rem'
+                  marginBottom: '.25rem'
                 }}
                 >
                   <div>
                 <Typography
                   style={{
                     marginLeft: '1rem',
-                    marginTop: '.25rem',
+                    
                     color: 'white'
                   }}
                   >
@@ -114,7 +114,7 @@ const Orders = ({ orders, auth, loadOrders }) => {
                 style={{
                   borderRadius: 1,
                   boxShadow: '0 0px 4px 2px #ffffff',
-                  margin: '1rem',
+                  margin: '.25rem',
                   marginTop: 0
                 }}
               />
@@ -126,14 +126,17 @@ const Orders = ({ orders, auth, loadOrders }) => {
                   display: 'flex',
                   flexDirection: 'row',
                   justifyContent: 'space-evenly',
-                  marginBottom: '1rem'
+                  marginBottom: '.5rem',
+                  marginTop: '.5rem'
+
                 }}
                 >
-                  <div>
+                  <div style={{display: 'flex'}}>
                 <Avatar alt={item.product.name + ' image'} src={item.product.imageUrl} 
                   style={{
                     boxShadow: '0 0px 3px 3px #20c9c9',
-                    marginLeft: '1rem'
+                    marginLeft: '1rem',
+                    
                   }}
                   />
                 <Typography
