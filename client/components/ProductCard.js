@@ -63,7 +63,6 @@ const ProductCard = ({
   if (!product) return '...loading'
 
   return (
-    //TODO: can't get them to be same height
     <div>
       <Card
         key={product.id}

@@ -43,7 +43,6 @@ class Products extends Component {
   }
 
   filterProducts = async(event) => {
-    console.log(`filterProducts is called with this event target`, event.target.value)
     if (event.target.value === '') {
       await this.setState({
         ...this.state,
@@ -59,12 +58,10 @@ class Products extends Component {
         ),
       })
     }
-    console.log(`lastSortEvent target value `, this.state.lastSortEvent.value)
     this.state.lastSortEvent === '' ?  null : this.sortProducts(this.state.lastSortEvent)
   }
 
   sortProducts = async(event) => {
-    console.log(`sortProducts is called`)
     event.persist()
     const sort = event.target.value
     await this.setState({
@@ -88,7 +85,6 @@ class Products extends Component {
         )
     },
     )
-    console.log(`lastSortEvent is now `, this.state.lastSortEvent)
   }
 
   render() {

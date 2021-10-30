@@ -56,6 +56,7 @@ const AuthForm = (props) => {
               margin: '1rem',
               boxShadow: '0 0px 3px 3px #81c942',
               borderRadius: 10,
+              color:'white'
             }}
             type="submit"
           >
