@@ -71,11 +71,10 @@ const Navbar = ({
               style={{
                 background: 'black',
                 alignContent: 'center',
+                width: '100%'
               }}
             >
-              <div variant='subtitle1' style={{textAlign: 'center', margin: '1rem', color: 'white', background: 'linear-gradient(45deg, #3523d9, #00d3de)',
-            borderRadius: 10,
-            boxShadow: '0 0px 3px 3px #0745a3'}}>
+              <div variant='subtitle1' style={{width: '100%', textAlign: 'center', color: 'white', background: 'linear-gradient(45deg, #3523d9, #00d3de)' , boxShadow: '0 0px 3px 3px #0745a3'}}>
         <Typography>
         Welcome to the Pasta Peddler
           </Typography>
@@ -163,11 +162,14 @@ const Navbar = ({
               style={{
                 background: 'black',
                 alignContent: 'center',
+                width: '100%'
               }}
             >
-              <Typography>
+              <div variant='subtitle1' style={{textAlign: 'center', color: 'white', background: 'linear-gradient(45deg, #3523d9, #00d3de)' , boxShadow: '0 0px 3px 3px #0745a3'}}>
+              <Typography >
         Welcome to the Pasta Peddler
           </Typography>
+          </div>
               <Toolbar style={{ justifyContent: 'space-around' }}>
                 <Link to="/login">
                   <Button
