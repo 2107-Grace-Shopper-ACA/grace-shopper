@@ -93,10 +93,22 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrders}) => 
     })
     // Material Table Columns
     const columns = [
-    { title: 'Date Ordered', field: 'date', type: 'datetime' },
-    { title: 'Order ID', field: 'orderId'},
-    { title: 'Open ?', field: 'isCart', type: 'boolean'},
-    { title: 'Purchaser', field: 'purchaser'},
+    { title: 'Date Ordered', field: 'date', type: 'datetime', filtering: false },
+    { title: 'Order ID', field: 'orderId', filtering: false,
+        cellStyle: {
+            width: 20,
+            maxWidth: 20,
+            textOverflow: 'ellipsis', 
+            whiteSpace: 'nowrap', 
+            overflow: 'hidden',
+        },
+        headerStyle: {
+            width: 20,
+            maxWidth: 20
+        }
+    },
+    { title: 'Cart Order', field: 'isCart', type: 'boolean'},
+    { title: 'Purchaser', field: 'purchaser', filtering: false},
     { title: 'Total Items', field: 'totalItems', type: 'numeric', filtering: false},
     { title: 'Total', field: 'total', type: 'currency', filtering: false},
 
@@ -175,7 +187,12 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrders}) => 
                 data={data}
                 options={{
                     filtering: true,
-                    headerStyle: {backgroundColor: 'dodgerBlue'}
+                    headerStyle: {
+                        color: 'white',
+                        background: 'linear-gradient(45deg, #3523d9, #00d3de)',
+                        borderRadius: 10,
+                        boxShadow: '0 0px 3px 3px #0745a3',
+                    }
                 }}
                 actions={[
                     {
@@ -196,7 +213,19 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrders}) => 
                             icons={tableIcons}
                             columns={[
                                 { title: 'Date Added to Cart', field: 'date', type: 'datetime'},
-                                { title: 'Order Item ID', field: 'id'},
+                                { title: 'Order Item ID', field: 'id',
+                                cellStyle: {
+                                    width: 10,
+                                    maxWidth: 10,
+                                    textOverflow: 'ellipsis', 
+                                    whiteSpace: 'nowrap', 
+                                    overflow: 'hidden',
+                                },
+                                headerStyle: {
+                                    width: 10,
+                                    maxWidth: 10
+                                }
+                                },
                                 { title: 'Product Name', field: 'productName'},
                                 { title: 'Quantity', field: 'quantity' },
                                 { title: 'Price', field: 'price', type: 'currency' },
@@ -207,7 +236,12 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrders}) => 
                                 paging: false,
                                 search: false,
                                 toolbar: false,
-                                headerStyle: {backgroundColor: 'dodgerBlue'}
+                                headerStyle: {
+                                    color: 'black',
+                                    background: 'linear-gradient(45deg, #ff820d, #f21f2a)',
+                                    borderRadius: 10,
+                                    boxShadow: '0 0px 3px 3px #c7570c',
+                                }
                             }}
                             actions={[
                                 {

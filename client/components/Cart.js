@@ -272,7 +272,7 @@ const handleSubmit = async() => {
               <Divider 
                 style={{
                   borderRadius: 7,
-                  boxShadow: '0 0px 4px 2px #ff2c61',
+                  boxShadow: '0 0px 4px 2px #ffffff',
                 }}
               />
               </>
@@ -288,13 +288,13 @@ const handleSubmit = async() => {
             }}
           >
             <Typography variant='h6'>
-              Subtotal: <span>${total.toFixed(2)}</span>
+              Subtotal:  <span>${total.toFixed(2)}</span>
             </Typography>
             <Typography variant='h6'>
-              Tax: <span>${(total * tax).toFixed(2)}</span>
+              Tax:  <span>${(total * tax).toFixed(2)}</span>
             </Typography>
             <Typography color='secondary' variant='h6'>
-              TOTAL: <span>${+total + +(total * tax).toFixed(2)}</span>
+              TOTAL:  <span>${(+total + (+total * +tax)).toFixed(2)}</span>
             </Typography>
           </Box>
         </Box>

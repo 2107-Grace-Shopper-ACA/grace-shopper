@@ -5,6 +5,7 @@ import { editOrder, createOrder, editProduct } from '../store'
 
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
+import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 
 
@@ -46,15 +47,45 @@ const Success = ({auth, order, editOrder, createOrder, orderItems, editProduct, 
         history.push('/products');
       }
 
-  
+      console.log(order)
     return (
-        <Paper variant="outlined" square >
-            <Typography variant='h5'>Success, {auth.username}! 
+        <Box 
+            sx={{
+                '& .MuiTextField-root': { m: 1, width: '25ch' },
+                backgroundColor: 'black',
+                borderRadius: 10,
+                boxShadow: '0 0px 7px 7px #ffffff',
+                padding: '1rem',
+                margin: '1rem',
+            }}
+            display='flex'
+            flexDirection='column'
+            noValidate
+            autoComplete="off"
+        >
+            <Typography 
+                style={{alignSelf: 'center'}}
+                variant='h5'
+            >Success, {auth.username}! 
             <br></br>
               Your order is complete.</Typography>
             <br></br>
-            <Button variant='outlined' color='primary' onClick={handleClick}>BACK TO PASTA</Button>
-        </Paper>
+            <Button 
+                variant='outlined' 
+                color='primary' 
+                onClick={handleClick}
+                style={{
+                    borderRadius: 10,
+                    background: 'linear-gradient(45deg, #3523d9, #00d3de)',
+                    color: 'white',
+                    boxShadow: '0 0px 3px 3px #1e23b0',
+                    width: '40%',
+                    alignSelf: 'center'
+                }} 
+            >
+                BACK TO PASTA
+            </Button>
+        </Box>
     )
 }
 
@@ -65,7 +96,6 @@ const mapState = state => {
   return {
     auth: state.auth,
     order: state.orders.find(order => order.isCart),
-    // orderItems: state.orderItems.filter(item => item.order.isCart),
     orderItems: state.orderItems,
     products: state.products
   }

@@ -97,9 +97,10 @@ class AdminUserForm extends Component {
                             name='isAdmin' 
                             checked={isAdmin || ''} 
                             onChange={onChange}
+                            style={{color: 'white'}}
                         />
                     }
-                    style={{marginLeft: '1rem', color: 'white'}}
+                    style={{marginLeft: '1rem', color: '#ff2c61'}}
                     label='Is Admin'
                     disabled={user && auth.id === user.id}
                 />
