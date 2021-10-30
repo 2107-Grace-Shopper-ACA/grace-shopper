@@ -44,7 +44,7 @@ const Success = ({auth, order, editOrder, createOrder, orderItems, editProduct, 
             }
         })
         ]);
-        history.push('/products');
+        history.push('/orders');
       }
 // console.log(order)
 //for some reason it logs order, but says order.id is undefined
@@ -81,11 +81,11 @@ const Success = ({auth, order, editOrder, createOrder, orderItems, editProduct, 
                     background: 'linear-gradient(45deg, #3523d9, #00d3de)',
                     color: 'white',
                     boxShadow: '0 0px 3px 3px #1e23b0',
-                    width: '40%',
+                    width: '10%',
                     alignSelf: 'center'
                 }} 
             >
-                BACK TO PASTA
+                My Orders
             </Button>
         </Box>
          {/* <Box

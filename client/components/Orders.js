@@ -15,7 +15,7 @@ const Orders = ({ orders, auth, loadOrders }) => {
   }, [])
 
   const [rating, setRating] = useState(2.5);
-  orders = orders.filter(order => !order.isCart);
+  orders = orders.filter(order => !order.isCart && order.orderItems.length > 0);
 
   
   return ( 
