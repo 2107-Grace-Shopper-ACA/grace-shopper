@@ -46,9 +46,9 @@ const Success = ({auth, order, editOrder, createOrder, orderItems, editProduct, 
         ]);
         history.push('/orders');
       }
-// console.log(order)
-//for some reason it logs order, but says order.id is undefined
-// console.log(order.id)
+
+    if (!order) return '...loading'
+    
     return (
         <>
         <Box 
@@ -66,29 +66,13 @@ const Success = ({auth, order, editOrder, createOrder, orderItems, editProduct, 
             autoComplete="off"
         >
             <Typography 
-                style={{alignSelf: 'center'}}
+                style={{alignSelf: 'center', textAlign: 'center'}}
                 variant='h5'
             >Success, {auth.username}! 
             <br></br>
               Your order is complete.</Typography>
             <br></br>
-            <Button 
-                variant='outlined' 
-                color='primary' 
-                onClick={handleClick}
-                style={{
-                    borderRadius: 10,
-                    background: 'linear-gradient(45deg, #3523d9, #00d3de)',
-                    color: 'white',
-                    boxShadow: '0 0px 3px 3px #1e23b0',
-                    width: '10%',
-                    alignSelf: 'center'
-                }} 
-            >
-                My Orders
-            </Button>
-        </Box>
-         {/* <Box
+            <Box
            display='flex'
            flexDirection='column'
            style={{
@@ -96,7 +80,7 @@ const Success = ({auth, order, editOrder, createOrder, orderItems, editProduct, 
              borderRadius: 10,
              boxShadow: '0 0px 7px 7px #ffffff',
              width: '60%',
-             marginLeft: '2rem'
+             alignSelf: 'center'
            }}
          >
            <Typography 
@@ -230,7 +214,25 @@ const Success = ({auth, order, editOrder, createOrder, orderItems, editProduct, 
              </>
              ))}
            </div>
-     </Box> */}
+     </Box>
+            <Button 
+                variant='outlined' 
+                color='primary' 
+                onClick={handleClick}
+                style={{
+                    borderRadius: 10,
+                    background: 'linear-gradient(45deg, #3523d9, #00d3de)',
+                    color: 'white',
+                    boxShadow: '0 0px 3px 3px #1e23b0',
+                    width: '10%',
+                    alignSelf: 'center',
+                    marginTop: '2rem'
+                }} 
+            >
+                My Orders
+            </Button>
+        </Box>
+        
    
    </>   
     )
