@@ -189,9 +189,7 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrders}) => 
                     filtering: true,
                     headerStyle: {
                         color: 'white',
-                        background: 'linear-gradient(45deg, #3523d9, #00d3de)',
-                        borderRadius: 10,
-                        boxShadow: '0 0px 3px 3px #0745a3',
+                        background: '#3523d9',
                     }
                 }}
                 actions={[
@@ -204,7 +202,10 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrders}) => 
                 ]}
                 style={{
                     margin: '2rem',
-                    backgroundColor: 'aliceblue'
+                    color: 'black',
+                    borderRadius: 10,
+                    boxShadow: '0 0px 7px 7px #ffffff',
+                    backgroundColor: 'lightSteelBlue'
                 }}
                 detailPanel={rowData => {
                     return (
@@ -238,9 +239,7 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrders}) => 
                                 toolbar: false,
                                 headerStyle: {
                                     color: 'black',
-                                    background: 'linear-gradient(45deg, #ff820d, #f21f2a)',
-                                    borderRadius: 10,
-                                    boxShadow: '0 0px 3px 3px #c7570c',
+                                    background: '#ff820d',
                                 }
                             }}
                             actions={[
@@ -252,7 +251,7 @@ const AdminOrders = ({orders, orderItems, match, products, loadAdminOrders}) => 
                                 }
                             ]}
                             style={{
-                                backgroundColor: "aliceblue"
+                                backgroundColor: "lightSteelBlue"
                             }}
                         />
                     );

@@ -98,7 +98,7 @@ const AdminProducts = ({products, history}) => {
                 maxWidth: 10
             }
         },
-        { title: 'Inventory', field: 'inventory', filtering: false,
+        { title: 'Inventory', field: 'inventory', filtering: false, type: 'integer',
             cellStyle: {
                 width: 10,
                 maxWidth: 10,
@@ -193,14 +193,16 @@ const AdminProducts = ({products, history}) => {
                     filtering: true,
                     headerStyle: {
                         color: 'white',
-                        background: 'linear-gradient(45deg, #3523d9, #00d3de)',
-                        borderRadius: 10,
-                        boxShadow: '0 0px 3px 3px #0745a3',
+                        background: '#3523d9',
+                        
                     }
                 }}
                 style={{
                     margin: '2rem',
-                    backgroundColor: 'aliceblue',
+                    color: 'black',
+                    borderRadius: 10,
+                    boxShadow: '0 0px 7px 7px #ffffff',
+                    backgroundColor: 'lightSteelBlue'
                 }}
             />  
         </div>
