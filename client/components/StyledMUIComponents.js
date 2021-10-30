@@ -2,13 +2,15 @@ import TextField from '@material-ui/core/TextField'
 import { withStyles } from '@material-ui/core'
 
 export const StyledTextField = withStyles(() => ({
-    root: {
+    root: {    
         "& .MuiInputBase-root": {
-            color: 'whitesmoke'
+            color: 'whitesmoke',
+            disableUnderline: 'true'
         },
         "& .MuiFormLabel-root": {
-            color: '#ff2c61',
-            marginLeft: '1rem'
+            color: '#ffffff',
+            marginLeft: '1rem',
+            disableUnderline: 'true'
         },
       },
 }))(TextField);
