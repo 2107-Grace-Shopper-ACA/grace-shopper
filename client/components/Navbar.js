@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
 import HomeIcon from '@material-ui/icons/Home'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 
@@ -72,6 +73,14 @@ const Navbar = ({
                 alignContent: 'center',
               }}
             >
+              <div variant='subtitle1' style={{textAlign: 'center', margin: '1rem', color: 'white', background: 'linear-gradient(45deg, #3523d9, #00d3de)',
+            borderRadius: 10,
+            boxShadow: '0 0px 3px 3px #0745a3'}}>
+        <Typography>
+        Welcome to the Pasta Peddler
+          </Typography>
+        
+      </div>
               <Toolbar style={{ justifyContent: 'space-around' }}>
                 <Link to="/home">
                   <Button

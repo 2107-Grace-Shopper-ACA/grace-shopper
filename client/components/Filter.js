@@ -5,6 +5,7 @@ import { hydrate } from 'react-dom'
 export default class Filter extends Component {
   render() {
     return (
+      <>
       <div className="filter">
         <Typography
           className="filter-result"
@@ -66,6 +67,18 @@ export default class Filter extends Component {
           </select>
         </Typography>
       </div>
+        <div variant='subtitle1' className='filter' style={{margin: '0 1rem 0 1rem', alignSelf: 'center', textAlign: 'center', color: 'slategrey', background: 'black',
+          boxShadow: '0 0px 7px 7px #ffffff',
+          padding: '1rem',
+          borderRadius: 10,
+            }}>
+        <Typography>
+        The Pasta Peddler peddles only the finest pasta known to man.
+        Each piece of pasta is hand-crafted by a Pasta Maestro and carefully inspected by the International Pasta Association. 
+          </Typography>
+        
+      </div>
+      </>
     )
   }
 }

@@ -4,10 +4,10 @@ import { useHistory } from 'react-router'
 import { editOrder, createOrder, editProduct } from '../store'
 
 import Button from '@material-ui/core/Button'
-import Paper from '@material-ui/core/Paper'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
-
+import Divider from '@material-ui/core/Divider';
+import Avatar from '@material-ui/core/Avatar';
 
 /**
  * COMPONENT
@@ -46,9 +46,11 @@ const Success = ({auth, order, editOrder, createOrder, orderItems, editProduct, 
         ]);
         history.push('/products');
       }
-
-      console.log(order)
+// console.log(order)
+//for some reason it logs order, but says order.id is undefined
+// console.log(order.id)
     return (
+        <>
         <Box 
             sx={{
                 '& .MuiTextField-root': { m: 1, width: '25ch' },
@@ -86,6 +88,151 @@ const Success = ({auth, order, editOrder, createOrder, orderItems, editProduct, 
                 BACK TO PASTA
             </Button>
         </Box>
+         {/* <Box
+           display='flex'
+           flexDirection='column'
+           style={{
+             background: 'black',
+             borderRadius: 10,
+             boxShadow: '0 0px 7px 7px #ffffff',
+             width: '60%',
+             marginLeft: '2rem'
+           }}
+         >
+           <Typography 
+             variant="h6"
+             style={{
+               color: 'black',
+               background: 'linear-gradient(45deg, #26b7ff, #28fcdd)',
+               borderRadius: 5,
+               textAlign: 'center',
+               marginBottom: '.5rem'
+             }}
+           >
+             Order # {order.id}
+           </Typography>
+           
+           <div
+             style={{
+               marginLeft: '1rem',
+               marginBottom: '1rem',
+               display: 'flex',
+               justifyContent: 'space-around'
+             }}
+           >
+             <Typography variant='subtitle1' color='secondary'
+             >
+               Date Ordered:  {order.date.slice(0, order.date.indexOf('T'))}
+             </Typography>
+             <Typography color='secondary' variant='h6'>
+               Total:  ${(order.orderItems.reduce((accum, item) => {
+                 accum += item.product.price * +item.quantity;
+                 return accum;
+               }, 0)).toFixed(2)}
+             </Typography>
+           </div>
+           <div
+             style={{
+               display: 'flex',
+               flexDirection: 'column',
+               justifyContent: 'space-between'
+             }}
+           >
+             <Divider 
+               style={{
+                 borderRadius: 1,
+                 boxShadow: '0 0px 4px 2px #ffffff',
+                 margin: '1rem',
+                 marginTop: 0
+               }}
+             />
+             <Box
+               style={{
+                 display: 'flex',
+                 flexDirection: 'row',
+                 justifyContent: 'space-evenly',
+                 marginBottom: '.5rem'
+               }}
+               >
+                 <div>
+               <Typography
+                 style={{
+                   marginLeft: '1rem',
+                   marginTop: '.25rem',
+                   color: 'white'
+                 }}
+                 >
+                 Product
+               </Typography>
+               </div>
+                 <Typography style={{color: 'white'}}>
+                   Quantity
+                 </Typography>
+                 <Typography style={{color: 'white'}}>
+                   Price
+                 </Typography>
+                 <Typography style={{fontWeight: 'bold', color: 'secondary'}}>
+                   Subtotal
+                 </Typography>
+             </Box>
+             <Divider 
+               style={{
+                 borderRadius: 1,
+                 boxShadow: '0 0px 4px 2px #ffffff',
+                 margin: '1rem',
+                 marginTop: 0
+               }}
+             />
+             {
+               order.orderItems.map(item => (
+               <>
+               <Box
+               style={{
+                 display: 'flex',
+                 flexDirection: 'row',
+                 justifyContent: 'space-evenly',
+                 marginBottom: '1rem'
+               }}
+               >
+                 <div>
+               <Avatar alt={item.product.name + ' image'} src={item.product.imageUrl} 
+                 style={{
+                   boxShadow: '0 0px 3px 3px #20c9c9',
+                   marginLeft: '1rem'
+                 }}
+                 />
+               <Typography
+                 style={{
+                   marginLeft: '1rem',
+                   marginTop: '.25rem',
+                   color: 'white'
+                 }}
+                 >
+                 {item.product.name  } 
+               </Typography>
+               </div>
+               
+                 <Typography style={{color: 'white', textAlign: 'center'}}>
+                   {item.quantity}
+                 </Typography>
+               
+               
+                 <Typography style={{color: 'white', textAlign: 'center'}}>
+                   ${item.product.price}
+                 </Typography>
+               
+               
+                 <Typography style={{color: 'white', textAlign: 'center'}}>
+                   ${(item.product.price * +item.quantity).toFixed(2)}
+                 </Typography>
+               
+             </Box>
+             </>
+             ))}
+           </div>
+     </Box> */}
+   
+   </>   
     )
 }
 
@@ -96,7 +243,7 @@ const mapState = state => {
   return {
     auth: state.auth,
     order: state.orders.find(order => order.isCart),
-    orderItems: state.orderItems,
+    orderItems: state.orderItems.filter(item => item.order.isCart),
     products: state.products
   }
 }

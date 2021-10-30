@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Card from '@material-ui/core/Card'
 import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
 import ProductCard from './ProductCard'
 import Filter from './Filter'
+import { loadProducts } from '../store'
 
 class Products extends Component {
   constructor(props) {
@@ -21,6 +23,7 @@ class Products extends Component {
   }
 
   componentDidMount(){
+    this.props.loadProducts()
     this.setState({
       ...this.state,
       products: this.props.products.sort((a, b) =>
@@ -43,7 +46,6 @@ class Products extends Component {
   }
 
   filterProducts = async(event) => {
-    console.log(`filterProducts is called with this event target`, event.target.value)
     if (event.target.value === '') {
       await this.setState({
         ...this.state,
@@ -59,7 +61,6 @@ class Products extends Component {
         ),
       })
     }
-    console.log(`lastSortEvent target value `, this.state.lastSortEvent.value)
     this.state.lastSortEvent === '' ?  null : this.sortProducts(this.state.lastSortEvent)
   }
 
@@ -88,7 +89,6 @@ class Products extends Component {
         )
     },
     )
-    console.log(`lastSortEvent is now `, this.state.lastSortEvent)
   }
 
   render() {
@@ -103,6 +103,7 @@ class Products extends Component {
           filterProducts={this.filterProducts}
           sortProducts={this.sortProducts}
         />
+        
         <Grid
           container
           alignItems="center"
@@ -134,5 +135,8 @@ class Products extends Component {
     )
   }
 }
+const mapDispatch = dispatch => ({
+  loadProducts: () => dispatch(loadProducts())
+})
 
-export default connect((state) => state)(Products)
+export default connect((state) => state, mapDispatch)(Products)
