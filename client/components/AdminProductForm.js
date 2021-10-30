@@ -79,7 +79,16 @@ class AdminProductForm extends Component {
             noValidate
             autoComplete="off"
             >
-                <div style={{display: 'flex', flexDirection: 'column', border: '1px solid white', borderRadius: '4px'}}>
+                <div 
+                    style={{
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        borderRadius: 10,
+                        boxShadow: '0 0px 7px 7px #ffffff',
+                        padding: '1rem',
+                        margin: '1rem',
+                    }}
+                >
                     <StyledTextField name='name' value={name || ''} label='Name' onChange={onChange}/>
                     <InputLabel variant="outlined" style={{color: "#ff2c61"}}>
                     Category
@@ -109,9 +118,10 @@ class AdminProductForm extends Component {
                                 name='isActive' 
                                 checked={isActive || ''} 
                                 onChange={onChange}
+                                style={{color: 'white'}}
                             />
                         }
-                        style={{marginLeft: '1rem', color: 'white'}}
+                        style={{marginLeft: '1rem', color: '#ff2c61'}}
                         label='Is Active'
                     />
                     <FormControlLabel
@@ -120,12 +130,23 @@ class AdminProductForm extends Component {
                                 name='onSale' 
                                 checked={onSale || ''} 
                                 onChange={onChange}
+                                style={{color: 'white'}}
                             />
                         }
-                        style={{marginLeft: '1rem', color: 'white'}}
+                        style={{marginLeft: '1rem', color: '#ff2c61'}}
                         label='On Sale'
                     />
-                    <Button disabled={!categoryId || !name} style={{backgroundColor: 'white', margin: '1rem'}} onClick={onSubmit}>
+                    <Button disabled={!categoryId || !name} 
+                        style={{
+                            borderRadius: 10,
+                            background: 'linear-gradient(45deg, #ff2c61, #ff6c61)',
+                            color: 'white',
+                            boxShadow: '0 0px 3px 3px #1e23b0',
+                            width: '60%',
+                            alignSelf: 'center'
+                        }} 
+                        onClick={onSubmit}
+                    >
                         {action === 'edit' ? 'Edit Product' : 'Add Product'}
                     </Button>
                 </div>

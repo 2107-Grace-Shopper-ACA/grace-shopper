@@ -47,15 +47,87 @@ const AdminProducts = ({products, history}) => {
       };
 
       const columns = [
-        { title: 'ID', field: 'id', filtering: false },
+        { title: 'ID', field: 'id', filtering: false,
+            cellStyle: {
+                width: 20,
+                maxWidth: 20,
+                textOverflow: 'ellipsis', 
+                whiteSpace: 'nowrap', 
+                overflow: 'hidden',
+            },
+            headerStyle: {
+                width: 20,
+                maxWidth: 20
+            }
+        },
         { title: 'Product Name', field: 'name', filtering: false  },
         { title: 'Category', field: 'category', filtering: false },
-        { title: 'Description', field: 'description', filtering: false  },
-        { title: 'Image URL', field: 'imageUrl', filtering: false },
-        { title: 'Price', field: 'price', filtering: false, type: 'currency' },
-        { title: 'Inventory', field: 'inventory', filtering: false },
-        { title: 'Active', field: 'isActive', type: 'boolean' },
-        { title: 'On Sale', field: 'onSale', type: 'boolean' },
+        { title: 'Description', field: 'description', filtering: false,
+            cellStyle: {
+                width: 30,
+                maxWidth: 30,
+                textOverflow: 'ellipsis', 
+                whiteSpace: 'nowrap', 
+                overflow: 'hidden',
+            },
+            headerStyle: {
+                width: 30,
+                maxWidth: 30
+            }
+        },
+        { title: 'Image URL', field: 'imageUrl', filtering: false,
+            cellStyle: {
+                width: 20,
+                maxWidth: 20,
+                textOverflow: 'ellipsis', 
+                whiteSpace: 'nowrap', 
+                overflow: 'hidden',
+            },
+            headerStyle: {
+                width: 20,
+                maxWidth: 20
+            }
+        },
+        { title: 'Price', field: 'price', filtering: false, type: 'currency',
+            cellStyle: {
+                width: 10,
+                maxWidth: 10,
+            },
+            headerStyle: {
+                width: 10,
+                maxWidth: 10
+            }
+        },
+        { title: 'Inventory', field: 'inventory', filtering: false, type: 'integer',
+            cellStyle: {
+                width: 10,
+                maxWidth: 10,
+            },
+            headerStyle: {
+                width: 10,
+                maxWidth: 10
+            }
+         },
+        { title: 'Active', field: 'isActive', type: 'boolean',
+        cellStyle: {
+            width: 5,
+            maxWidth: 5,
+        },
+        headerStyle: {
+            width: 5,
+            maxWidth: 5
+        }
+         },
+        { title: 'On Sale', field: 'onSale', type: 'boolean',
+            cellStyle: {
+                width: 5,
+                maxWidth: 5,
+            },
+            headerStyle: {
+                width: 5,
+                maxWidth: 5
+            }
+         },
       ];
 
       // Material Table Columns Rows
@@ -99,33 +171,40 @@ const AdminProducts = ({products, history}) => {
                 <AdminProductForm handleClose={handleClose} history={history} product={product} action={action} />
             </Dialog>
             <MaterialTable
-          title="Products"
-          icons={tableIcons}
-          columns={columns}
-          data={data}
-          actions={[
-              {
-                  icon: AddBox,
-                  tooltip: 'Add Product',
-                  isFreeAction: true,
-                  onClick: ()=>handleOpen(),
-              },
-              {
-                  icon: Edit,
-                  tooltip: 'Edit Product',
-                  isFreeAction: false,
-                  onClick: (ev,rowData)=>handleOpen(ev, rowData),
-              }
-          ]}
-          options={{
-              filtering: true,
-              headerStyle: {backgroundColor: 'dodgerBlue'}
-          }}
-          style={{
-              margin: '2rem',
-              backgroundColor: 'aliceblue'
-          }}
-        />  
+                title="Products"
+                icons={tableIcons}
+                columns={columns}
+                data={data}
+                actions={[
+                    {
+                        icon: AddBox,
+                        tooltip: 'Add Product',
+                        isFreeAction: true,
+                        onClick: ()=>handleOpen(),
+                    },
+                    {
+                        icon: Edit,
+                        tooltip: 'Edit Product',
+                        isFreeAction: false,
+                        onClick: (ev,rowData)=>handleOpen(ev, rowData),
+                    }
+                ]}
+                options={{
+                    filtering: true,
+                    headerStyle: {
+                        color: 'white',
+                        background: '#3523d9',
+                        
+                    }
+                }}
+                style={{
+                    margin: '2rem',
+                    color: 'black',
+                    borderRadius: 10,
+                    boxShadow: '0 0px 7px 7px #ffffff',
+                    backgroundColor: 'lightSteelBlue'
+                }}
+            />  
         </div>
     )
 }

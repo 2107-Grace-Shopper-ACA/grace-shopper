@@ -15,9 +15,11 @@ async function seed() {
 
   // Creating Users
     const andy = await User.create({ username: "Andy", password: "123", isAdmin: true })
-    const corinne = await User.create({ username: "Corinne", password: "123" })
+    const corinne = await User.create({ username: "Corinne", password: "123", email: 'corinne@mail.com', streetAddress: '1 Street', city: 'Brooklyn', state: 'NY', zipcode: '11211' })
     const alex = await User.create({ username: "Alex", password: "123" })
     const stanley = await User.create({ username: "Stanley", password: "123" })
+    const jason = await User.create({ username: "Jason", password: "123" })
+    const prof = await User.create({ username: "Prof", password: "123" })
 
   const users = [andy, corinne, alex, stanley]
 

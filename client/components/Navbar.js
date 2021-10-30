@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
 import HomeIcon from '@material-ui/icons/Home'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 
@@ -70,8 +71,15 @@ const Navbar = ({
               style={{
                 background: 'black',
                 alignContent: 'center',
+                width: '100%'
               }}
             >
+              <div variant='subtitle1' style={{width: '100%', textAlign: 'center', color: 'white', background: 'linear-gradient(45deg, #3523d9, #00d3de)' , boxShadow: '0 0px 3px 3px #0745a3'}}>
+        <Typography style={{color: 'white'}} variant='h6'>
+        THE PASTA PEDDLER
+          </Typography>
+        
+      </div>
               <Toolbar style={{ justifyContent: 'space-around' }}>
                 <Link to="/home">
                   <Button
@@ -83,7 +91,8 @@ const Navbar = ({
                     }}
                     startIcon={<HomeIcon />}
                   >
-                    Pasta Peddler
+                    Home
+                    {/* Pasta Peddler */}
                   </Button>
                 </Link>
                 <Link to="/products">
@@ -154,8 +163,14 @@ const Navbar = ({
               style={{
                 background: 'black',
                 alignContent: 'center',
+                width: '100%'
               }}
             >
+              <div variant='subtitle1' style={{textAlign: 'center', color: 'white', background: 'linear-gradient(45deg, #3523d9, #00d3de)' , boxShadow: '0 0px 3px 3px #0745a3'}}>
+              <Typography style={{color: 'white'}} variant='h6'>
+        THE PASTA PEDDLER
+          </Typography>
+          </div>
               <Toolbar style={{ justifyContent: 'space-around' }}>
                 <Link to="/login">
                   <Button
@@ -165,7 +180,7 @@ const Navbar = ({
                       borderRadius: 10,
                       boxShadow: '0 0px 3px 3px #c7570c',
                     }}
-                    startIcon={<HomeIcon />}
+                    
                   >
                     Pasta Peddler
                   </Button>

@@ -48,11 +48,66 @@ const AdminUsers = ({users, history, loadUsers}) => {
     
       const columns = [
         { title: 'User Name', field: 'username' },
-        { title: 'Password', field: 'password' },
-        { title: 'Email', field: 'email' },
-        { title: 'Phone Number', field: 'phone' },
-        { title: 'Address', field: 'streetAddress' },
-        { title: 'City', field: 'city' },
+        { title: 'Password', field: 'password',
+        cellStyle: {
+            width: 10,
+            maxWidth: 10,
+            textOverflow: 'ellipsis', 
+            whiteSpace: 'nowrap', 
+            overflow: 'hidden',
+        },
+        headerStyle: {
+            width: 10,
+            maxWidth: 10
+        } },
+        { title: 'Email', field: 'email',
+        cellStyle: {
+            width: 10,
+            maxWidth: 10,
+            textOverflow: 'ellipsis', 
+            whiteSpace: 'nowrap', 
+            overflow: 'hidden',
+        },
+        headerStyle: {
+            width: 10,
+            maxWidth: 10
+        } },
+        { title: 'Phone Number', field: 'phone',
+        cellStyle: {
+            width: 10,
+            maxWidth: 10,
+            textOverflow: 'ellipsis', 
+            whiteSpace: 'nowrap', 
+            overflow: 'hidden',
+        },
+        headerStyle: {
+            width: 10,
+            maxWidth: 10
+        } },
+        { title: 'Address', field: 'streetAddress',
+        cellStyle: {
+            width: 10,
+            maxWidth: 10,
+            textOverflow: 'ellipsis', 
+            whiteSpace: 'nowrap', 
+            overflow: 'hidden',
+        },
+        headerStyle: {
+            width: 10,
+            maxWidth: 10
+        } },
+        { title: 'City', field: 'city',
+        cellStyle: {
+            width: 10,
+            maxWidth: 10,
+            textOverflow: 'ellipsis', 
+            whiteSpace: 'nowrap', 
+            overflow: 'hidden',
+        },
+        headerStyle: {
+            width: 10,
+            maxWidth: 10
+        } },
         { title: 'State', field: 'state' },
         { title: 'Zipcode', field: 'zipcode' },
         { title: 'Admin', field: 'isAdmin', type: 'boolean' },
@@ -123,11 +178,17 @@ const AdminUsers = ({users, history, loadUsers}) => {
               }
           ]}
           options={{
-            headerStyle: {backgroundColor: 'dodgerBlue'}
+            headerStyle: {
+                color: 'white',
+                background: '#3523d9',
+            }
           }}
           style={{
               margin: '2rem',
-              backgroundColor: 'aliceblue'
+              color: 'black',
+                borderRadius: 10,
+                boxShadow: '0 0px 7px 7px #ffffff',
+                backgroundColor: 'lightSteelBlue'
           }}
         />
             

@@ -91,25 +91,40 @@ class CartAddress extends Component {
                 sx={{
                     '& .MuiTextField-root': { m: 1, width: '25ch' },
                     backgroundColor: 'black',
-                    border: '1px solid white',
-                    borderRadius: '4px'
+                    borderRadius: 10,
+                    boxShadow: '0 0px 7px 7px #ffffff',
+                    margin: '0 3rem 0 3rem'
                 }}
                 noValidate
                 autoComplete="off"
-            >
-                <div style={{display: 'flex', flexDirection: 'column'}}>
-                    <StyledTextField name='streetAddress' value={streetAddress || ''} label='Street Address' onChange={onChange} />
-                                          <small style={{color: 'red'}}>{errors.streetAddressLength}</small>
-                    <StyledTextField name='city' value={city || ''} label='City' onChange={onChange} />
-                                          <small style={{color: 'red'}}>{errors.cityLength}</small>
-                    <StyledTextField name='state' value={state || ''} label='State' onChange={onChange} />
-                     <small style={{color: 'red'}}>{errors.stateLength}</small>
-                    <StyledTextField name='zipcode' value={zipcode || ''} label='Zipcode' onChange={onChange} />
+                display='flex'
+                flexDirection='column'
+                padding='1rem'
+            >   
+                <StyledTextField name='streetAddress' value={streetAddress || ''} label='Street Address' onChange={onChange} />
+                    <small style={{color: 'red'}}>{errors.streetAddressLength}</small>
+                                        
+                <StyledTextField name='city' value={city || ''} label='City' onChange={onChange} />
+                    <small style={{color: 'red'}}>{errors.cityLength}</small>
+                                        
+                <StyledTextField name='state' value={state || ''} label='State' onChange={onChange} />
+                    <small style={{color: 'red'}}>{errors.stateLength}</small>
+                <StyledTextField name='zipcode' value={zipcode || ''} label='Zipcode' onChange={onChange} />
                     <small style={{color: 'red'}}>{errors.zipcodeLength}</small>
-                    <Button style={{backgroundColor: 'white'}} onClick={onSubmit} disabled={!streetAddress || !city || !state || !zipcode}>
-                        Confirm Address
-                    </Button>
-                </div>
+                <Button 
+                    style={{
+                        borderRadius: 10,
+                        background: 'linear-gradient(45deg, #ff2c61, #ff6c61)',
+                        color: 'white',
+                        boxShadow: '0 0px 3px 3px #1e23b0',
+                        width: '40%',
+                        alignSelf: 'center'
+                    }} 
+                    onClick={onSubmit} 
+                    disabled={!streetAddress || !city || !state || !zipcode}
+                >
+                    Confirm Address
+                </Button>
             </Box>
         )
     }

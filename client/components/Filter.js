@@ -5,6 +5,7 @@ import { hydrate } from 'react-dom'
 export default class Filter extends Component {
   render() {
     return (
+      <>
       <div className="filter">
         <Typography
           className="filter-result"
@@ -66,6 +67,18 @@ export default class Filter extends Component {
           </select>
         </Typography>
       </div>
+        <div variant='subtitle1' className='filter' style={{margin: '0 3rem 0 3rem', alignSelf: 'center', textAlign: 'center', color: 'eggshell', background: 'black',
+          boxShadow: '0 0px 7px 7px #ffffff',
+          padding: '1rem',
+          borderRadius: 10,
+            }}>
+        <Typography>
+        The Pasta Peddler peddles only the finest pasta known to man.
+        Every single strand, tube, ribbon, and pocket of Pasta Peddler pasta is hand-crafted by an accredited Pasta Maestro and carefully inspected by the International Pasta Association. We guarantee that Pasta Peddler will change your relationship with pasta forever.
+          </Typography>
+        
+      </div>
+      </>
     )
   }
 }

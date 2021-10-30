@@ -68,7 +68,16 @@ class AdminOrderForm extends Component {
                 noValidate
                 autoComplete="off"
             >
-                <div style={{display: 'flex', flexDirection: 'column', border: '1px solid white', borderRadius: '4px'}}>
+                <div 
+                    style={{
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        borderRadius: 10,
+                        boxShadow: '0 0px 7px 7px #ffffff',
+                        padding: '1rem',
+                        margin: '1rem',
+                    }}
+                >
                     <StyledTextField value={order.id || ''} label='Order ID' />
                     <StyledTextField value={order.date || ''} label='Order Date' />
                     <StyledTextField value={order.purchaser || ''} label='Purchaser' />
@@ -79,12 +88,23 @@ class AdminOrderForm extends Component {
                                 name='isCart' 
                                 checked={isCart || ''} 
                                 onChange={onChange}
+                                style={{color: 'white'}}
                             />
                         }
-                        style={{marginLeft: '1rem', color: 'white'}}
+                        style={{marginLeft: '1rem', color: '#ff2c61'}}
                         label='Cart Order'
                     />
-                    <Button style={{backgroundColor: 'white', margin: '1rem'}} onClick={onSubmit}>
+                    <Button 
+                        onClick={onSubmit}
+                        style={{
+                            borderRadius: 10,
+                            background: 'linear-gradient(45deg, #ff2c61, #ff6c61)',
+                            color: 'white',
+                            boxShadow: '0 0px 3px 3px #1e23b0',
+                            width: '45%',
+                            alignSelf: 'center'
+                        }} 
+                    >
                         Edit Order
                     </Button>
                 </div>

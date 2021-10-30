@@ -69,41 +69,62 @@ class AdminUserForm extends Component {
 
         if (action === 'edit' && !user) return '...loading'
         return (
+            <div
+            style={{
+                backgroundColor: 'black'
+            }}>
             <Box
             component="form"
             sx={{
                 '& .MuiTextField-root': { m: 1, width: '25ch' },
-                backgroundColor: 'black'
+                backgroundColor: 'black',
+                borderRadius: 10,
+                boxShadow: '0 0px 7px 7px #ffffff',
+                padding: '1rem',
+                margin: '1rem',
             }}
+            display='flex'
+            flexDirection='column'
+
             noValidate
             autoComplete="off"
             >
-                <div style={{display: 'flex', flexDirection: 'column', border: '1px solid white', borderRadius: '4px'}}>
-                    <StyledTextField name='username' value={username || ''} label='Username' onChange={onChange}/>
-                    <FormControlLabel
-                        control={
-                            <Checkbox 
-                                name='isAdmin' 
-                                checked={isAdmin || ''} 
-                                onChange={onChange}
-                            />
-                        }
-                        style={{marginLeft: '1rem', color: 'white'}}
-                        label='Is Admin'
-                        disabled={user && auth.id === user.id}
-                    />
-                    <StyledTextField multiline maxRows={3} name='password' value={password || ''} label='Password' onChange={onChange} />
-                    <StyledTextField multiline maxRows={3} name='email' value={email || ''} label='Email' onChange={onChange} />
-                    <StyledTextField name='phoneNumber' value={phoneNumber || ''} label='Phone Number' onChange={onChange} />
-                    <StyledTextField multiline maxRows={3} name='streetAddress' value={streetAddress || ''} label='Street Address' onChange={onChange} />
-                    <StyledTextField name='city' value={city || ''} label='City' onChange={onChange} />
-                    <StyledTextField name='state' value={state || ''} label='State' onChange={onChange} />
-                    <StyledTextField name='zipcode' value={zipcode || ''} label='Zipcode' onChange={onChange} />
-                    <Button style={{backgroundColor: 'white', margin: '1rem'}} onClick={onSubmit}>
-                        {action === 'edit' ? 'Edit User' : 'Add User'}
-                    </Button>
-                </div>
+                
+                <StyledTextField name='username' value={username || ''} label='Username' onChange={onChange}/>
+                <FormControlLabel
+                    control={
+                        <Checkbox 
+                            name='isAdmin' 
+                            checked={isAdmin || ''} 
+                            onChange={onChange}
+                            style={{color: 'white'}}
+                        />
+                    }
+                    style={{marginLeft: '1rem', color: '#ff2c61'}}
+                    label='Is Admin'
+                    disabled={user && auth.id === user.id}
+                />
+                <StyledTextField multiline maxRows={3} name='password' value={password || ''} label='Password' onChange={onChange} />
+                <StyledTextField multiline maxRows={3} name='email' value={email || ''} label='Email' onChange={onChange} />
+                <StyledTextField name='phoneNumber' value={phoneNumber || ''} label='Phone Number' onChange={onChange} />
+                <StyledTextField multiline maxRows={3} name='streetAddress' value={streetAddress || ''} label='Street Address' onChange={onChange} />
+                <StyledTextField name='city' value={city || ''} label='City' onChange={onChange} />
+                <StyledTextField name='state' value={state || ''} label='State' onChange={onChange} />
+                <StyledTextField name='zipcode' value={zipcode || ''} label='Zipcode' onChange={onChange} />
+                <Button 
+                    style={{
+                        borderRadius: 10,
+                        background: 'linear-gradient(45deg, #ff2c61, #ff6c61)',
+                        color: 'white',
+                        boxShadow: '0 0px 3px 3px #1e23b0',
+                        width: '40%',
+                        alignSelf: 'center'
+                    }} 
+                    onClick={onSubmit}>
+                    {action === 'edit' ? 'Edit User' : 'Add User'}
+                </Button>
             </Box>
+            </div>
         )
     }
 }
