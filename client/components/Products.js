@@ -65,7 +65,6 @@ class Products extends Component {
   }
 
   sortProducts = async(event) => {
-    console.log(`sortProducts is called`)
     event.persist()
     const sort = event.target.value
     await this.setState({

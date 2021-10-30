@@ -76,9 +76,9 @@ export const Home = (props) => {
             paddingRight: '2rem',
             borderRadius: 10,
             marginBottom: '1rem',
-            background: 'linear-gradient(45deg, #c206ac, #c2b506)',
+            background: 'linear-gradient(45deg, #c206ac, #cc2b38)',
             color: 'white',
-            boxShadow: '0 0px 3px 3px #9c970c',
+            boxShadow: '0 0px 3px 3px #cc2b91',
           }}
         >
           Your Orders
@@ -92,7 +92,7 @@ export const Home = (props) => {
             margin: '1rem',
             borderRadius: 10,
             marginBottom: '1rem',
-            background: 'linear-gradient(45deg, #15c7d4, #07ab1d)',
+            background: 'linear-gradient(45deg, #15c7d4, #1df281)',
             color: 'white',
             boxShadow: '0 0px 3px 3px #0c9ea8',
           }}

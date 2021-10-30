@@ -1,36 +1,82 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {authenticate} from '../store'
+import { connect } from 'react-redux'
+import { authenticate } from '../store'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
-import { StyledTextField } from './StyledMUIComponents';
+import { StyledTextField } from './StyledMUIComponents'
 /**
  * COMPONENT
  */
-const AuthForm = props => {
-  const {name, displayName, handleSubmit, error} = props
+const AuthForm = (props) => {
+  const { name, displayName, handleSubmit, error } = props
 
   return (
-    <div>
-      <Box
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: '5rem',
+      }}
+    >
+      <form
         component="form"
-        sx={{
-            '& .MuiTextField-root': { m: 1, width: '25ch' },
-            backgroundColor: 'black',
-            name: {name}
-        }}
         noValidate
         autoComplete="off"
         name={name}
         onSubmit={handleSubmit}
       >
-        <div style={{display: 'flex', border: '1px solid white', borderRadius: '4px'}}>
-            <StyledTextField label='Username:' name='username'/>
-            <StyledTextField label='Password:' name='password' type='password'/>
-            <Button style={{backgroundColor: 'white', margin: '1rem'}} type="submit" >{displayName}</Button>
-            {error && error.response && <div> {error.response.data} </div>}
+        <div
+          style={{
+            display: 'flex',
+            borderRadius: 10,
+            color: 'white',
+            boxShadow: '0 0px 5px 5px white',
+            width: '10rem',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '1.5rem',
+          }}
+        >
+          <StyledTextField
+            label="Username:"
+            name="username"
+            InputProps={{ disableUnderline: true }}
+          />
+          <StyledTextField
+            label="Password:"
+            name="password"
+            type="password"
+            InputProps={{ disableUnderline: true }}
+          />
+          <Button
+            style={{
+              background: 'linear-gradient(45deg, #30ff34, #baff30)',
+              margin: '1rem',
+              boxShadow: '0 0px 3px 3px #81c942',
+              borderRadius: 10,
+              color:'white'
+            }}
+            type="submit"
+          >
+            {displayName}
+          </Button>
+          {error && error.response && (
+            <div
+              style={{
+                borderRadius: 10,
+                background: 'linear-gradient(45deg, #ff5d38, #ff0505)',
+                color: 'white',
+                boxShadow: '0 0px 3px 3px #fa5c5c',
+                padding: '.5rem',
+              }}
+            >
+              {error.response.data}
+            </div>
+          )}
         </div>
-      </Box>
+      </form>
     </div>
   )
 }
@@ -42,23 +88,23 @@ const AuthForm = props => {
  *   function, and share the same Component. This is a good example of how we
  *   can stay DRY with interfaces that are very similar to each other!
  */
-const mapLogin = state => {
+const mapLogin = (state) => {
   return {
     name: 'login',
     displayName: 'Login',
-    error: state.auth.error
+    error: state.auth.error,
   }
 }
 
-const mapSignup = state => {
+const mapSignup = (state) => {
   return {
     name: 'signup',
     displayName: 'Sign Up',
-    error: state.auth.error
+    error: state.auth.error,
   }
 }
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
     handleSubmit(evt) {
       evt.preventDefault()
@@ -66,7 +112,7 @@ const mapDispatch = dispatch => {
       const username = evt.target.username.value
       const password = evt.target.password.value
       dispatch(authenticate(username, password, formName))
-    }
+    },
   }
 }
 

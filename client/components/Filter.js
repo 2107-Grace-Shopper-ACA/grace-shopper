@@ -37,7 +37,7 @@ export default class Filter extends Component {
             onChange={this.props.sortProducts}
             style={{ background: 'none', color: 'white', border: 'none', outline: 'none' }}
           >
-            <option value="A-Z">A-Z</option>
+            <option value=''>A-Z</option>
             <option value="lowest">Price Low to High</option>
             <option value="highest">Price High to Low</option>
           </select>
@@ -59,7 +59,7 @@ export default class Filter extends Component {
             onChange={this.props.filterProducts}
             style={{ background: 'none', color: 'white', border: 'none', outline: 'none' }}
           >
-            <option value="All">All</option>
+            <option value=''>All</option>
             <option value="Small Pastas">Small Pastas</option>
             <option value="Ribbon-Cut">Ribbon-Cut</option>
             <option value="Stuffed">Stuffed</option>
