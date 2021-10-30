@@ -16,7 +16,7 @@ app.use(express.json())
 
 const stripe = require('stripe')('sk_test_51JmQ2ABj1g9TrN0Oc56w5ehAiaCGqvZKLHAdmNsmDP5lTWyyy3MjpwVrzHj9hVpMi669k4BgaTAHTliTouWTmoYf000RamHzJl');
 
-const YOUR_DOMAIN = 'http://localhost:8080/checkout';
+const YOUR_DOMAIN = 'https://pasta-peddler.herokuapp.com/checkout';
 
 app.post("/create-checkout-session", async (req, res) => {
   try {
