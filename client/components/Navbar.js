@@ -84,7 +84,7 @@ const Navbar = ({
                 <Link to="/home">
                   <Button
                     style={{
-                      color: 'black',
+                      color: 'white',
                       background: 'linear-gradient(45deg, #ff820d, #f21f2a)',
                       borderRadius: 10,
                       boxShadow: '0 0px 3px 3px #c7570c',
@@ -98,7 +98,7 @@ const Navbar = ({
                 <Link to="/products">
                   <Button
                     style={{
-                      color: 'black',
+                      color: 'white',
                       background: 'linear-gradient(45deg, #26b7ff, #28fcdd)',
                       borderRadius: 10,
                       boxShadow: '0 0px 3px 3px #20c9c9',
@@ -110,7 +110,7 @@ const Navbar = ({
                 <Link to="/cart">
                   <Button
                     style={{
-                      color: 'black',
+                      color: 'white',
                       background: 'linear-gradient(45deg, #b329f2, #2e35ff)',
                       borderRadius: 10,
                       boxShadow: '0 0px 3px 3px #1e23b0',
@@ -129,7 +129,7 @@ const Navbar = ({
                 >
                   <Button
                     style={{
-                      color: 'black',
+                      color: 'white',
                       background: 'linear-gradient(45deg, #16f53b, #faef52)',
                       borderRadius: 10,
                       boxShadow: '0 0px 3px 3px #10b32b',
@@ -142,7 +142,7 @@ const Navbar = ({
                   <Link to="/admin">
                     <Button
                       style={{
-                        color: 'black',
+                        color: 'white',
                         background: 'linear-gradient(45deg, #f44af7, #f74a95)',
                         borderRadius: 10,
                         boxShadow: '0 0px 3px 3px #b0377b',
@@ -166,7 +166,7 @@ const Navbar = ({
                 width: '100%'
               }}
             >
-              <div variant='subtitle1' style={{textAlign: 'center', color: 'black', background: 'linear-gradient(45deg, #3523d9, #00d3de)' , boxShadow: '0 0px 3px 3px #0745a3'}}>
+              <div variant='subtitle1' style={{textAlign: 'center', color: 'white', background: 'linear-gradient(45deg, #3523d9, #00d3de)' , boxShadow: '0 0px 3px 3px #0745a3'}}>
               <Typography style={{color: 'white'}} variant='h6'>
         THE PASTA PEDDLER
           </Typography>
@@ -175,7 +175,7 @@ const Navbar = ({
                 <Link to="/login">
                   <Button
                     style={{
-                      color: 'black',
+                      color: 'white',
                       background: 'linear-gradient(45deg, #ff820d, #f21f2a)',
                       borderRadius: 10,
                       boxShadow: '0 0px 3px 3px #c7570c',
@@ -188,7 +188,7 @@ const Navbar = ({
                 <Link to="/products">
                   <Button
                     style={{
-                      color: 'black',
+                      color: 'white',
                       background: 'linear-gradient(45deg, #26b7ff, #28fcdd)',
                       borderRadius: 10,
                       boxShadow: '0 0px 3px 3px #20c9c9',
@@ -200,7 +200,7 @@ const Navbar = ({
                 <Link to="/cart">
                   <Button
                     style={{
-                      color: 'black',
+                      color: 'white',
                       background: 'linear-gradient(45deg, #b329f2, #2e35ff)',
                       borderRadius: 10,
                       boxShadow: '0 0px 3px 3px #1e23b0',
@@ -220,7 +220,7 @@ const Navbar = ({
                 >
                   <Button
                     style={{
-                      color: 'black',
+                      color: 'white',
                       background: 'linear-gradient(45deg, #16f53b, #faef52)',
                       borderRadius: 10,
                       boxShadow: '0 0px 3px 3px #10b32b',
@@ -232,7 +232,7 @@ const Navbar = ({
                 <Link to="/signup">
                   <Button
                     style={{
-                      color: 'black',
+                      color: 'white',
                       background: 'linear-gradient(45deg, #f44af7, #f74a95)',
                       borderRadius: 10,
                       boxShadow: '0 0px 3px 3px #b0377b',

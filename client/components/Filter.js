@@ -10,7 +10,7 @@ export default class Filter extends Component {
         <Typography
           className="filter-result"
           style={{
-            color: 'black',
+            color: 'white',
             background: 'linear-gradient(45deg, #2ef2a0, #e8de27)',
             borderRadius: 10,
             boxShadow: '0 0px 3px 3px #34ba20',
@@ -35,7 +35,7 @@ export default class Filter extends Component {
           <select
             value={this.props.sort}
             onChange={this.props.sortProducts}
-            style={{ background: 'none', color: 'black', border: 'none', outline: 'none' }}
+            style={{ background: 'none', color: 'white', border: 'none', outline: 'none' }}
           >
             <option value="A-Z">A-Z</option>
             <option value="lowest">Price Low to High</option>
@@ -57,7 +57,7 @@ export default class Filter extends Component {
           <select
             value={this.props.category}
             onChange={this.props.filterProducts}
-            style={{ background: 'none', color: 'black', border: 'none', outline: 'none' }}
+            style={{ background: 'none', color: 'white', border: 'none', outline: 'none' }}
           >
             <option value="All">All</option>
             <option value="Small Pastas">Small Pastas</option>

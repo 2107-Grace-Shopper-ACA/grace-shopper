@@ -95,7 +95,7 @@ const ProductCard = ({
               variant="h5"
               component="div"
               style={{
-                color: 'black',
+                color: 'white',
                 background: 'linear-gradient(45deg, #ff820d, #f21f2a)',
                 borderRadius: 10,
                 boxShadow: '0 0px 3px 3px #c7570c',
@@ -108,7 +108,7 @@ const ProductCard = ({
           <Typography
             variant="body1"
             style={{
-              color: 'black',
+              color: 'white',
               background: 'linear-gradient(45deg, #16f53b, #faef52)',
               borderRadius: 10,
               boxShadow: '0 0px 3px 3px #10b32b',
