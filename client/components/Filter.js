@@ -67,7 +67,7 @@ export default class Filter extends Component {
           </select>
         </Typography>
       </div>
-        <div variant='subtitle1' className='filter' style={{margin: '0 1rem 0 1rem', alignSelf: 'center', textAlign: 'center', color: 'slategrey', background: 'black',
+        <div variant='subtitle1' className='filter' style={{margin: '0 3rem 0 3rem', alignSelf: 'center', textAlign: 'center', color: 'slategrey', background: 'black',
           boxShadow: '0 0px 7px 7px #ffffff',
           padding: '1rem',
           borderRadius: 10,

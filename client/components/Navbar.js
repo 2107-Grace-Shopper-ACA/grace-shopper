@@ -165,6 +165,9 @@ const Navbar = ({
                 alignContent: 'center',
               }}
             >
+              <Typography>
+        Welcome to the Pasta Peddler
+          </Typography>
               <Toolbar style={{ justifyContent: 'space-around' }}>
                 <Link to="/login">
                   <Button
